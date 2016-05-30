@@ -1,0 +1,2810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel_basic_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="in.mol.labourinspection.FormActivity">
+
+    <TextView
+        android:id="@+id/tv_head"
+        style="@style/textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:padding="0dp"
+        android:text="Inspection Basic Details"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_below="@id/tv_head"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/grey" />
+
+    <LinearLayout
+        android:id="@+id/ll_select_act"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/textview"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Select Act :" />
+
+        <Spinner
+            android:id="@+id/spn_act"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_below="@id/ll_select_act"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:visibility="gone"
+        android:background="@color/grey" />
+
+
+    <ScrollView
+        android:id="@+id/scroll_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view1"
+        android:background="@drawable/scrollview"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="0dp"
+                    android:padding="0dp"
+                    android:text="Name of Establishment:" />
+
+                <EditText
+                    android:id="@+id/edit_name_of_establishment"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:digits="@string/onlytext"
+                    android:ems="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Address of Establishment:" />
+
+                <EditText
+                    android:id="@+id/edit_address"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="105dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="250"
+                    android:maxLines="5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_address_site"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Address of Site/Location:" />
+
+                <EditText
+                    android:id="@+id/edit_address_of_site"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="105dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="250"
+                    android:maxLines="5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Name of Employer:" />
+
+                <EditText
+                    android:id="@+id/edit_name_of_employer"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_year_of_starting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Year of Starting:" />
+
+                <EditText
+                    android:id="@+id/edit_year_of_starting"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_no_of_employees_1970"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Total number of employees:" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textview"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Direct: " />
+
+                        <EditText
+                            android:id="@+id/edit_direct_employees"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:maxLength="4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textview"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Contract Worker: " />
+
+                        <EditText
+                            android:id="@+id/edit_contract_worker"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:maxLength="4" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_no_of_contractor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Number of Contractor:" />
+
+                <EditText
+                    android:id="@+id/edit_no_of_contractors"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:maxLength="20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr1"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="1." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor1"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work1"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker1"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement1"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr2"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="2." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor2"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work2"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker2"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement2"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr3"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="3." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor3"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work3"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker3"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement3"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr4"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="4." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor4"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work4"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker4"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement4"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr5"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="5." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor5"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work5"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker5"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement5"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr6"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="6." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor6"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work6"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker6"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement6"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr7"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="7." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor7"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work7"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker7"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement7"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr8"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="8." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor8"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work8"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker8"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement8"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr9"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="9." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor9"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work9"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker9"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement9"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_f10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_mem_sr10"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:text="9." />
+
+                <EditText
+                    android:id="@+id/edt_name_of_contractor10"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name of Contractor"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_nature_of_work10"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Nature of work"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+
+                <EditText
+                    android:id="@+id/edt_no_of_worker10"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Number of Worker"
+                    android:inputType="textPersonName"
+                    android:maxLength="20" />
+
+                <EditText
+                    android:id="@+id/edt_date_of_commencement10"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date of Commencement"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="12" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_no_of_employees"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Number of Employee's:" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textview"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Male: " />
+
+                        <EditText
+                            android:id="@+id/edit_male"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:maxLength="4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textview"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Female: " />
+
+                        <EditText
+                            android:id="@+id/edit_female"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:maxLength="4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textview"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total: " />
+
+                        <EditText
+                            android:id="@+id/edit_total"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:inputType="number"
+                            android:maxLength="5" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_representative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Representative of employer :" />
+
+                <EditText
+                    android:id="@+id/edit_representative_of_principle"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_registration_under"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Registration Under :" />
+
+                <EditText
+                    android:id="@+id/edit_registration_under"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_schedule_emp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Schedule employment :" />
+
+                <EditText
+                    android:id="@+id/edit_schedule_employment"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_working_hours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Working Hours :" />
+
+                <EditText
+                    android:id="@+id/edit_working_hours"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="50"
+                    android:paddingRight="5dp" />
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Weekly Off :" />
+
+                <EditText
+                    android:id="@+id/edit_weekly_off"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_accounting_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Accounting Year :" />
+
+                <EditText
+                    android:id="@+id/edit_accouting_year"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="date"
+                    android:maxLength="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Date of inspection :" />
+
+                <EditText
+                    android:id="@+id/edit_date_of_inspection"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:inputType="date"
+                    android:maxLength="50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_decalration"
+                    style="@style/textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/act1948" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/edit_declar_designation"
+                        style="@style/edittext"
+                        android:layout_width="0dp"
+                        android:layout_height="55dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:maxLines="3"
+                        android:maxLength="50" />
+
+                    <TextView
+                        android:id="@+id/tv_desig"
+                        style="@style/textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Designation " />
+
+                    <EditText
+                        android:id="@+id/edit_is_present"
+                        style="@style/edittext"
+                        android:layout_width="0dp"
+                        android:layout_height="55dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:maxLines="3"
+                        android:maxLength="50" />
+
+                    <TextView
+                        android:id="@+id/tv_ispresent"
+                        style="@style/textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" is present." />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_no_of_workers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Number of Workers :" />
+
+                <EditText
+                    android:id="@+id/edit_no_of_workers"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:maxLength="10" />
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/hs_worker_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker1"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="1." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus1"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric1"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker2"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="2." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus2"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric2"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker3"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="3." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus3"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric3"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker4"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="4." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus4"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric4"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker5"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="5." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus5"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric5"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker6"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="6." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus6"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric6"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker7"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="7." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus7"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric7"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker8"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="8." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus8"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric8"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker9"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="9." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus9"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric9"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker10"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="10." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus10"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric10"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker11"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="11." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus11"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric11"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker12"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="12." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus12"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric12"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker13"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="13." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="textPersonName"
+                            android:maxLength="15" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus13"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric13"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_blue"
+                android:text="Submit"
+                android:textSize="20dp"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

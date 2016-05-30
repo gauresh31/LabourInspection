@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Labour Randomization</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_list">List of Districts</string>
+    <string name="title_activity_form">Inspection Form</string>
+    <string name="onlytext">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz .</string>
+    <string name="txt_mandatory">*</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="rules_header"><u>During inspection following contraventions has been observed:</u></string>
+    <string name="title_activity_license_list">LicenseListActivity</string>
+
+    <!--Acts-->
+    <string name="act1948">I have visited the above mentioned establishment for the purpose of inspection under The Minimum Wages Act, 1948
+                                and Maharashtra Minimum Wages Rules, 1963. During inspection </string>
+    
+    <string name="act_1948">The Minimum Wages Act, 1948</string>
+    <string name="act_1936">The Payement of Wages Act, 1936</string>
+    <string name="act_1976">The Equal Remuration Act, 1976</string>
+    <string name="act_1965">The Payment of Bonus Act, 1965</string>
+    <string name="act_1983">The Maharashtra Workmen Minimum House Rent Allowance Act , 1983</string>
+    <string name="act_1966">Beedi and Cigar Workers Act, 1966</string>
+    <string name="act_1970">The Contract Labour Act,1970</string>
+    <string name="act_1961">The Motor Transport Workmen Act, 1961</string>
+    <string name="act_1976_sales">The Sales Promotion Employees Act, 1976</string>
+    <string name="act_1996">The Building and Other Construction Workers Act, 1996</string>
+    <string name="act_1955">The Working Journalist And Other News Paper Employees Act, 1955</string>
+    <string name="act_1979">The Inter-state Migrants Workmen Act,1979</string>
+    <string name="act_1961_maternity">The Maternity Benefit Act, 1961</string>
+    <string name="act_1972">The Payment of gratuity Act, 1972</string>
+    <string name="act_1986">The Child Labour (Prohibition and Regulation) Act, 1986</string>
+</resources>

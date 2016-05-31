@@ -146,7 +146,7 @@ public class ActivityLogin extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                     Log.i("Inside Error", error.toString());
-                    Utilities.showMessage("Unable to download....please try again", getApplicationContext());
+                    Utilities.showMessage("Error occurred....please try again", getApplicationContext());
                 }
             });
 

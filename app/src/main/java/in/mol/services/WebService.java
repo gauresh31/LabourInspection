@@ -76,6 +76,7 @@ public class WebService {
             URL url = new URL(License_Url + "UserID=" + "411F82DF-1702-4E37-9016-6DB1C4909FFE");//59FBCF05-F9F7-47D9-AE90-742122C6A292 //userId
                                                                                                 //BE6EB98C-9D9B-45ED-9033-441023A7394E
                                                                                                 //411F82DF-1702-4E37-9016-6DB1C4909FFE
+            System.out.println("URL: " + url.toString());
             HttpURLConnection urlConnection = (HttpURLConnection) url
                     .openConnection();
             urlConnection.setConnectTimeout(60000);

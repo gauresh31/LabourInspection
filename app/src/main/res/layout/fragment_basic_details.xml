@@ -833,7 +833,7 @@
                     style="@style/textview"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:text="9." />
+                    android:text="10." />
 
                 <EditText
                     android:id="@+id/edt_name_of_contractor10"

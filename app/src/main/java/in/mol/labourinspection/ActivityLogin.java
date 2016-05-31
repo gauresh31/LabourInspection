@@ -87,9 +87,9 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public void attemptLogin() {
-        String username = mUserNameView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        String passwordMD5 = md5(password);
+//        String username = mUserNameView.getText().toString();
+//        String password = mPasswordView.getText().toString();
+//        String passwordMD5 = md5(password);
 
         //Async Request
 //        if (Utilities.isNetworkAvailable(getApplicationContext())) {
@@ -114,6 +114,8 @@ public class ActivityLogin extends AppCompatActivity {
             progressDialog.setMessage("Authenticating User....");
             progressDialog.setCancelable(true);
             progressDialog.show();
+
+//            mPasswordView.setText(passwordMD5);
 
             RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
 
@@ -145,7 +147,7 @@ public class ActivityLogin extends AppCompatActivity {
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
-                    Log.i("Inside Error", error.toString());
+                    Log.i("Inside Error ", error.toString());
                     Utilities.showMessage("Error occurred....please try again", getApplicationContext());
                 }
             });

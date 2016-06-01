@@ -163,12 +163,12 @@ public class LicenseListActivity extends AppCompatActivity {
 
 //                    if (Utilities.isNetworkAvailable(getApplicationContext())) {
 //
-//                    GetBasicDetails basic = new GetBasicDetails(license_no);
-//                    basic.execute("");
+                    GetBasicDetails basic = new GetBasicDetails(license_no);
+                    basic.execute("");
 //                    } else {
 //                        Utilities.showMessage("No Internet Connection", getApplicationContext());
 //                    }
-                    callLicenseList(license_no);
+//                    callLicenseList(license_no);
 
                 }
             });
@@ -288,9 +288,9 @@ public class LicenseListActivity extends AppCompatActivity {
                     "\t}\n" +
                     "}";
 
-            if (result != null) {
-                session.createBasicDetailsInfo(result);
-                Log.i("Response: ", result);
+            if (resp != null) {
+                session.createBasicDetailsInfo(resp);
+                Log.i("Response: ", resp);
                 Intent in = new Intent(LicenseListActivity.this, ActivityActList.class);
                 startActivity(in);
             } else {

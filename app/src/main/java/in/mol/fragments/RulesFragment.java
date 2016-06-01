@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ import android.widget.Spinner;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
+
+import org.xmlpull.v1.XmlSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,62 +173,78 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.btn_submit:
-                JSONObject jsonData = new JSONObject();
-                try {
-                    jsonData.put("licence_no", licence_no);
-                    jsonData.put("inspection_no", inspection_no);
+                saveData();
+                saveXml();
+                break;
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            default:
+                break;
+        }
+    }
 
-                for (int i = 0; i < strRules.length; i++) {
-                    try {
-                        jsonData.put("" + i, strRules[i]);
+    private void saveXml() {
+        String basicInfo = session.getBasicDetailsInfo();
+//        try {
+//            XmlSerializer xmlSerializer = (XmlSerializer) basicInfo;
+//        } catch (SAXException e) {
+//            e.printStackTrace();
+//        }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+    }
 
-                JSONArray jsonArray = new JSONArray();
-                jsonArray.put(jsonData);
+    private void saveData() {
+        JSONObject jsonData = new JSONObject();
+        try {
+            jsonData.put("licence_no", licence_no);
+            jsonData.put("inspection_no", inspection_no);
 
-                JSONArray jsonArray1 = new JSONArray();
-                String basicInfo = session.getBasicDetailsInfo();
-                if (basicInfo != null) {
-                    jsonArray1.put(basicInfo);
-                }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-                try {
-                    dataToDatabase.put("basic_details_list", basicInfo);
-                    dataToDatabase.put("rules_list", jsonData);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        for (int i = 0; i < strRules.length; i++) {
+            try {
+                jsonData.put("" + i, strRules[i]);
 
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(jsonData);
+
+        JSONArray jsonArray1 = new JSONArray();
+        String basicInfo = session.getBasicDetailsInfo();
+        if (basicInfo != null) {
+            jsonArray1.put(basicInfo);
+        }
+
+        try {
+            dataToDatabase.put("basic_details_list", basicInfo);
+            dataToDatabase.put("rules_list", jsonData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //                long result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToDatabase.toString());
 
 //                if (result > 0) {
-                    Utilities.showMessage("Data saved sucessfully", context);
+        Utilities.showMessage("Data saved sucessfully", context);
 //                Intent in = new Intent(context, ActivityActList.class);
 //                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                in.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 //                startActivity(in);
-                    mainActivity.finish();
+        mainActivity.finish();
 //                } else {
 //                    Utilities.showMessage("Data not saved", context);
 //                }
-
-            default:
-                break;
-        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

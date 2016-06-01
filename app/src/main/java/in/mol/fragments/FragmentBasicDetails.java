@@ -143,6 +143,8 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     List<SpinnerObject> m_list;
     private static UserSessionManager session;
     String licence_no, inspection_no, actId, actNAME, user_name;
+    JSONObject json;
+    XmlSerializer serializer;
 
     public FragmentBasicDetails() {
         // Required empty public constructor
@@ -500,11 +502,11 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         JSONObject jsonObject;
         try {
             jsonObject = new JSONObject(basicData);
-            JSONObject json = jsonObject.optJSONObject("objLabourInspectionSchema");
+            json = jsonObject.optJSONObject("objLabourInspectionSchema");
 
             name_of_establishment.setText(json.getString("Institution_Name"));
             address.setText(json.getString("Institution_Addr"));
-            name_of_employer.setText(json.getString("Owner_Name"));
+//            name_of_employer.setText(json.getString("Owner_Name"));
 //            no_of_workers.setText(json.getString("TotalWorkers"));
             direct_worker.setText(json.getString("TotalDirectEmp"));
             contract_worker.setText(json.getString("TotalContractEmp"));
@@ -837,7 +839,8 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                 if (worker_count > 0) {
                     createWorkerJson();
                 }
-                createJson();
+//                createJson();
+                writeXml();
 //                }
                 break;
 
@@ -1008,48 +1011,486 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     }
 
     private String writeXml() {
-        XmlSerializer serializer = Xml.newSerializer();
+        serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
         try {
             serializer.setOutput(writer);
             serializer.startDocument("UTF-8", true);
-            serializer.startTag("", "message");
+            serializer.startTag("", "InspectionActRemarks");
 
-            serializer.startTag("", "name_of_establishment");
+            serializer.startTag("", "objLabourInspectionSchema");
+            serializer.startTag("", "Institution_Name");
             serializer.text(name_of_establishment.getText().toString());
-            serializer.endTag("", "name_of_establishment");
+            serializer.endTag("", "Institution_Name");
 
-            serializer.startTag("", "address");
+            serializer.startTag("", "Institution_Addr");
             serializer.text(address.getText().toString());
-            serializer.endTag("", "address");
+            serializer.endTag("", "Institution_Addr");
 
-            serializer.startTag("", "name_of_employer");
-            serializer.text(name_of_employer.getText().toString());
-            serializer.endTag("", "name_of_employer");
+            serializer.startTag("", "Owner_Name");
+            serializer.text(json.getString("Owner_Name"));
+            serializer.endTag("", "Owner_Name");
 
-            serializer.startTag("", "address_site");
-            serializer.text(address_site.getText().toString());
-            serializer.endTag("", "address_site");
+            serializer.startTag("", "Owner_Addr");
+            serializer.text(address.getText().toString());
+            serializer.endTag("", "Owner_Addr");
 
-            serializer.startTag("", "male");
+            serializer.startTag("", "TotalWorkers");
+            serializer.text(no_of_workers.getText().toString());
+            serializer.endTag("", "TotalWorkers");
+
+            serializer.startTag("", "Male");
             serializer.text(male.getText().toString());
-            serializer.endTag("", "male");
+            serializer.endTag("", "Male");
 
-            serializer.startTag("", "female");
+            serializer.startTag("", "Female");
             serializer.text(female.getText().toString());
-            serializer.endTag("", "female");
+            serializer.endTag("", "Female");
 
-            serializer.endTag("", "message");
-            serializer.endDocument();
+            serializer.startTag("", "TotalDirectEmp");
+            serializer.text(direct_worker.getText().toString());
+            serializer.endTag("", "TotalDirectEmp");
+
+            serializer.startTag("", "TotalContractEmp");
+            serializer.text(contract_worker.getText().toString());
+            serializer.endTag("", "TotalContractEmp");
+
+            serializer.startTag("", "Transgender");
+            serializer.text("0");
+            serializer.endTag("", "Transgender");
+
+            serializer.startTag("", "StatusId");
+            serializer.text("0");
+            serializer.endTag("", "StatusId");
+
+            serializer.startTag("", "RegistrationUnder");
+            serializer.text(registration.getText().toString());
+            serializer.endTag("", "RegistrationUnder");
+
+            serializer.startTag("", "ScheduleEmp");
+            serializer.text(schedule_empl.getText().toString());
+            serializer.endTag("", "ScheduleEmp");
+
+            serializer.startTag("", "WorkingHr");
+            serializer.text(working_hours.getText().toString());
+            serializer.endTag("", "WorkingHr");
+
+            serializer.startTag("", "WeeklyOff");
+            serializer.text(weekly_off.getText().toString());
+            serializer.endTag("", "WeeklyOff");
+
+            serializer.endTag("", "objLabourInspectionSchema");
+
+            initWorkerXml();
+//            initContractorXml();
+
+//            serializer.endTag("", "InspectionActRemarks");
+//            serializer.endDocument();
+            String strSerial = serializer.toString();
+
+            session.createBasicInfoSession(strSerial);
+
             return writer.toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    private void initContractorXml() {
+        switch (count) {
+            case 1:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                break;
+
+            case 2:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                break;
+
+            case 3:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                break;
+
+            case 4:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                contractorXml(edit_name_of_contractor4, edit_nature_of_work4, edit_no_of_workers4, edit_date_of_commencement4);
+                break;
+
+            case 5:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                contractorXml(edit_name_of_contractor4, edit_nature_of_work4, edit_no_of_workers4, edit_date_of_commencement4);
+                contractorXml(edit_name_of_contractor5, edit_nature_of_work5, edit_no_of_workers5, edit_date_of_commencement5);
+                break;
+
+            case 6:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                contractorXml(edit_name_of_contractor4, edit_nature_of_work4, edit_no_of_workers4, edit_date_of_commencement4);
+                contractorXml(edit_name_of_contractor5, edit_nature_of_work5, edit_no_of_workers5, edit_date_of_commencement5);
+                contractorXml(edit_name_of_contractor6, edit_nature_of_work6, edit_no_of_workers6, edit_date_of_commencement6);
+                break;
+
+            case 7:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                contractorXml(edit_name_of_contractor4, edit_nature_of_work4, edit_no_of_workers4, edit_date_of_commencement4);
+                contractorXml(edit_name_of_contractor5, edit_nature_of_work5, edit_no_of_workers5, edit_date_of_commencement5);
+                contractorXml(edit_name_of_contractor6, edit_nature_of_work6, edit_no_of_workers6, edit_date_of_commencement6);
+                contractorXml(edit_name_of_contractor7, edit_nature_of_work7, edit_no_of_workers7, edit_date_of_commencement7);
+                break;
+
+            case 8:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                contractorXml(edit_name_of_contractor4, edit_nature_of_work4, edit_no_of_workers4, edit_date_of_commencement4);
+                contractorXml(edit_name_of_contractor5, edit_nature_of_work5, edit_no_of_workers5, edit_date_of_commencement5);
+                contractorXml(edit_name_of_contractor6, edit_nature_of_work6, edit_no_of_workers6, edit_date_of_commencement6);
+                contractorXml(edit_name_of_contractor7, edit_nature_of_work7, edit_no_of_workers7, edit_date_of_commencement7);
+                contractorXml(edit_name_of_contractor8, edit_nature_of_work8, edit_no_of_workers8, edit_date_of_commencement8);
+                break;
+
+            case 9:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                contractorXml(edit_name_of_contractor4, edit_nature_of_work4, edit_no_of_workers4, edit_date_of_commencement4);
+                contractorXml(edit_name_of_contractor5, edit_nature_of_work5, edit_no_of_workers5, edit_date_of_commencement5);
+                contractorXml(edit_name_of_contractor6, edit_nature_of_work6, edit_no_of_workers6, edit_date_of_commencement6);
+                contractorXml(edit_name_of_contractor7, edit_nature_of_work7, edit_no_of_workers7, edit_date_of_commencement7);
+                contractorXml(edit_name_of_contractor8, edit_nature_of_work8, edit_no_of_workers8, edit_date_of_commencement8);
+                contractorXml(edit_name_of_contractor9, edit_nature_of_work9, edit_no_of_workers9, edit_date_of_commencement9);
+                break;
+
+            case 10:
+                contractorXml(edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement);
+                contractorXml(edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2);
+                contractorXml(edit_name_of_contractor3, edit_nature_of_work3, edit_no_of_workers3, edit_date_of_commencement3);
+                contractorXml(edit_name_of_contractor4, edit_nature_of_work4, edit_no_of_workers4, edit_date_of_commencement4);
+                contractorXml(edit_name_of_contractor5, edit_nature_of_work5, edit_no_of_workers5, edit_date_of_commencement5);
+                contractorXml(edit_name_of_contractor6, edit_nature_of_work6, edit_no_of_workers6, edit_date_of_commencement6);
+                contractorXml(edit_name_of_contractor7, edit_nature_of_work7, edit_no_of_workers7, edit_date_of_commencement7);
+                contractorXml(edit_name_of_contractor8, edit_nature_of_work8, edit_no_of_workers8, edit_date_of_commencement8);
+                contractorXml(edit_name_of_contractor9, edit_nature_of_work9, edit_no_of_workers9, edit_date_of_commencement9);
+                contractorXml(edit_name_of_contractor10, edit_nature_of_work10, edit_no_of_workers10, edit_date_of_commencement10);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void contractorXml(EditText... editTexts) {
+
+    }
+
+    private void initWorkerXml() {
+        try {
+
+            if (worker_count > 0) {
+                serializer.startTag("", "objInspectedEmpDetails");
+            }
+
+            switch (worker_count) {
+
+                case 1:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    break;
+
+                case 2:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    break;
+
+                case 3:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    break;
+
+                case 4:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    break;
+
+                case 5:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    break;
+
+                case 6:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    break;
+
+                case 7:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    workerXml(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                            edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                    break;
+
+                case 8:
+
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    workerXml(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                            edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                    workerXml(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                            edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                    break;
+
+
+                case 9:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    workerXml(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                            edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                    workerXml(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                            edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                    workerXml(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                            edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+
+                    break;
+
+                case 10:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    workerXml(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                            edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                    workerXml(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                            edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                    workerXml(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                            edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                    workerXml(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                            edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                    break;
+
+                case 11:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    workerXml(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                            edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                    workerXml(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                            edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                    workerXml(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                            edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                    workerXml(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                            edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                    workerXml(strBioTemplate[10], edit_name_of_worker11, edit_designation11, edit_lenght_of_service11, edit_working_hours11, edit_rest_time11,
+                            edit_attend_card11, edit_over_time_rate11, edit_salary_per_day11, edit_date_of_payment11, edit_bonus11);
+                    break;
+
+                case 12:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    workerXml(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                            edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                    workerXml(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                            edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                    workerXml(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                            edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                    workerXml(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                            edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                    workerXml(strBioTemplate[10], edit_name_of_worker11, edit_designation11, edit_lenght_of_service11, edit_working_hours11, edit_rest_time11,
+                            edit_attend_card11, edit_over_time_rate11, edit_salary_per_day11, edit_date_of_payment11, edit_bonus11);
+                    workerXml(strBioTemplate[11], edit_name_of_worker12, edit_designation12, edit_lenght_of_service12, edit_working_hours12, edit_rest_time12,
+                            edit_attend_card12, edit_over_time_rate12, edit_salary_per_day12, edit_date_of_payment12, edit_bonus12);
+                    break;
+
+                case 13:
+                    workerXml(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                            edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                    workerXml(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                            edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                    workerXml(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                            edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                    workerXml(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                            edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                    workerXml(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                            edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                    workerXml(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                            edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                    workerXml(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                            edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                    workerXml(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                            edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                    workerXml(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                            edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                    workerXml(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                            edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                    workerXml(strBioTemplate[10], edit_name_of_worker11, edit_designation11, edit_lenght_of_service11, edit_working_hours11, edit_rest_time11,
+                            edit_attend_card11, edit_over_time_rate11, edit_salary_per_day11, edit_date_of_payment11, edit_bonus11);
+                    workerXml(strBioTemplate[11], edit_name_of_worker12, edit_designation12, edit_lenght_of_service12, edit_working_hours12, edit_rest_time12,
+                            edit_attend_card12, edit_over_time_rate12, edit_salary_per_day12, edit_date_of_payment12, edit_bonus12);
+                    workerXml(strBioTemplate[12], edit_name_of_worker13, edit_designation13, edit_lenght_of_service13, edit_working_hours13, edit_rest_time13,
+                            edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13);
+                    break;
+
+                default:
+                    break;
+            }
+            if (worker_count > 0) {
+                serializer.endTag("", "objInspectedEmpDetails");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void workerXml(String template, EditText... editTexts) {
+
+        try {
+            serializer.startTag("", "InspectedEmpDetails");
+
+            serializer.startTag("", "Name");
+            serializer.text(editTexts[0].getText().toString());
+            serializer.endTag("", "Name");
+
+            serializer.startTag("", "Designation");
+            serializer.text(editTexts[1].getText().toString());
+            serializer.endTag("", "Designation");
+
+            serializer.startTag("", "LengthOfService");
+            serializer.text(editTexts[2].getText().toString());
+            serializer.endTag("", "LengthOfService");
+
+            serializer.startTag("", "WorkingHr");
+            serializer.text(editTexts[3].getText().toString());
+            serializer.endTag("", "WorkingHr");
+
+            serializer.startTag("", "RestHr");
+            serializer.text(editTexts[4].getText().toString());
+            serializer.endTag("", "RestHr");
+
+            serializer.startTag("", "AttendCard");
+            serializer.text(editTexts[5].getText().toString());
+            serializer.endTag("", "AttendCard");
+
+            serializer.startTag("", "OverTimeRate");
+            serializer.text(editTexts[6].getText().toString());
+            serializer.endTag("", "OverTimeRate");
+
+            serializer.startTag("", "SalayPerDay");
+            serializer.text(editTexts[7].getText().toString());
+            serializer.endTag("", "SalayPerDay");
+
+            serializer.startTag("", "DateOfPayment");
+            serializer.text(editTexts[8].getText().toString());
+            serializer.endTag("", "DateOfPayment");
+
+            serializer.startTag("", "Bonus");
+            serializer.text(editTexts[9].getText().toString());
+            serializer.endTag("", "Bonus");
+
+            serializer.endTag("", "InspectedEmpDetails");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     private void createJson() {
 
-//        String xml = writeXml();
+        String xml = writeXml();
 
         JSONObject jsonn = new JSONObject();
         JSONArray jarr = new JSONArray();

@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -506,7 +508,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
             name_of_establishment.setText(json.getString("Institution_Name"));
             address.setText(json.getString("Institution_Addr"));
-//            name_of_employer.setText(json.getString("Owner_Name"));
+            name_of_employer.setText(json.getString("Owner_Name"));
 //            no_of_workers.setText(json.getString("TotalWorkers"));
             direct_worker.setText(json.getString("TotalDirectEmp"));
             contract_worker.setText(json.getString("TotalContractEmp"));
@@ -514,6 +516,35 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             male.setText("0");
             female.setText("0");
 
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String basicInfo = session.getBasicDetailsInfo();
+        JSONObject basic;
+        JSONObject objJson;
+        try {
+            basic = new JSONObject(basicInfo);
+            objJson = basic.optJSONObject("objLabourInspectionSchema");
+
+            male.setText(objJson.getString("Male"));
+            female.setText(objJson.getString("Female"));
+            registration.setText(objJson.getString("RegistrationUnder"));
+            schedule_empl.setText(objJson.getString("ScheduleEmp"));
+            working_hours.setText(objJson.getString("WorkingHr"));
+            weekly_off.setText(objJson.getString("WeeklyOff"));
+            date.setText(objJson.getString("DateOfInspection"));
+            representative_of_principle.setText(objJson.getString("representative_of_principle"));
+            direct_worker.setText(objJson.getString("TotalDirectEmp"));
+            contract_worker.setText(objJson.getString("TotalContractEmp"));
+            year_of_starting.setText(objJson.getString("year_of_starting"));
+            accounting_year.setText(objJson.getString("accounting_year"));
+            declaration_designation.setText(objJson.getString("PresentEmpDesg"));
+            is_present.setText(objJson.getString("PresentEmpName"));
+            name_of_employer.setText(objJson.getString("Owner_Name"));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -647,53 +678,53 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                     switch (count) {
                         case 0:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             break;
                         case 1:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1);
                             break;
 
                         case 2:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1, ll2);
                             break;
 
                         case 3:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1, ll2, ll3);
                             break;
 
                         case 4:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1, ll2, ll3, ll4);
                             break;
 
                         case 5:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1, ll2, ll3, ll4, ll5);
                             break;
 
                         case 6:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1, ll2, ll3, ll4, ll5, ll6);
                             break;
 
                         case 7:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1, ll2, ll3, ll4, ll5, ll6, ll7);
                             break;
 
                         case 8:
                             Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6,
-                                    ll7, ll8, ll9);
+                                    ll7, ll8, ll9, ll10);
                             Utilities.visibleAll(ll1, ll2, ll3, ll4, ll5, ll6, ll7,
                                     ll8);
                             break;
@@ -737,62 +768,75 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                             .toString());
                     switch (worker_count) {
                         case 0:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             break;
                         case 1:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1);
                             break;
 
                         case 2:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2);
                             break;
 
                         case 3:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3);
                             break;
 
                         case 4:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4);
                             break;
 
                         case 5:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5);
                             break;
 
                         case 6:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6);
                             break;
 
                         case 7:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7);
                             break;
 
                         case 8:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8);
                             break;
 
                         case 9:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9);
                             break;
 
                         case 10:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10);
                             break;
 
                         case 11:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10, llw11);
                             break;
 
                         case 12:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10, llw11, llw12);
                             break;
 
                         case 13:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10, llw11, llw12, llw13);
                             break;
@@ -832,16 +876,16 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit:
-//                if (validation()) {
-                if (count > 0) {
-                    createContractorJson();
+                if (validation()) {
+                    if (count > 0) {
+                        createContractorJson();
+                    }
+                    if (worker_count > 0) {
+                        createWorkerJson();
+                    }
+                    createJson();
+//                writeXml();
                 }
-                if (worker_count > 0) {
-                    createWorkerJson();
-                }
-//                createJson();
-                writeXml();
-//                }
                 break;
 
             case R.id.edit_date_of_inspection:
@@ -1010,7 +1054,39 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
     }
 
+    public class PagerAdapter extends FragmentPagerAdapter {
+
+        private FragmentBasicDetails fragmentBasicDetails;
+        private RulesFragment rulesFragment;
+
+        public PagerAdapter(FragmentManager manager) {
+            super(manager);
+            this.fragmentBasicDetails = new FragmentBasicDetails();
+            this.rulesFragment = new RulesFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            switch (position) {
+                case 0:
+                    return fragmentBasicDetails;
+
+                case 1:
+                    return rulesFragment;
+                default:
+                    return null;
+            }
+        }
+    }
+
     private String writeXml() {
+
         serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
         try {
@@ -1090,10 +1166,24 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
             session.createBasicInfoSession(strSerial);
 
-            return writer.toString();
+            PagerAdapter fragmentPagerAdapter = new PagerAdapter(getFragmentManager());
+            RulesFragment frag = (RulesFragment) fragmentPagerAdapter.getItem(1);
+            frag.sendData(serializer);
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        clear();
+        Utilities.showMessage("Data Saved Successfully", context);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        viewPager.setCurrentItem(1);
+        return writer.toString();
     }
 
     private void initContractorXml() {
@@ -1490,41 +1580,44 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
     private void createJson() {
 
-        String xml = writeXml();
+//        String xml = writeXml();
 
         JSONObject jsonn = new JSONObject();
-        JSONArray jarr = new JSONArray();
         try {
 
-            jsonn.put("license_no", licence_no);
+            jsonn.put("LicenseNo", licence_no);
             jsonn.put("inspection_no", inspection_no);
 
-            jsonn.put("name_of_establishment", name_of_establishment.getText().toString());
-            jsonn.put("address", address.getText().toString());
+            jsonn.put("Institution_Name", name_of_establishment.getText().toString());
+            jsonn.put("Institution_Addr", address.getText().toString());
+            jsonn.put("Owner_Addr", address.getText().toString());
             jsonn.put("address_site", address_site.getText().toString());
-            jsonn.put("name_of_employer", name_of_employer.getText().toString());
-            jsonn.put("male", male.getText().toString());
-            jsonn.put("female", female.getText().toString());
-            jsonn.put("total", total.getText().toString());
-            jsonn.put("registration", registration.getText().toString());
-            jsonn.put("schedule_empl", schedule_empl.getText().toString());
-            jsonn.put("working_hours", working_hours.getText().toString());
-            jsonn.put("weekly_off", weekly_off.getText().toString());
-            jsonn.put("date", date.getText().toString());
+            jsonn.put("Male", male.getText().toString());
+            jsonn.put("Female", female.getText().toString());
+            jsonn.put("TotalWorkers", total.getText().toString());
+            jsonn.put("RegistrationUnder", registration.getText().toString());
+            jsonn.put("ScheduleEmp", schedule_empl.getText().toString());
+            jsonn.put("WorkingHr", working_hours.getText().toString());
+            jsonn.put("WeeklyOff", weekly_off.getText().toString());
+            jsonn.put("DateOfInspection", date.getText().toString());
             jsonn.put("representative_of_principle", representative_of_principle.getText().toString());
-            jsonn.put("direct_worker", direct_worker.getText().toString());
-            jsonn.put("contract_worker", contract_worker.getText().toString());
+            jsonn.put("TotalDirectEmp", direct_worker.getText().toString());
+            jsonn.put("TotalContractEmp", contract_worker.getText().toString());
             jsonn.put("year_of_starting", year_of_starting.getText().toString());
             jsonn.put("accounting_year", accounting_year.getText().toString());
-            jsonn.put("declaration_designation", declaration_designation.getText().toString());
-            jsonn.put("is_present", is_present.getText().toString());
+            jsonn.put("PresentEmpDesg", declaration_designation.getText().toString());
+            jsonn.put("PresentEmpName", is_present.getText().toString());
+            jsonn.put("Owner_Name", name_of_employer.getText().toString());
 
-            jarr.put(jsonn);
-            dataToDatabase.put("basic_details_list", jarr);
-
-            session.createBasicInfoSession(jsonn.toString());
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            dataToDatabase.put("objLabourInspectionSchema", jsonn);
+            session.createBasicInfoSession(dataToDatabase.toString());
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -1689,7 +1782,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
         try {
             jarr = dataToDatabase
-                    .getJSONArray("labour_contractor_list");
+                    .getJSONArray("InspectedContractorDetails");
         } catch (JSONException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -1709,7 +1802,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                     .trim());
             jarr.put(json);
 
-            dataToDatabase.put("labour_contractor_list", jarr);
+            dataToDatabase.put("InspectedContractorDetails", jarr);
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -1953,7 +2046,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         JSONArray jarr = new JSONArray();
         try {
             jarr = dataToDatabase
-                    .getJSONArray("labour_worker_list");
+                    .getJSONArray("objInspectedEmpDetails");
         } catch (JSONException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -1963,30 +2056,30 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             json.put("license_no", licence_no);
             json.put("inspection_no", inspection_no);
 
-            json.put("worker_name", editTexts[0].getText().toString()
+            json.put("Name", editTexts[0].getText().toString()
                     .trim());
-            json.put("worker_designation", editTexts[1].getText().toString()
+            json.put("Designation", editTexts[1].getText().toString()
                     .trim());
-            json.put("worker_length_of_service", editTexts[2].getText().toString()
+            json.put("LengthOfService", editTexts[2].getText().toString()
                     .trim());
-            json.put("worker_working_hours", editTexts[3].getText().toString()
+            json.put("WorkingHr", editTexts[3].getText().toString()
                     .trim());
-            json.put("worker_rest_time", editTexts[4].getText().toString()
+            json.put("RestHr", editTexts[4].getText().toString()
                     .trim());
-            json.put("worker_attend_card", editTexts[5].getText().toString()
+            json.put("AttendCard", editTexts[5].getText().toString()
                     .trim());
-            json.put("worker_over_time", editTexts[6].getText().toString()
+            json.put("OverTimeRate", editTexts[6].getText().toString()
                     .trim());
-            json.put("worker_salary_per_day", editTexts[7].getText().toString()
+            json.put("SalayPerDay", editTexts[7].getText().toString()
                     .trim());
-            json.put("worker_date_of_payment", editTexts[8].getText().toString()
+            json.put("DateOfPayment", editTexts[8].getText().toString()
                     .trim());
-            json.put("worker_bonus", editTexts[9].getText().toString()
+            json.put("Bonus", editTexts[9].getText().toString()
                     .trim());
 
             jarr.put(json);
 
-            dataToDatabase.put("labour_worker_list", jarr);
+            dataToDatabase.put("objInspectedEmpDetails", jarr);
         } catch (JSONException e) {
             e.printStackTrace();
         }

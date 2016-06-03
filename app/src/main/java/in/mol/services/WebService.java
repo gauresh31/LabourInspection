@@ -10,6 +10,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -179,15 +181,22 @@ public class WebService {
         }
     }
 
-    public static String uploadData(String data) {
+    public static String uploadData(JSONObject data) {
         int code = 400;
 
         try {
             // URL url = new URL();
-            URL url = new URL("" + data);//jsonData
+            URL url = new URL("http://testlmsrandomization.mahaonlinegov.in/api/InspectionActRemarks");//jsonData
             HttpURLConnection urlConnection = (HttpURLConnection) url
                     .openConnection();
             urlConnection.setConnectTimeout(60000);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
+            out.write(data.toString());
+            out.close();
+
             code = urlConnection.getResponseCode();
             try {
                 BufferedReader bufferedReader = new BufferedReader(
@@ -272,28 +281,5 @@ public class WebService {
 //            }
 //        }
 //        return result;
-//    }
-
-//    public static String loginService3(String email, String password, String macAddr) {
-//
-//        RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.i("Inside Response", response);
-////                Toast.makeText(getActivity(), "Response" + response, Toast.LENGTH_SHORT).show();
-//                resp = response;
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.i("Inside Error", "onError");
-////                Toast.makeText(getActivity(), "Error" + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        requestQueue.add(stringRequest);
-//
-//        return resp;
 //    }
 }

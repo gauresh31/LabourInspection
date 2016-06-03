@@ -73,7 +73,6 @@ public class ActivityLogin extends AppCompatActivity {
 
 
     private void init() {
-        // Set up the login form.
         context = getApplicationContext();
         session = new UserSessionManager(context);
 

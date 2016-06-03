@@ -30,12 +30,7 @@ public class DataSyncService extends Service {
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
-
-        // Toast.makeText(getApplicationContext(),
-        // "Service Created",Toast.LENGTH_SHORT).show();
         db = new DatabaseHelper(getApplicationContext());
-
-
     }
 
     @Override

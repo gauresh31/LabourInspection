@@ -27,6 +27,172 @@
             android:layout_weight="1" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_minimum_wages"
+        style="@style/textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        android:text="Following are the prescribed rates of minimum wages:" />
+    <LinearLayout
+        android:id="@+id/ll_skilled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:text="Skilled"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:maxLength="30" />
+
+        <EditText
+            android:id="@+id/edt_skilled_basic"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Basic"
+            android:inputType="numberDecimal"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/edt_skilled_special_allow"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Special Allowance"
+            android:inputType="numberDecimal"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/edt_skilled_total"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Total"
+            android:maxLength="12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_semi_skilled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:focusable="false"
+            android:text="Semi-Skilled"
+            android:inputType="textPersonName"
+            android:maxLength="30" />
+
+        <EditText
+            android:id="@+id/edt_semi_skilled_basic"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Basic"
+            android:inputType="numberDecimal"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/edt_semi_skilled_special_allow"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Special Allowance"
+            android:inputType="numberDecimal"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/edt_semi_skilled_total"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Total"
+            android:focusable="false"
+            android:maxLength="12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_unskilled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:text="Unskilled"
+            android:focusable="false"
+            android:inputType="numberDecimal"
+            android:maxLength="30" />
+
+        <EditText
+            android:id="@+id/edt_unskilled_basic"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Basic"
+            android:inputType="numberDecimal"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/edt_unskilled_special_allow"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Special Allowance"
+            android:inputType="numberDecimal"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/edt_unskilled_total"
+            style="@style/edittext"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Total"
+            android:focusable="false"
+            android:maxLength="12" />
+    </LinearLayout>
 
     <TextView
         style="@style/textview"
@@ -45,7 +211,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="450dp"
         android:layout_margin="10dp"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/fab_margin"

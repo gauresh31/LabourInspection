@@ -61,18 +61,21 @@ public class LicenseListActivity extends AppCompatActivity {
 
         init();
         setDefaults();
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        session.createBasicInfoSession("");
     }
 
     private void init() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_license_list);
         db = new DatabaseHelper(getApplicationContext());
+        session = new UserSessionManager(getApplicationContext());
     }
 
     private void setDefaults() {
-        session = new UserSessionManager(getApplicationContext());
-
         try {
 
 //            user_data = new JSONObject(session.getUserDetails().
@@ -169,7 +172,6 @@ public class LicenseListActivity extends AppCompatActivity {
 //                        Utilities.showMessage("No Internet Connection", getApplicationContext());
 //                    }
 //                    callLicenseList(license_no);
-
                 }
             });
 
@@ -272,21 +274,21 @@ public class LicenseListActivity extends AppCompatActivity {
             String resp =
 
                     "{\n" +
-                    "\t\"objLabourInspectionSchema\": {\n" +
-                    "\t\t\"Institution_Name\": \"CLEAR CARGO LOGISTIK PVT LTD\",\n" +
-                    "\t\t\"Institution_Addr\": \"B - 307 , HARBOUR COURT, PLOT NO 25 A B C D, SECTOR NO 02, REVENUE VILLAGE DRONAGIRI, NAVI MUMBAI (M CORP.) , THANE, THANE, 400707\",\n" +
-                    "\t\t\"Owner_Name\": \"NISHIGANDH REDKAR\",\n" +
-                    "\t\t\"Owner_Addr\": \"16 , JIJAU BHAVAN, LALUBHAI PARK ROAD EXTN, NEAR IRLA NALA, VILE PARLE WEST, MUMBAI CITY , MUMBAI CITY, MUMBAI CITY, 400056\",\n" +
-                    "\t\t\"TotalWorkers\": 30,\n" +
-                    "\t\t\"Male\": 0,\n" +
-                    "\t\t\"Female\": 0,\n" +
-                    "\t\t\"CreatedBy\": \"00000000-0000-0000-0000-000000000000\",\n" +
-                    "\t\t\"TotalDirectEmp\": 0,\n" +
-                    "\t\t\"TotalContractEmp\": 0,\n" +
-                    "\t\t\"Transgender\": 0,\n" +
-                    "\t\t\"StatusId\": 0\n" +
-                    "\t}\n" +
-                    "}";
+                            "\t\"objLabourInspectionSchema\": {\n" +
+                            "\t\t\"Institution_Name\": \"CLEAR CARGO LOGISTIK PVT LTD\",\n" +
+                            "\t\t\"Institution_Addr\": \"B - 307 , HARBOUR COURT, PLOT NO 25 A B C D, SECTOR NO 02, REVENUE VILLAGE DRONAGIRI, NAVI MUMBAI (M CORP.) , THANE, THANE, 400707\",\n" +
+                            "\t\t\"Owner_Name\": \"NISHIGANDH REDKAR\",\n" +
+                            "\t\t\"Owner_Addr\": \"16 , JIJAU BHAVAN, LALUBHAI PARK ROAD EXTN, NEAR IRLA NALA, VILE PARLE WEST, MUMBAI CITY , MUMBAI CITY, MUMBAI CITY, 400056\",\n" +
+                            "\t\t\"TotalWorkers\": 30,\n" +
+                            "\t\t\"Male\": 0,\n" +
+                            "\t\t\"Female\": 0,\n" +
+                            "\t\t\"CreatedBy\": \"00000000-0000-0000-0000-000000000000\",\n" +
+                            "\t\t\"TotalDirectEmp\": 0,\n" +
+                            "\t\t\"TotalContractEmp\": 0,\n" +
+                            "\t\t\"Transgender\": 0,\n" +
+                            "\t\t\"StatusId\": 0\n" +
+                            "\t}\n" +
+                            "}";
 
             if (resp != null) {
                 session.createBasicDetailsInfo(resp);

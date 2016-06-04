@@ -93,14 +93,14 @@ public class ActivityLogin extends AppCompatActivity {
         //Async Request
 //        if (Utilities.isNetworkAvailable(getApplicationContext())) {
 //
-            mAuthTask = new UserLoginTask(username, password, getMacAddress());
-            mAuthTask.execute("");
+//            mAuthTask = new UserLoginTask(username, password, getMacAddress());
+//            mAuthTask.execute("");
 //        } else {
 //            Utilities.showMessage("No Internet Connection", getApplicationContext());
 //        }
 
         //Request Using Volley Library
-//        loginUsingVolley();
+        loginUsingVolley();
     }
 
     public void loginUsingVolley() {

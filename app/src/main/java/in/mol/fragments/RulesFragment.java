@@ -59,6 +59,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM2 = "act_ID";
     private static final String ARG_PARAM3 = "act_NAME";
     private static final String ARG_PARAM4 = "User_NAME";
+    private static final String ARG_PARAM5 = "User_ID";
     private Button submit;
     private Spinner spn_act;
     private String jsonRule;
@@ -72,7 +73,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     View view;
     List<SpinnerObject> m_list;
     String actId = "0", actNAME;
-    private String actList, user_name;
+    private String actList, user_name, user_id;
     private static ViewPager viewPager;
     private static UserSessionManager session;
     String licence_no, inspection_no;
@@ -90,13 +91,14 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     }
 
     public static RulesFragment newInstance(MainActivity mainAct, Context con, ViewPager viewPagr,
-                                            String json, String actID, String actName, String userName) {
+                                            String json, String actID, String actName, String userName, String userID) {
         RulesFragment fragment = new RulesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, json);
         args.putString(ARG_PARAM2, actID);
         args.putString(ARG_PARAM3, actName);
         args.putString(ARG_PARAM4, userName);
+        args.putString(ARG_PARAM5, userID);
 
         fragment.setArguments(args);
 
@@ -115,6 +117,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             actId = getArguments().getString(ARG_PARAM2);
             actNAME = getArguments().getString(ARG_PARAM3);
             user_name = getArguments().getString(ARG_PARAM4);
+            user_id = getArguments().getString(ARG_PARAM5);
         }
     }
 
@@ -547,6 +550,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             dataToDatabase.put("PresentEmpDesg", empData.getString("PresentEmpDesg"));
             dataToDatabase.put("DateOfInspection", empData.getString("DateOfInspection"));
             dataToDatabase.put("Remark", "Test Data");
+            dataToDatabase.put("CreatedBy", "411f82df-1702-4e37-9016-6db1c4909ffe");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -632,7 +636,6 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-
         try {
             dataToUpload.put("InspectionActRemarks", dataToDatabase);
 
@@ -640,7 +643,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-        System.out.println(dataToDatabase.toString());
+        System.out.println(dataToUpload.toString());
         try {
             Thread.sleep(1000);
         } catch (Exception e) {

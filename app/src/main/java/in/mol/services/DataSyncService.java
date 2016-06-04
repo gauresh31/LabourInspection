@@ -54,14 +54,13 @@ public class DataSyncService extends Service {
                         M_Data data = db.getData();
 
                         if (data.getData() != null) {
+                            System.out.println(data.getData());
                             try {
                                 JSONObject json = new JSONObject(data.getData());
                                 response = WebService.uploadData(json);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
-
                         }
 
                         if (response.equalsIgnoreCase("\"Insert Success\"\n")) {

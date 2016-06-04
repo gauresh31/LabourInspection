@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
     UserSessionManager session;
     JSONArray jsonArray;
     Intent in;
-    String act_name, act_id, username;
+    String act_name, act_id, username, userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
             JSONObject user_data = new JSONObject(session.getUserDetails().
                     get(ApplicationConstants.KEY_LOGIN_INFO));
             username = user_data.getString("UserName");
+            userId = user_data.getString("UserID");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
         adapter.addFragment(FragmentBasicDetails.
                 newInstance(MainActivity.this, getApplicationContext(), viewPager, "", act_id, act_name, username), "Basic Data");
         adapter.addFragment(RulesFragment.
-                newInstance(MainActivity.this,getApplicationContext(), viewPager, "", act_id, act_name, username), "Rules");
+                newInstance(MainActivity.this,getApplicationContext(), viewPager, "", act_id, act_name, username, userId), "Rules");
 
         viewPager.setAdapter(adapter);
     }

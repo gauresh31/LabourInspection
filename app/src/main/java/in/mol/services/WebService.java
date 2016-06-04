@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
 import in.mol.models.VolleySingleton;
@@ -76,8 +78,8 @@ public class WebService {
         try {
             // URL url = new URL();
             URL url = new URL(License_Url + "UserID=" + "411F82DF-1702-4E37-9016-6DB1C4909FFE");//59FBCF05-F9F7-47D9-AE90-742122C6A292 //userId
-                                                                                                //BE6EB98C-9D9B-45ED-9033-441023A7394E
-                                                                                                //411F82DF-1702-4E37-9016-6DB1C4909FFE
+            //BE6EB98C-9D9B-45ED-9033-441023A7394E
+            //411F82DF-1702-4E37-9016-6DB1C4909FFE
             System.out.println("URL: " + url.toString());
             HttpURLConnection urlConnection = (HttpURLConnection) url
                     .openConnection();
@@ -183,19 +185,31 @@ public class WebService {
 
     public static String uploadData(JSONObject data) {
         int code = 400;
-
+        DataOutputStream printout;
+        DataInputStream input;
         try {
             // URL url = new URL();
             URL url = new URL("http://testlmsrandomization.mahaonlinegov.in/api/InspectionActRemarks");//jsonData
             HttpURLConnection urlConnection = (HttpURLConnection) url
                     .openConnection();
             urlConnection.setConnectTimeout(60000);
-            urlConnection.setRequestMethod("GET");
+//            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+            urlConnection.setUseCaches(false);
             urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.connect();
+//            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
+//            out.write(data.toString());
+//            out.close();
 
-            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
-            out.write(data.toString());
-            out.close();
+            printout = new DataOutputStream(urlConnection.getOutputStream());
+//            printout.write(Integer.parseInt(URLEncoder.encode(data.toString(), "UTF-8")));
+            String str = data.toString();
+            byte[] data1 = str.getBytes("UTF-8");
+            printout.write(data1);
+            printout.flush();
+            printout.close();
 
             code = urlConnection.getResponseCode();
             try {

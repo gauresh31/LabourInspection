@@ -147,6 +147,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     String licence_no, inspection_no, actId, actNAME, user_name;
     JSONObject json;
     XmlSerializer serializer;
+    JSONObject jsonWorker;
 
     public FragmentBasicDetails() {
         // Required empty public constructor
@@ -210,6 +211,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         dbHelper = new DatabaseHelper(getActivity());
         session = new UserSessionManager(context);
         m_list = new ArrayList<>();
+        jsonWorker = new JSONObject();
 
         rel_main = (RelativeLayout) view.findViewById(R.id.rel_basic_details);
         scroll_list = (ScrollView) view.findViewById(R.id.scroll_list);
@@ -545,6 +547,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             declaration_designation.setText(objJson.getString("PresentEmpDesg"));
             is_present.setText(objJson.getString("PresentEmpName"));
             name_of_employer.setText(objJson.getString("Owner_Name"));
+            total.setText(objJson.getString("TotalWorkers"));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -882,6 +885,11 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                     }
                     if (worker_count > 0) {
                         createWorkerJson();
+                        try {
+                            dataToDatabase.put("objInspectedEmpDetails",jsonWorker);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                     createJson();
 //                writeXml();
@@ -2045,16 +2053,13 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         JSONObject json = new JSONObject();
         JSONArray jarr = new JSONArray();
         try {
-            jarr = dataToDatabase
-                    .getJSONArray("objInspectedEmpDetails");
+            jarr = jsonWorker
+                    .getJSONArray("InspectedEmpDetails");
         } catch (JSONException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         try {
-
-            json.put("license_no", licence_no);
-            json.put("inspection_no", inspection_no);
 
             json.put("Name", editTexts[0].getText().toString()
                     .trim());
@@ -2079,7 +2084,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
             jarr.put(json);
 
-            dataToDatabase.put("objInspectedEmpDetails", jarr);
+            jsonWorker.put("InspectedEmpDetails", jarr);
         } catch (JSONException e) {
             e.printStackTrace();
         }

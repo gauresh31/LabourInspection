@@ -229,6 +229,11 @@ public class ActivityLogin extends AppCompatActivity {
                 String passwordMD5 = md5(mPassword);
                 response = WebService.loginService(user_name, passwordMD5, mMacAddr);
 
+                try {
+                    Thread.sleep(3000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } catch (Exception e) {
                 return "";
             }
@@ -292,6 +297,13 @@ public class ActivityLogin extends AppCompatActivity {
             String response;
 
             response = WebService.getLicenseList(userId);
+
+            try {
+                Thread.sleep(3000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return response;
         }
 

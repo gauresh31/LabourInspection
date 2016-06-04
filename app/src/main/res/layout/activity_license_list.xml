@@ -94,12 +94,4 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/fab_margin"
         android:scrollbars="horizontal" />
-
-
-    <include
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/footer"/>
 </LinearLayout>

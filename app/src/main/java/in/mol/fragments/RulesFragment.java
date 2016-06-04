@@ -543,10 +543,10 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             dataToDatabase = new JSONObject(basicInfo);
 
             empData = dataToDatabase.optJSONObject("objLabourInspectionSchema");
-            dataToDatabase.put("PresentEmpName",empData.getString("PresentEmpName"));
-            dataToDatabase.put("PresentEmpDesg",empData.getString("PresentEmpDesg"));
-            dataToDatabase.put("DateOfInspection",empData.getString("DateOfInspection"));
-            dataToDatabase.put("Remark","Test Data");
+            dataToDatabase.put("PresentEmpName", empData.getString("PresentEmpName"));
+            dataToDatabase.put("PresentEmpDesg", empData.getString("PresentEmpDesg"));
+            dataToDatabase.put("DateOfInspection", empData.getString("DateOfInspection"));
+            dataToDatabase.put("Remark", "Test Data");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -581,7 +581,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             }
 
             try {
-                dataToDatabase.put("objLabourRulesSchema",rules);
+                dataToDatabase.put("objLabourRulesSchema", rules);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -614,15 +614,27 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
 
                 minWages.put("InspectionEmpMinWages", jarr.toString());
 
-                dataToDatabase.put("objInspectionEmpMinWages",minWages);
+                dataToDatabase.put("objInspectionEmpMinWages", minWages);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
+        JSONObject jsonActSchema = new JSONObject();
 
         try {
-            dataToUpload.put("InspectionActRemarks",dataToDatabase);
+            jsonActSchema.put("Actid", actId);
+            jsonActSchema.put("ISSelected", true);
+            jsonActSchema.put("ISSelected", true);
+
+            dataToDatabase.put("objLabourActSchema", jsonActSchema);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            dataToUpload.put("InspectionActRemarks", dataToDatabase);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -634,31 +646,31 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//                long result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToDatabase.toString());
+        long result = -1;
+        result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToUpload.toString());
 
-//                if (result > 0) {
-        Utilities.showMessage("Data saved sucessfully", context);
+        if (result > 0) {
+            Utilities.showMessage("Data saved sucessfully", context);
 
-        SendData send = new SendData(dataToUpload);
-        send.execute("");
-
+//        SendData send = new SendData(dataToUpload);
+//        send.execute("");
 
 //                Intent in = new Intent(context, ActivityActList.class);
 //                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                in.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 //                startActivity(in);
-        mainActivity.finish();
-//                } else {
-//                    Utilities.showMessage("Data not saved", context);
-//                }
+            mainActivity.finish();
+        } else {
+            Utilities.showMessage("Data not saved", context);
+        }
     }
 
-    private class SendData extends AsyncTask<String, String, String>{
+    private class SendData extends AsyncTask<String, String, String> {
 
         JSONObject json;
 
-        SendData(JSONObject jsonObject){
+        SendData(JSONObject jsonObject) {
             json = jsonObject;
         }
 

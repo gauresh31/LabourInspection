@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,15 +50,21 @@ public class DataSyncService extends Service {
                     cnt++;
                     System.out.println("Attempt : " + cnt);
                     if (Utilities.isNetworkAvailable(getApplicationContext())) {
-                        String response = null;
+                        String response = "";
                         M_Data data = db.getData();
 
-                        if (data != null) {
-//                            response = WebService.uploadData(data.getData);
+                        if (data.getData() != null) {
+                            try {
+                                JSONObject json = new JSONObject(data.getData());
+                                response = WebService.uploadData(json);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
 
                         }
 
-                        if(response != null){
+                        if (response.equalsIgnoreCase("\"Insert Success\"\n")) {
                             db.updateData(data.getRowid());
                         }
                     }

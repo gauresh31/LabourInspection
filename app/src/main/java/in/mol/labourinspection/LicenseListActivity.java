@@ -261,6 +261,13 @@ public class LicenseListActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             String response;
             response = WebService.getBasicData(license);
+
+            try {
+                Thread.sleep(3000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return response;
         }
 

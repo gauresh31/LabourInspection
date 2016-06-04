@@ -7,6 +7,8 @@
     android:orientation="vertical"
     tools:context=".ActivityRetailerViewOrders">
 
+
+
     <TextView
         style="@style/textview_header"
         android:layout_width="match_parent"
@@ -87,10 +89,17 @@
         android:id="@+id/recycler_license_list"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="600sp"
         android:layout_margin="10dp"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/fab_margin"
         android:scrollbars="horizontal" />
 
+
+    <include
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/footer"/>
 </LinearLayout>

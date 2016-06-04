@@ -46,4 +46,6 @@
     <string name="act_1961_maternity">The Maternity Benefit Act, 1961</string>
     <string name="act_1972">The Payment of gratuity Act, 1972</string>
     <string name="act_1986">The Child Labour (Prohibition and Regulation) Act, 1986</string>
+
+    <string name="iv_footer">footer</string>
 </resources>

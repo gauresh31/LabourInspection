@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -67,8 +68,8 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     private JSONArray arrActs;
     ContentAdapter contentAdapter;
     private DatabaseHelper dbHelper;
-    String[] strRules, strRuleName;
-    int rulesLen;
+    String[] strRules, strRuleName, strRemarks;
+    String[] etValArr;
     RecyclerView recyclerView;
     View view;
     List<SpinnerObject> m_list;
@@ -85,6 +86,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             edit_semi_skilled_basic, edit_semi_skilled_special, edit_semi_total,
             edit_unskilled_basic, edit_unskilled_special, edit_unskilled_total;
     TextView tv_min_wages;
+    boolean[] isSelect;
 
     public RulesFragment() {
         // Required empty public constructor
@@ -538,7 +540,10 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     }
 
     private void saveData() {
+        JSONObject rulesSchema = new JSONObject();
         JSONObject dataToUpload = new JSONObject();
+        JSONObject rules = new JSONObject();
+
         String basicInfo = session.getBasicDetailsInfo();
         JSONObject empData;
         try {
@@ -552,13 +557,13 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             dataToDatabase.put("Remark", "Test Data");
             dataToDatabase.put("CreatedBy", "411f82df-1702-4e37-9016-6db1c4909ffe");
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (strRules.length > 0) {
             JSONArray arrRules = new JSONArray();
-            JSONObject rules = new JSONObject();
+
             int len = strRules.length;
             for (int i = 0; i < len; i++) {
                 try {
@@ -568,27 +573,43 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
-                if (strRules[i] != null) {
-                    try {
-                        JSONObject jsonData = new JSONObject();
-                        jsonData.put("RuleId", strRules[i]);
-                        jsonData.put("RuleName", strRuleName[i]);
-                        jsonData.put("Actid", actId);
-                        jsonData.put("IsSelected", true);
-                        arrRules.put(jsonData);
+//                if (m_list != null) {
+                try {
+                    JSONObject jsonData = new JSONObject();
+                    jsonData.put("RuleId", m_list.get(i).getActId());
+                    jsonData.put("RuleName", m_list.get(i).getActName());
+                    jsonData.put("Actid", actId);
+                    jsonData.put("IsSelected", isSelect[i]);
+                    jsonData.put("ComplaintRmk", etValArr[i]);
+                    arrRules.put(jsonData);
 
-                        rules.put("LabourRulesSchema", arrRules.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    rules.put("LabourRulesSchema", arrRules.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+//                } else {
+//
+//                }
             }
+        }
 
-            try {
-                dataToDatabase.put("objLabourRulesSchema", rules);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        JSONObject actSchema = new JSONObject();
+        JSONObject selectedActs = new JSONObject();
+        try {
+            actSchema.put("Actid", actId);
+            actSchema.put("ActName", actNAME);
+            actSchema.put("ISSelected", true);
+            actSchema.put("objLabourRulesSchema", rules);
+
+            rulesSchema.put("LabourActSchema", actSchema);
+
+            selectedActs.put("SelectedActs", rulesSchema);
+            selectedActs.put("ISSelected", true);
+
+            dataToDatabase.put("objLabourActSchema", selectedActs);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         JSONArray jarr = new JSONArray();
@@ -619,27 +640,15 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
                 minWages.put("InspectionEmpMinWages", jarr.toString());
 
                 dataToDatabase.put("objInspectionEmpMinWages", minWages);
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-
-        JSONObject jsonActSchema = new JSONObject();
-
-        try {
-            jsonActSchema.put("Actid", actId);
-            jsonActSchema.put("ISSelected", true);
-            jsonActSchema.put("ISSelected", true);
-
-            dataToDatabase.put("objLabourActSchema", jsonActSchema);
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
         try {
             dataToUpload.put("InspectionActRemarks", dataToDatabase);
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -650,7 +659,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
         long result = -1;
-        result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToUpload.toString());
+//        result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToUpload.toString());
 
         if (result > 0) {
             Utilities.showMessage("Data saved sucessfully", context);
@@ -693,11 +702,44 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final CheckBox rb_rules;
+        final EditText edit_remarks;
+        final CustomEtListener customEtListener;
 
-        public ViewHolder(View view, ViewGroup parent) {
+        public ViewHolder(View view, CustomEtListener listener) {
             super(view);
             rb_rules = (CheckBox) view.findViewById(R.id.rb_rules);
-            getAdapterPosition();
+            edit_remarks = (EditText) view.findViewById(R.id.edit_remarks);
+            this.customEtListener = listener;
+
+            edit_remarks.addTextChangedListener(customEtListener);
+//            getAdapterPosition();
+        }
+    }
+
+    public class CustomEtListener implements TextWatcher {
+        private int position;
+
+        /**
+         * Updates the position according to onBindViewHolder
+         *
+         * @param position - position of the focused item
+         */
+        public void updatePosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            // Change the value of array according to the position
+            etValArr[position] = charSequence.toString();
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
         }
     }
 
@@ -713,15 +755,9 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             size = lst_rules.size();
             strRules = new String[size];
             strRuleName = new String[size];
-//            try {
-//                jsonResult = new JSONObject(result);
-//                arrRule = jsonResult.getJSONArray("Rules");
-//                Log.i("Array Length", "" + arrRule.length());
-//                strRules = new String[arrRule.length()];
-//                rulesLen = arrRule.length();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            strRemarks = new String[size];
+            etValArr = new String[size];
+            isSelect = new boolean[size];
         }
 
         @Override
@@ -729,7 +765,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_rules, parent, false);
 
-            return new ViewHolder(view, parent);
+            return new ViewHolder(view, new CustomEtListener());
         }
 
         @Override
@@ -739,18 +775,26 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             String actName = lst_rules.get(position).getActName();
             holder.rb_rules.setText(actName);
 
-            holder.rb_rules.setOnClickListener(new View.OnClickListener() {
+            final SpinnerObject obj = lst_rules.get(position);
+            holder.customEtListener.updatePosition(position);
+
+            holder.rb_rules.setOnCheckedChangeListener(null);
+            holder.edit_remarks.setText(etValArr[position]);
+            holder.rb_rules.setChecked(obj.isSelected());
+
+            holder.rb_rules.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View v) {
-                    if (holder.rb_rules.isChecked()) {
-                        strRules[position] = lst_rules.get(position).getActId();
-                        strRuleName[position] = lst_rules.get(position).getActName();
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    //set your object's last status
+                    obj.setSelected(isChecked);
+                    if (isChecked) {
+                        isSelect[position] = true;
                     } else {
-                        strRules[position] = null;
-                        strRuleName[position] = null;
+                        isSelect[position] = false;
                     }
                 }
             });
+
 //            holder.itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {

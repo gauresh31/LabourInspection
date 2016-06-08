@@ -8,6 +8,7 @@ public class SpinnerObject {
 
     public String actId;
     public String actName;
+    public boolean selected;
 
     public SpinnerObject() {
 
@@ -27,6 +28,14 @@ public class SpinnerObject {
 
     public void setActName(String actName) {
         this.actName = actName;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override

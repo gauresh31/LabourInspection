@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +21,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.mol.fragments.FragmentActs;
 import in.mol.fragments.FragmentBasicDetails;
+import in.mol.fragments.FragmentRemarks;
 import in.mol.fragments.RulesFragment;
 import in.mol.models.ApplicationConstants;
 import in.mol.models.UserSessionManager;
@@ -41,33 +46,6 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
         init();
         setDefaults();
 
-//        JSONObject jsonData = new JSONObject();
-//        JSONArray jsonArrayActs = new JSONArray();
-//        JSONArray jsonArrayActsRules = new JSONArray();
-//
-//        String[] rules = {"Attendance", "Muster", "Inspection", "Overtime", "Paid Wages", "Medical"};
-//        try {
-//            for (int i = 1000; i < 1005; i++) {
-//                JSONObject jsonActs = new JSONObject();
-//                jsonActs.put("Act_id", i + "");
-//                jsonActs.put("Act_name", "Minimum Wages Act " + (i + 985));
-//                jsonArrayActs.put(jsonActs);
-//
-//                for (int j = 2000; j < 2004; j++) {
-//                    JSONObject jsonActsRules = new JSONObject();
-//                    jsonActsRules.put("Act_id", i + "");
-//                    jsonActsRules.put("Rule_id", j + "");
-//                    jsonActsRules.put("Rule_name", rules[j - 2000]);
-//                    jsonArrayActsRules.put(jsonActsRules);
-//                }
-//            }
-//
-//            jsonData.put("Acts", jsonArrayActs);
-//            jsonData.put("Rules", jsonArrayActsRules);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        JSONObject json1 = new JSONObject();
     }
 
     private void init() {
@@ -103,6 +81,17 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
 
         setupViewPager(viewPager);
         tabs.setupWithViewPager(viewPager);
+
+        //Disable touch event on tabs
+//        LinearLayout tabStrip = ((LinearLayout) tabs.getChildAt(0));
+//        for (int i = 0; i < tabStrip.getChildCount(); i++) {
+//            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    return true;
+//                }
+//            });
+//        }
     }
 
     // Add Fragments to ViewPager
@@ -110,8 +99,12 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(FragmentBasicDetails.
                 newInstance(MainActivity.this, getApplicationContext(), viewPager, "", act_id, act_name, username), "Basic Data");
-        adapter.addFragment(RulesFragment.
-                newInstance(MainActivity.this,getApplicationContext(), viewPager, "", act_id, act_name, username, userId), "Rules");
+        adapter.addFragment(FragmentActs.
+                newInstance(MainActivity.this, getApplicationContext(), viewPager, act_id, act_name, username, userId), "Acts");
+        adapter.addFragment(FragmentRemarks.
+                newInstance(MainActivity.this, getApplicationContext(), viewPager, username, userId), "Remarks");
+//        adapter.addFragment(RulesFragment.
+//                newInstance(MainActivity.this, getApplicationContext(), viewPager, "", act_id, act_name, username, userId), "Rules");
 
         viewPager.setAdapter(adapter);
     }

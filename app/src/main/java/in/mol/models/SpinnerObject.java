@@ -2,32 +2,32 @@ package in.mol.models;
 
 public class SpinnerObject {
     public SpinnerObject(String actId, String actName) {
-        this.actId = actId;
-        this.actName = actName;
+        this.ruleId = actId;
+        this.ruleName = actName;
     }
 
-    public String actId;
-    public String actName;
+    public String ruleId;
+    public String ruleName;
     public boolean selected;
 
     public SpinnerObject() {
 
     }
 
-    public String getActId() {
-        return actId;
+    public String getRuleId() {
+        return ruleId;
     }
 
-    public void setActId(String actId) {
-        this.actId = actId;
+    public void setRuleId(String actId) {
+        this.ruleId = actId;
     }
 
-    public String getActName() {
-        return actName;
+    public String getRuleName() {
+        return ruleName;
     }
 
-    public void setActName(String actName) {
-        this.actName = actName;
+    public void setRuleName(String actName) {
+        this.ruleName = actName;
     }
 
     public boolean isSelected() {
@@ -40,6 +40,6 @@ public class SpinnerObject {
 
     @Override
     public String toString() {
-        return actName;
+        return ruleName;
     }
 }

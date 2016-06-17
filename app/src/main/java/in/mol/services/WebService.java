@@ -77,7 +77,9 @@ public class WebService {
 
         try {
             // URL url = new URL();
-            URL url = new URL(License_Url + "UserID=" + "411F82DF-1702-4E37-9016-6DB1C4909FFE");//59FBCF05-F9F7-47D9-AE90-742122C6A292 //userId
+            URL url = new URL(License_Url + "UserID=" + "D6E77167-3016-4A56-8EC7-D377DBD01757");
+//                    "411F82DF-1702-4E37-9016-6DB1C4909FFE");
+            //59FBCF05-F9F7-47D9-AE90-742122C6A292 //userId
             //BE6EB98C-9D9B-45ED-9033-441023A7394E
             //411F82DF-1702-4E37-9016-6DB1C4909FFE
             System.out.println("URL: " + url.toString());
@@ -183,7 +185,7 @@ public class WebService {
         }
     }
 
-    public static String uploadData(JSONObject data) {
+    public static String uploadData(String data) {
         int code = 400;
         DataOutputStream printout;
         DataInputStream input;
@@ -193,6 +195,7 @@ public class WebService {
             HttpURLConnection urlConnection = (HttpURLConnection) url
                     .openConnection();
             urlConnection.setConnectTimeout(60000);
+            urlConnection.setReadTimeout(20000);
 //            urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
@@ -205,7 +208,7 @@ public class WebService {
 
             printout = new DataOutputStream(urlConnection.getOutputStream());
 //            printout.write(Integer.parseInt(URLEncoder.encode(data.toString(), "UTF-8")));
-            String str = data.toString();
+            String str = data;
             byte[] data1 = str.getBytes("UTF-8");
             printout.write(data1);
             printout.flush();

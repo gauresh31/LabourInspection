@@ -235,6 +235,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public List<SpinnerObject> getActs() {
+        List<SpinnerObject> lst_acts = new ArrayList<>();
+        String id, name;
+        SpinnerObject obj_spn;
+        myDataBase = this.getReadableDatabase();
+
+        Cursor c = myDataBase.query("Act_Master", new String[]{"ActId", "ActName"},
+                null, null, null, null, null);
+
+        lst_acts.add(new SpinnerObject("0", "Select"));
+        if (c.moveToFirst()) {
+            do {
+                id = c.getString(0);
+                name = c.getString(1);
+
+                obj_spn = new SpinnerObject(id, name);
+                lst_acts.add(obj_spn);
+            } while (c.moveToNext());
+        }
+        return lst_acts;
+    }
+
+
     public List<SpinnerObject> getRules(String actId) {
         List<SpinnerObject> lst_rules = new ArrayList<>();
         String id, name;

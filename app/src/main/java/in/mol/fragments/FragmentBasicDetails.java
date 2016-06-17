@@ -118,17 +118,27 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             edit_name_of_worker12, edit_designation12, edit_lenght_of_service12, edit_working_hours12, edit_rest_time12,
             edit_attend_card12, edit_over_time_rate12, edit_salary_per_day12, edit_date_of_payment12, edit_bonus12,
             edit_name_of_worker13, edit_designation13, edit_lenght_of_service13, edit_working_hours13, edit_rest_time13,
-            edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13;
+            edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13,
+            edit_name_of_worker14, edit_designation14, edit_lenght_of_service14, edit_working_hours14, edit_rest_time14,
+            edit_attend_card14, edit_over_time_rate14, edit_salary_per_day14, edit_date_of_payment14, edit_bonus14,
+            edit_name_of_worker15, edit_designation15, edit_lenght_of_service15, edit_working_hours15, edit_rest_time15,
+            edit_attend_card15, edit_over_time_rate15, edit_salary_per_day15, edit_date_of_payment15, edit_bonus15,
+            edit_name_of_worker16, edit_designation16, edit_lenght_of_service16, edit_working_hours16, edit_rest_time16,
+            edit_attend_card16, edit_over_time_rate16, edit_salary_per_day16, edit_date_of_payment16, edit_bonus16,
+            edit_name_of_worker17, edit_designation17, edit_lenght_of_service17, edit_working_hours17, edit_rest_time17,
+            edit_attend_card17, edit_over_time_rate17, edit_salary_per_day17, edit_date_of_payment17, edit_bonus17;
+
+    private Spinner spin_weeklyoff1, spin_wages1;
 
     static EditText date;
 
     private ImageView biometric_worker_1, biometric_worker_2, biometric_worker_3, biometric_worker_4, biometric_worker_5,
             biometric_worker_6, biometric_worker_7, biometric_worker_8, biometric_worker_9, biometric_worker_10,
-            biometric_worker_11, biometric_worker_12, biometric_worker_13;
+            biometric_worker_11, biometric_worker_12, biometric_worker_13, biometric_worker_14, biometric_worker_15, biometric_worker_16, biometric_worker_17;
     private TextView tv_Declaration;
     private RelativeLayout rel_main;
     private LinearLayout ll1, ll2, ll3, ll4, ll5, ll6, ll7, ll8, ll9, ll10;
-    private LinearLayout llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13;
+    private LinearLayout llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17;
     Button submit;
     Spinner spn_act;
     LinearLayout ll_address_site_1970, ll_employees, ll_employees_1970, ll_working_hours, ll_no_of_contractor,
@@ -148,6 +158,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     JSONObject json;
     XmlSerializer serializer;
     JSONObject jsonWorker;
+    JSONArray jarr;
 
     public FragmentBasicDetails() {
         // Required empty public constructor
@@ -212,6 +223,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         session = new UserSessionManager(context);
         m_list = new ArrayList<>();
         jsonWorker = new JSONObject();
+        jarr = new JSONArray();
 
         rel_main = (RelativeLayout) view.findViewById(R.id.rel_basic_details);
         scroll_list = (ScrollView) view.findViewById(R.id.scroll_list);
@@ -329,6 +341,8 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         edit_salary_per_day1 = (EditText) view.findViewById(R.id.edit_salary_per_day1);
         edit_date_of_payment1 = (EditText) view.findViewById(R.id.edit_date_of_payment1);
         edit_bonus1 = (EditText) view.findViewById(R.id.edit_bonus1);
+        spin_wages1 = (Spinner) view.findViewById(R.id.spin_wages1);
+        spin_weeklyoff1 = (Spinner) view.findViewById(R.id.spin_weeklyOff1);
 
         edit_name_of_worker2 = (EditText) view.findViewById(R.id.edit_name_of_worker2);
         edit_designation2 = (EditText) view.findViewById(R.id.edit_designation2);
@@ -462,6 +476,50 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         edit_date_of_payment13 = (EditText) view.findViewById(R.id.edit_date_of_payment13);
         edit_bonus13 = (EditText) view.findViewById(R.id.edit_bonus13);
 
+        edit_name_of_worker14 = (EditText) view.findViewById(R.id.edit_name_of_worker14);
+        edit_designation14 = (EditText) view.findViewById(R.id.edit_designation14);
+        edit_lenght_of_service14 = (EditText) view.findViewById(R.id.edit_lenght_of_service14);
+        edit_working_hours14 = (EditText) view.findViewById(R.id.edit_working_hours14);
+        edit_rest_time14 = (EditText) view.findViewById(R.id.edit_rest_time14);
+        edit_attend_card14 = (EditText) view.findViewById(R.id.edit_attend_card14);
+        edit_over_time_rate14 = (EditText) view.findViewById(R.id.edit_over_time_rate14);
+        edit_salary_per_day14 = (EditText) view.findViewById(R.id.edit_salary_per_day14);
+        edit_date_of_payment14 = (EditText) view.findViewById(R.id.edit_date_of_payment14);
+        edit_bonus14 = (EditText) view.findViewById(R.id.edit_bonus14);
+
+        edit_name_of_worker15 = (EditText) view.findViewById(R.id.edit_name_of_worker15);
+        edit_designation15 = (EditText) view.findViewById(R.id.edit_designation15);
+        edit_lenght_of_service15 = (EditText) view.findViewById(R.id.edit_lenght_of_service15);
+        edit_working_hours15 = (EditText) view.findViewById(R.id.edit_working_hours15);
+        edit_rest_time15 = (EditText) view.findViewById(R.id.edit_rest_time15);
+        edit_attend_card15 = (EditText) view.findViewById(R.id.edit_attend_card15);
+        edit_over_time_rate15 = (EditText) view.findViewById(R.id.edit_over_time_rate15);
+        edit_salary_per_day15 = (EditText) view.findViewById(R.id.edit_salary_per_day15);
+        edit_date_of_payment15 = (EditText) view.findViewById(R.id.edit_date_of_payment15);
+        edit_bonus15 = (EditText) view.findViewById(R.id.edit_bonus15);
+
+        edit_name_of_worker16 = (EditText) view.findViewById(R.id.edit_name_of_worker16);
+        edit_designation16 = (EditText) view.findViewById(R.id.edit_designation16);
+        edit_lenght_of_service16 = (EditText) view.findViewById(R.id.edit_lenght_of_service16);
+        edit_working_hours16 = (EditText) view.findViewById(R.id.edit_working_hours16);
+        edit_rest_time16 = (EditText) view.findViewById(R.id.edit_rest_time16);
+        edit_attend_card16 = (EditText) view.findViewById(R.id.edit_attend_card16);
+        edit_over_time_rate16 = (EditText) view.findViewById(R.id.edit_over_time_rate16);
+        edit_salary_per_day16 = (EditText) view.findViewById(R.id.edit_salary_per_day16);
+        edit_date_of_payment16 = (EditText) view.findViewById(R.id.edit_date_of_payment16);
+        edit_bonus16 = (EditText) view.findViewById(R.id.edit_bonus16);
+
+        edit_name_of_worker17 = (EditText) view.findViewById(R.id.edit_name_of_worker17);
+        edit_designation17 = (EditText) view.findViewById(R.id.edit_designation17);
+        edit_lenght_of_service17 = (EditText) view.findViewById(R.id.edit_lenght_of_service17);
+        edit_working_hours17 = (EditText) view.findViewById(R.id.edit_working_hours17);
+        edit_rest_time17 = (EditText) view.findViewById(R.id.edit_rest_time17);
+        edit_attend_card17 = (EditText) view.findViewById(R.id.edit_attend_card17);
+        edit_over_time_rate17 = (EditText) view.findViewById(R.id.edit_over_time_rate17);
+        edit_salary_per_day17 = (EditText) view.findViewById(R.id.edit_salary_per_day17);
+        edit_date_of_payment17 = (EditText) view.findViewById(R.id.edit_date_of_payment17);
+        edit_bonus17 = (EditText) view.findViewById(R.id.edit_bonus17);
+
         biometric_worker_1 = (ImageView) view.findViewById(R.id.iv_biometric1);
         biometric_worker_2 = (ImageView) view.findViewById(R.id.iv_biometric2);
         biometric_worker_3 = (ImageView) view.findViewById(R.id.iv_biometric3);
@@ -475,6 +533,10 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         biometric_worker_11 = (ImageView) view.findViewById(R.id.iv_biometric11);
         biometric_worker_12 = (ImageView) view.findViewById(R.id.iv_biometric12);
         biometric_worker_13 = (ImageView) view.findViewById(R.id.iv_biometric13);
+        biometric_worker_14 = (ImageView) view.findViewById(R.id.iv_biometric14);
+        biometric_worker_15 = (ImageView) view.findViewById(R.id.iv_biometric15);
+        biometric_worker_16 = (ImageView) view.findViewById(R.id.iv_biometric16);
+        biometric_worker_17 = (ImageView) view.findViewById(R.id.iv_biometric17);
 
         llw1 = (LinearLayout) view.findViewById(R.id.ll_Worker1);
         llw2 = (LinearLayout) view.findViewById(R.id.ll_Worker2);
@@ -489,12 +551,35 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         llw11 = (LinearLayout) view.findViewById(R.id.ll_Worker11);
         llw12 = (LinearLayout) view.findViewById(R.id.ll_Worker12);
         llw13 = (LinearLayout) view.findViewById(R.id.ll_Worker13);
+        llw14 = (LinearLayout) view.findViewById(R.id.ll_Worker14);
+        llw15 = (LinearLayout) view.findViewById(R.id.ll_Worker15);
+        llw16 = (LinearLayout) view.findViewById(R.id.ll_Worker16);
+        llw17 = (LinearLayout) view.findViewById(R.id.ll_Worker17);
     }
 
     private void setDefault() {
         Utilities.invisibleAll(ll1, ll2, ll3, ll4, ll5, ll6, ll7, ll8, ll9, ll10);
-        Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+        Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12,
+                llw13, llw14, llw15, llw16, llw17);
 //        scroll_list.setVisibility(View.GONE);
+
+        List<String> lstWeekly = new ArrayList<>();
+        lstWeekly.add("Select");
+        lstWeekly.add("Sunday");
+        lstWeekly.add("Monday");
+        lstWeekly.add("Select");
+        lstWeekly.add("Select");
+        lstWeekly.add("Select");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                context, android.R.layout.simple_dropdown_item_1line, lstWeekly);
+
+        spin_weeklyoff1.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(
+                context, android.R.layout.simple_dropdown_item_1line, lstWeekly);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin_wages1.setAdapter(adapter1);
 
         licence_no = session.getLicenseNo();
         inspection_no = session.getInspectionNo();
@@ -511,17 +596,17 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             name_of_establishment.setText(json.getString("Institution_Name"));
             address.setText(json.getString("Institution_Addr"));
             name_of_employer.setText(json.getString("Owner_Name"));
-//            no_of_workers.setText(json.getString("TotalWorkers"));
             direct_worker.setText(json.getString("TotalDirectEmp"));
             contract_worker.setText(json.getString("TotalContractEmp"));
 
+            total.setText(json.getString("TotalWorkers"));
+            male.setText(json.getString("Male"));
+            female.setText(json.getString("Female"));
+
+
+        } catch (Exception e) {
             male.setText("0");
             female.setText("0");
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -598,69 +683,69 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         biometric_worker_10.setOnClickListener(this);
 //        spn_act.setOnItemSelectedListener(this);
 
-        male.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    if (male.getText().toString().equals("") && female.getText().toString().equals("")) {
-                        total.setText("");
-                    } else {
-                        int strMale = Integer.parseInt(male.getText().toString());
-                        int strFemale;
-                        if (!female.getText().toString().equalsIgnoreCase("")) {
-                            strFemale = Integer.parseInt(female.getText().toString());
-                        } else {
-                            strFemale = 0;
-                        }
-                        total.setText(Integer.toString(strMale + strFemale));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        female.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    if (male.getText().toString().equals("") && female.getText().toString().equals("")) {
-                        total.setText("");
-                    } else {
-                        int strFemale = Integer.parseInt(female.getText().toString());
-                        int strMale;
-                        if (!male.getText().toString().equalsIgnoreCase("")) {
-                            strMale = Integer.parseInt(male.getText().toString());
-                        } else {
-                            strMale = 0;
-                        }
-                        total.setText(Integer.toString(strMale + strFemale));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        male.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                try {
+//                    if (male.getText().toString().equals("") && female.getText().toString().equals("")) {
+//                        total.setText("");
+//                    } else {
+//                        int strMale = Integer.parseInt(male.getText().toString());
+//                        int strFemale;
+//                        if (!female.getText().toString().equalsIgnoreCase("")) {
+//                            strFemale = Integer.parseInt(female.getText().toString());
+//                        } else {
+//                            strFemale = 0;
+//                        }
+//                        total.setText(Integer.toString(strMale + strFemale));
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//
+//        female.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                try {
+//                    if (male.getText().toString().equals("") && female.getText().toString().equals("")) {
+//                        total.setText("");
+//                    } else {
+//                        int strFemale = Integer.parseInt(female.getText().toString());
+//                        int strMale;
+//                        if (!male.getText().toString().equalsIgnoreCase("")) {
+//                            strMale = Integer.parseInt(male.getText().toString());
+//                        } else {
+//                            strMale = 0;
+//                        }
+//                        total.setText(Integer.toString(strMale + strFemale));
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         no_of_contractors_count.addTextChangedListener(new TextWatcher() {
             @Override
@@ -771,77 +856,101 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                             .toString());
                     switch (worker_count) {
                         case 0:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             break;
                         case 1:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1);
                             break;
 
                         case 2:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2);
                             break;
 
                         case 3:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3);
                             break;
 
                         case 4:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4);
                             break;
 
                         case 5:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5);
                             break;
 
                         case 6:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6);
                             break;
 
                         case 7:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7);
                             break;
 
                         case 8:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8);
                             break;
 
                         case 9:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9);
                             break;
 
                         case 10:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10);
                             break;
 
                         case 11:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10, llw11);
                             break;
 
                         case 12:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10, llw11, llw12);
                             break;
 
                         case 13:
-                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13);
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
                                     llw8, llw9, llw10, llw11, llw12, llw13);
+                            break;
+
+                        case 14:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
+                            Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
+                                    llw8, llw9, llw10, llw11, llw12, llw13, llw14);
+                            break;
+
+                        case 15:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
+                            Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
+                                    llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15);
+                            break;
+
+                        case 16:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
+                            Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
+                                    llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16);
+                            break;
+
+                        case 17:
+                            Utilities.invisibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7, llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
+                            Utilities.visibleAll(llw1, llw2, llw3, llw4, llw5, llw6, llw7,
+                                    llw8, llw9, llw10, llw11, llw12, llw13, llw14, llw15, llw16, llw17);
                             break;
 
                         default:
@@ -870,8 +979,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
-            date.setText(day + "/" + (month + 1) + "/" + year);
-
+            date.setText(year + "-" + (month + 1) + "-" + day);
         }
     }
 
@@ -886,7 +994,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                     if (worker_count > 0) {
                         createWorkerJson();
                         try {
-                            dataToDatabase.put("objInspectedEmpDetails",jsonWorker);
+                            dataToDatabase.put("objInspectedEmpDetails", jarr);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -1065,12 +1173,12 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     public class PagerAdapter extends FragmentPagerAdapter {
 
         private FragmentBasicDetails fragmentBasicDetails;
-        private RulesFragment rulesFragment;
+        private FragmentActs actFragment;
 
         public PagerAdapter(FragmentManager manager) {
             super(manager);
             this.fragmentBasicDetails = new FragmentBasicDetails();
-            this.rulesFragment = new RulesFragment();
+            this.actFragment = new FragmentActs();
         }
 
         @Override
@@ -1086,7 +1194,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                     return fragmentBasicDetails;
 
                 case 1:
-                    return rulesFragment;
+                    return actFragment;
                 default:
                     return null;
             }
@@ -1102,7 +1210,28 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             serializer.startDocument("UTF-8", true);
             serializer.startTag("", "InspectionActRemarks");
 
+            serializer.startTag("", "PresentEmpName");
+            serializer.text(is_present.getText().toString());
+            serializer.endTag("", "PresentEmpName");
+            serializer.startTag("", "PresentEmpDesg");
+            serializer.text(declaration_designation.getText().toString());
+            serializer.endTag("", "PresentEmpDesg");
+            serializer.startTag("", "DateOfInspection");
+            serializer.text(date.getText().toString());
+            serializer.endTag("", "DateOfInspection");
+            serializer.startTag("", "Remark");
+            serializer.text("Test Data");
+            serializer.endTag("", "Remark");
+            serializer.startTag("", "CreatedBy");
+            serializer.text("411f82df-1702-4e37-9016-6db1c4909ffe");
+            serializer.endTag("", "CreatedBy");
+
             serializer.startTag("", "objLabourInspectionSchema");
+
+            serializer.startTag("", "LicenseNo");
+            serializer.text(licence_no);
+            serializer.endTag("", "LicenseNo");
+
             serializer.startTag("", "Institution_Name");
             serializer.text(name_of_establishment.getText().toString());
             serializer.endTag("", "Institution_Name");
@@ -1163,6 +1292,14 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             serializer.text(weekly_off.getText().toString());
             serializer.endTag("", "WeeklyOff");
 
+            serializer.startTag("", "OfficeID");
+            serializer.text("0");
+            serializer.endTag("", "OfficeID");
+
+            serializer.startTag("", "ServiceID");
+            serializer.text("4");
+            serializer.endTag("", "ServiceID");
+
             serializer.endTag("", "objLabourInspectionSchema");
 
             initWorkerXml();
@@ -1170,7 +1307,8 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
 //            serializer.endTag("", "InspectionActRemarks");
 //            serializer.endDocument();
-            String strSerial = serializer.toString();
+
+            String strSerial = writer.toString();
 
             session.createBasicInfoSession(strSerial);
 
@@ -1180,7 +1318,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         clear();
@@ -1585,7 +1723,6 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         }
     }
 
-
     private void createJson() {
 
 //        String xml = writeXml();
@@ -1611,12 +1748,19 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             jsonn.put("representative_of_principle", representative_of_principle.getText().toString());
             jsonn.put("TotalDirectEmp", direct_worker.getText().toString());
             jsonn.put("TotalContractEmp", contract_worker.getText().toString());
+
+            if(year_of_starting.getText().toString().equalsIgnoreCase("")){
+                year_of_starting.setText("1900");
+            }
+            if(accounting_year.getText().toString().equalsIgnoreCase("")){
+                accounting_year.setText("1900");
+            }
+
             jsonn.put("year_of_starting", year_of_starting.getText().toString());
             jsonn.put("accounting_year", accounting_year.getText().toString());
             jsonn.put("PresentEmpDesg", declaration_designation.getText().toString());
             jsonn.put("PresentEmpName", is_present.getText().toString());
             jsonn.put("Owner_Name", name_of_employer.getText().toString());
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1625,6 +1769,10 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         try {
             dataToDatabase.put("objLabourInspectionSchema", jsonn);
             session.createBasicInfoSession(dataToDatabase.toString());
+
+            PagerAdapter fragmentPagerAdapter = new PagerAdapter(getFragmentManager());
+            FragmentActs frag = (FragmentActs) fragmentPagerAdapter.getItem(1);
+            frag.sendData(dataToDatabase.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1797,16 +1945,16 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         }
 
         try {
-            json.put("license_no", licence_no);
-            json.put("inspection_no", inspection_no);
+//            json.put("license_no", licence_no);
+//            json.put("inspection_no", inspection_no);
 
-            json.put("Name_Of_Contractor", editTexts[1].getText().toString()
+            json.put("NameOfContractor", editTexts[1].getText().toString()
                     .trim());
-            json.put("Nature_Of_Work", editTexts[2].getText().toString()
+            json.put("NatureOfWork", editTexts[2].getText().toString()
                     .trim());
-            json.put("Number_Of_Workers", editTexts[3].getText().toString()
+            json.put("NoOfWorker", editTexts[3].getText().toString()
                     .trim());
-            json.put("Date_Of_Commencement", editTexts[4].getText().toString()
+            json.put("DateOfCommencement", editTexts[4].getText().toString()
                     .trim());
             jarr.put(json);
 
@@ -2044,6 +2192,146 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                         edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13);
                 break;
 
+            case 14:
+                workerJson(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                        edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                workerJson(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                        edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                workerJson(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                        edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                workerJson(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                        edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                workerJson(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                        edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                workerJson(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                        edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                workerJson(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                        edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                workerJson(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                        edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                workerJson(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                        edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                workerJson(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                        edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                workerJson(strBioTemplate[10], edit_name_of_worker11, edit_designation11, edit_lenght_of_service11, edit_working_hours11, edit_rest_time11,
+                        edit_attend_card11, edit_over_time_rate11, edit_salary_per_day11, edit_date_of_payment11, edit_bonus11);
+                workerJson(strBioTemplate[11], edit_name_of_worker12, edit_designation12, edit_lenght_of_service12, edit_working_hours12, edit_rest_time12,
+                        edit_attend_card12, edit_over_time_rate12, edit_salary_per_day12, edit_date_of_payment12, edit_bonus12);
+                workerJson(strBioTemplate[12], edit_name_of_worker13, edit_designation13, edit_lenght_of_service13, edit_working_hours13, edit_rest_time13,
+                        edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13);
+                workerJson(strBioTemplate[13], edit_name_of_worker14, edit_designation14, edit_lenght_of_service14, edit_working_hours14, edit_rest_time14,
+                        edit_attend_card14, edit_over_time_rate14, edit_salary_per_day14, edit_date_of_payment14, edit_bonus14);
+
+                break;
+
+            case 15:
+                workerJson(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                        edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                workerJson(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                        edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                workerJson(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                        edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                workerJson(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                        edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                workerJson(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                        edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                workerJson(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                        edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                workerJson(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                        edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                workerJson(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                        edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                workerJson(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                        edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                workerJson(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                        edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                workerJson(strBioTemplate[10], edit_name_of_worker11, edit_designation11, edit_lenght_of_service11, edit_working_hours11, edit_rest_time11,
+                        edit_attend_card11, edit_over_time_rate11, edit_salary_per_day11, edit_date_of_payment11, edit_bonus11);
+                workerJson(strBioTemplate[11], edit_name_of_worker12, edit_designation12, edit_lenght_of_service12, edit_working_hours12, edit_rest_time12,
+                        edit_attend_card12, edit_over_time_rate12, edit_salary_per_day12, edit_date_of_payment12, edit_bonus12);
+                workerJson(strBioTemplate[12], edit_name_of_worker13, edit_designation13, edit_lenght_of_service13, edit_working_hours13, edit_rest_time13,
+                        edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13);
+                workerJson(strBioTemplate[13], edit_name_of_worker14, edit_designation14, edit_lenght_of_service14, edit_working_hours14, edit_rest_time14,
+                        edit_attend_card14, edit_over_time_rate14, edit_salary_per_day14, edit_date_of_payment14, edit_bonus14);
+                workerJson(strBioTemplate[14], edit_name_of_worker15, edit_designation15, edit_lenght_of_service15, edit_working_hours15, edit_rest_time15,
+                        edit_attend_card15, edit_over_time_rate15, edit_salary_per_day15, edit_date_of_payment15, edit_bonus15);
+
+                break;
+
+            case 16:
+                workerJson(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                        edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                workerJson(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                        edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                workerJson(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                        edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                workerJson(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                        edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                workerJson(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                        edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                workerJson(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                        edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                workerJson(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                        edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                workerJson(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                        edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                workerJson(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                        edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                workerJson(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                        edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                workerJson(strBioTemplate[10], edit_name_of_worker11, edit_designation11, edit_lenght_of_service11, edit_working_hours11, edit_rest_time11,
+                        edit_attend_card11, edit_over_time_rate11, edit_salary_per_day11, edit_date_of_payment11, edit_bonus11);
+                workerJson(strBioTemplate[11], edit_name_of_worker12, edit_designation12, edit_lenght_of_service12, edit_working_hours12, edit_rest_time12,
+                        edit_attend_card12, edit_over_time_rate12, edit_salary_per_day12, edit_date_of_payment12, edit_bonus12);
+                workerJson(strBioTemplate[12], edit_name_of_worker13, edit_designation13, edit_lenght_of_service13, edit_working_hours13, edit_rest_time13,
+                        edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13);
+                workerJson(strBioTemplate[13], edit_name_of_worker14, edit_designation14, edit_lenght_of_service14, edit_working_hours14, edit_rest_time14,
+                        edit_attend_card14, edit_over_time_rate14, edit_salary_per_day14, edit_date_of_payment14, edit_bonus14);
+                workerJson(strBioTemplate[14], edit_name_of_worker15, edit_designation15, edit_lenght_of_service15, edit_working_hours15, edit_rest_time15,
+                        edit_attend_card15, edit_over_time_rate15, edit_salary_per_day15, edit_date_of_payment15, edit_bonus15);
+                workerJson(strBioTemplate[15], edit_name_of_worker16, edit_designation16, edit_lenght_of_service16, edit_working_hours16, edit_rest_time16,
+                        edit_attend_card16, edit_over_time_rate16, edit_salary_per_day16, edit_date_of_payment16, edit_bonus16);
+
+                break;
+
+            case 17:
+                workerJson(strBioTemplate[0], edit_name_of_worker1, edit_designation1, edit_lenght_of_service1, edit_working_hours1, edit_rest_time1,
+                        edit_attend_card1, edit_over_time_rate1, edit_salary_per_day1, edit_date_of_payment1, edit_bonus1);
+                workerJson(strBioTemplate[1], edit_name_of_worker2, edit_designation2, edit_lenght_of_service2, edit_working_hours2, edit_rest_time2,
+                        edit_attend_card2, edit_over_time_rate2, edit_salary_per_day2, edit_date_of_payment2, edit_bonus2);
+                workerJson(strBioTemplate[2], edit_name_of_worker3, edit_designation3, edit_lenght_of_service3, edit_working_hours3, edit_rest_time3,
+                        edit_attend_card3, edit_over_time_rate3, edit_salary_per_day3, edit_date_of_payment3, edit_bonus3);
+                workerJson(strBioTemplate[3], edit_name_of_worker4, edit_designation4, edit_lenght_of_service4, edit_working_hours4, edit_rest_time4,
+                        edit_attend_card4, edit_over_time_rate4, edit_salary_per_day4, edit_date_of_payment4, edit_bonus4);
+                workerJson(strBioTemplate[4], edit_name_of_worker5, edit_designation5, edit_lenght_of_service5, edit_working_hours5, edit_rest_time5,
+                        edit_attend_card5, edit_over_time_rate5, edit_salary_per_day5, edit_date_of_payment5, edit_bonus5);
+                workerJson(strBioTemplate[5], edit_name_of_worker6, edit_designation6, edit_lenght_of_service6, edit_working_hours6, edit_rest_time6,
+                        edit_attend_card6, edit_over_time_rate6, edit_salary_per_day6, edit_date_of_payment6, edit_bonus6);
+                workerJson(strBioTemplate[6], edit_name_of_worker7, edit_designation7, edit_lenght_of_service7, edit_working_hours7, edit_rest_time7,
+                        edit_attend_card7, edit_over_time_rate7, edit_salary_per_day7, edit_date_of_payment7, edit_bonus7);
+                workerJson(strBioTemplate[7], edit_name_of_worker8, edit_designation8, edit_lenght_of_service8, edit_working_hours8, edit_rest_time8,
+                        edit_attend_card8, edit_over_time_rate8, edit_salary_per_day8, edit_date_of_payment8, edit_bonus8);
+                workerJson(strBioTemplate[8], edit_name_of_worker9, edit_designation9, edit_lenght_of_service9, edit_working_hours9, edit_rest_time9,
+                        edit_attend_card9, edit_over_time_rate9, edit_salary_per_day9, edit_date_of_payment9, edit_bonus9);
+                workerJson(strBioTemplate[9], edit_name_of_worker10, edit_designation10, edit_lenght_of_service10, edit_working_hours10, edit_rest_time10,
+                        edit_attend_card10, edit_over_time_rate10, edit_salary_per_day10, edit_date_of_payment10, edit_bonus10);
+                workerJson(strBioTemplate[10], edit_name_of_worker11, edit_designation11, edit_lenght_of_service11, edit_working_hours11, edit_rest_time11,
+                        edit_attend_card11, edit_over_time_rate11, edit_salary_per_day11, edit_date_of_payment11, edit_bonus11);
+                workerJson(strBioTemplate[11], edit_name_of_worker12, edit_designation12, edit_lenght_of_service12, edit_working_hours12, edit_rest_time12,
+                        edit_attend_card12, edit_over_time_rate12, edit_salary_per_day12, edit_date_of_payment12, edit_bonus12);
+                workerJson(strBioTemplate[12], edit_name_of_worker13, edit_designation13, edit_lenght_of_service13, edit_working_hours13, edit_rest_time13,
+                        edit_attend_card13, edit_over_time_rate13, edit_salary_per_day13, edit_date_of_payment13, edit_bonus13);
+                workerJson(strBioTemplate[13], edit_name_of_worker14, edit_designation14, edit_lenght_of_service14, edit_working_hours14, edit_rest_time14,
+                        edit_attend_card14, edit_over_time_rate14, edit_salary_per_day14, edit_date_of_payment14, edit_bonus14);
+                workerJson(strBioTemplate[14], edit_name_of_worker15, edit_designation15, edit_lenght_of_service15, edit_working_hours15, edit_rest_time15,
+                        edit_attend_card15, edit_over_time_rate15, edit_salary_per_day15, edit_date_of_payment15, edit_bonus15);
+                workerJson(strBioTemplate[15], edit_name_of_worker16, edit_designation16, edit_lenght_of_service16, edit_working_hours16, edit_rest_time16,
+                        edit_attend_card16, edit_over_time_rate16, edit_salary_per_day16, edit_date_of_payment16, edit_bonus16);
+                workerJson(strBioTemplate[16], edit_name_of_worker17, edit_designation17, edit_lenght_of_service17, edit_working_hours17, edit_rest_time17,
+                        edit_attend_card17, edit_over_time_rate17, edit_salary_per_day17, edit_date_of_payment17, edit_bonus17);
+
+                break;
+
             default:
                 break;
         }
@@ -2051,10 +2339,10 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
     private void workerJson(String template, EditText... editTexts) {
         JSONObject json = new JSONObject();
-        JSONArray jarr = new JSONArray();
+
         try {
             jarr = jsonWorker
-                    .getJSONArray("InspectedEmpDetails");
+                    .getJSONArray("objInspectedEmpDetails");
         } catch (JSONException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -2081,10 +2369,12 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                     .trim());
             json.put("Bonus", editTexts[9].getText().toString()
                     .trim());
+            json.put("EmployeeWeeklyOff", "Monday");
+            json.put("LeaveWithWages", "Yes");
 
             jarr.put(json);
 
-            jsonWorker.put("InspectedEmpDetails", jarr);
+            jsonWorker.put("objInspectedEmpDetails", jarr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -2108,37 +2398,37 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             return false;
         }
 
-        if (ll_employees.getVisibility() == View.VISIBLE) {
-            if (male.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Male Employees", context);
-                return false;
-            }
-            if (female.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter female Employees", context);
-                return false;
-            }
-        }
-        if (registration.getText().toString().equalsIgnoreCase("")) {
-            Utilities.showMessage("Enter Registration", context);
-            registration.setError("Enter Value");
-            return false;
-        }
-        if (ll_schedule_emp.getVisibility() == View.VISIBLE) {
-            if (schedule_empl.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Schedule Employment", context);
-                return false;
-            }
-        }
-        if (ll_working_hours.getVisibility() == View.VISIBLE) {
-            if (working_hours.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Working hours", context);
-                return false;
-            }
-            if (weekly_off.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Weekly off", context);
-                return false;
-            }
-        }
+//        if (ll_employees.getVisibility() == View.VISIBLE) {
+//            if (male.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Male Employees", context);
+//                return false;
+//            }
+//            if (female.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter female Employees", context);
+//                return false;
+//            }
+//        }
+//        if (registration.getText().toString().equalsIgnoreCase("")) {
+//            Utilities.showMessage("Enter Registration", context);
+//            registration.setError("Enter Value");
+//            return false;
+//        }
+//        if (ll_schedule_emp.getVisibility() == View.VISIBLE) {
+//            if (schedule_empl.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Schedule Employment", context);
+//                return false;
+//            }
+//        }
+//        if (ll_working_hours.getVisibility() == View.VISIBLE) {
+//            if (working_hours.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Working hours", context);
+//                return false;
+//            }
+//            if (weekly_off.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Weekly off", context);
+//                return false;
+//            }
+//        }
         if (date.getText().toString().equalsIgnoreCase("")) {
             Utilities.showMessage("Enter Date of inspection", context);
             date.setError("Enter Value");
@@ -2151,31 +2441,31 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                 return false;
             }
         }
-        if (ll_employees_1970.getVisibility() == View.VISIBLE) {
-            if (direct_worker.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Direct Worker Count", context);
-                return false;
-            }
-            if (contract_worker.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Contract Worker Count", context);
-                return false;
-            }
-            if (representative_of_principle.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Representative", context);
-                return false;
-            }
-        }
+//        if (ll_employees_1970.getVisibility() == View.VISIBLE) {
+//            if (direct_worker.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Direct Worker Count", context);
+//                return false;
+//            }
+//            if (contract_worker.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Contract Worker Count", context);
+//                return false;
+//            }
+//            if (representative_of_principle.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Representative", context);
+//                return false;
+//            }
+//        }
 
-        if (actId.equalsIgnoreCase("108")) {
-            if (year_of_starting.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter year of starting", context);
-                return false;
-            }
-            if (accounting_year.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Accounting year", context);
-                return false;
-            }
-        }
+//        if (actId.equalsIgnoreCase("108")) {
+//            if (year_of_starting.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter year of starting", context);
+//                return false;
+//            }
+//            if (accounting_year.getText().toString().equalsIgnoreCase("")) {
+//                Utilities.showMessage("Enter Accounting year", context);
+//                return false;
+//            }
+//        }
 
         if (declaration_designation.getText().toString().equalsIgnoreCase("")) {
             Utilities.showMessage("Enter Designation", context);

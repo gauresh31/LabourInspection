@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,6 +71,20 @@ public class Utilities {
         bm = BitmapFactory.decodeFile(selectedImagePath, options);
 
         return bm;
+    }
+
+    public static boolean chkEmptyEditText(EditText... edt) {
+        boolean flag = true;
+        for (int i = 0; i < edt.length; i++) {
+            if (edt[i].getText().toString().trim().length() == 0) {
+                edt[i].setError("Enter value");
+                edt[i].requestFocus();
+                flag = false;
+            } else {
+                edt[i].setError(null);
+            }
+        }
+        return flag;
     }
 
     public static void invisibleAll(LinearLayout... linearLayout) {

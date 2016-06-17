@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="in.mol.labourinspection.FormActivity">
+    tools:context="in.mol.fragments.FragmentBasicDetails">
 
     <TextView
         android:id="@+id/tv_head"
@@ -22,9 +22,9 @@
 
     <View
         android:id="@+id/view"
-        android:layout_below="@id/tv_head"
         android:layout_width="match_parent"
         android:layout_height="3dp"
+        android:layout_below="@id/tv_head"
         android:background="@color/grey" />
 
     <LinearLayout
@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/view"
         android:layout_margin="10dp"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/textview"
@@ -53,11 +53,11 @@
 
     <View
         android:id="@+id/view1"
-        android:layout_below="@id/ll_select_act"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:visibility="gone"
-        android:background="@color/grey" />
+        android:layout_below="@id/ll_select_act"
+        android:background="@color/grey"
+        android:visibility="gone" />
 
 
     <ScrollView
@@ -332,7 +332,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -391,7 +391,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -450,7 +450,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -509,7 +509,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -568,7 +568,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -627,7 +627,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -686,7 +686,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -745,7 +745,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
 
@@ -805,7 +805,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -865,7 +865,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Number of Worker"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:maxLength="20" />
 
                 <EditText
@@ -963,7 +963,6 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:focusable="false"
                             android:inputType="number"
                             android:maxLength="5" />
                     </LinearLayout>
@@ -1154,8 +1153,8 @@
                         android:layout_height="55dp"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:maxLines="3"
-                        android:maxLength="50" />
+                        android:maxLength="50"
+                        android:maxLines="3" />
 
                     <TextView
                         android:id="@+id/tv_desig"
@@ -1171,8 +1170,8 @@
                         android:layout_height="55dp"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:maxLines="3"
-                        android:maxLength="50" />
+                        android:maxLength="50"
+                        android:maxLines="3" />
 
                     <TextView
                         android:id="@+id/tv_ispresent"
@@ -1272,6 +1271,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -1282,8 +1283,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card1"
@@ -1304,7 +1305,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day1"
@@ -1313,7 +1314,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment1"
@@ -1331,7 +1333,22 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
+
+                        <Spinner
+                            android:id="@+id/spin_weeklyOff1"
+                            style="@drawable/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1" />
+
+                        <Spinner
+                            android:id="@+id/spin_wages1"
+                            android:layout_width="0dp"
+                            android:background="@color/primary_color"
+                            android:layout_height="55dp"
+                            android:layout_weight="1" />
 
                         <ImageView
                             android:id="@+id/iv_biometric1"
@@ -1393,7 +1410,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Working Hours" />
+                            android:hint="Working Hours"
+                            android:inputType="time"
+                            android:maxLength="5"/>
 
                         <EditText
                             android:id="@+id/edit_rest_time2"
@@ -1403,8 +1422,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card2"
@@ -1425,7 +1444,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day2"
@@ -1434,7 +1453,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment2"
@@ -1452,7 +1472,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric2"
@@ -1514,6 +1535,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -1524,8 +1547,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card3"
@@ -1546,7 +1569,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day3"
@@ -1555,7 +1578,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment3"
@@ -1573,7 +1597,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric3"
@@ -1635,6 +1660,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -1645,8 +1672,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card4"
@@ -1667,7 +1694,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day4"
@@ -1676,7 +1703,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment4"
@@ -1694,7 +1722,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric4"
@@ -1755,6 +1784,8 @@
                             android:layout_width="0dp"
                             android:layout_height="55dp"
                             android:layout_weight="1"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:ems="10"
                             android:hint="Working Hours" />
 
@@ -1766,8 +1797,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card5"
@@ -1788,7 +1819,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day5"
@@ -1797,7 +1828,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment5"
@@ -1815,7 +1847,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric5"
@@ -1877,6 +1910,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -1887,8 +1922,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card6"
@@ -1909,7 +1944,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day6"
@@ -1918,7 +1953,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment6"
@@ -1936,7 +1972,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric6"
@@ -1998,6 +2035,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -2008,8 +2047,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card7"
@@ -2030,7 +2069,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day7"
@@ -2039,7 +2078,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment7"
@@ -2057,7 +2097,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric7"
@@ -2117,6 +2158,8 @@
                             style="@style/edittext"
                             android:layout_width="0dp"
                             android:layout_height="55dp"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Working Hours" />
@@ -2129,8 +2172,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card8"
@@ -2151,7 +2194,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day8"
@@ -2160,7 +2203,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment8"
@@ -2178,7 +2222,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric8"
@@ -2239,6 +2284,8 @@
                             android:layout_width="0dp"
                             android:layout_height="55dp"
                             android:layout_weight="1"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:ems="10"
                             android:hint="Working Hours" />
 
@@ -2250,8 +2297,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card9"
@@ -2272,7 +2319,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day9"
@@ -2281,7 +2328,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment9"
@@ -2299,7 +2347,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric9"
@@ -2360,6 +2409,8 @@
                             android:layout_width="0dp"
                             android:layout_height="55dp"
                             android:layout_weight="1"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:ems="10"
                             android:hint="Working Hours" />
 
@@ -2371,8 +2422,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card10"
@@ -2393,7 +2444,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day10"
@@ -2402,7 +2453,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment10"
@@ -2420,7 +2472,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric10"
@@ -2482,6 +2535,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -2492,8 +2547,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card11"
@@ -2514,7 +2569,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day11"
@@ -2523,7 +2578,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment11"
@@ -2541,7 +2597,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric11"
@@ -2603,6 +2660,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -2613,8 +2672,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card12"
@@ -2635,7 +2694,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Over Time Rate"
-                            android:inputType="textPersonName" />
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_salary_per_day12"
@@ -2644,7 +2703,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Salary per day/ per month" />
+                            android:hint="Salary per day/ per month"
+                            android:inputType="numberDecimal" />
 
                         <EditText
                             android:id="@+id/edit_date_of_payment12"
@@ -2662,7 +2722,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Bonus" />
+                            android:hint="Bonus"
+                            android:inputType="numberDecimal" />
 
                         <ImageView
                             android:id="@+id/iv_biometric12"
@@ -2724,6 +2785,8 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
                             android:hint="Working Hours" />
 
                         <EditText
@@ -2734,8 +2797,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Rest Time"
-                            android:inputType="textPersonName"
-                            android:maxLength="15" />
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_attend_card13"
@@ -2792,6 +2855,497 @@
                             android:layout_height="65dp" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/ll_Worker14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker14"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="14." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="time"
+                            android:maxLength="5" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus14"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric14"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker15"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="15." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="time"
+                            android:maxLength="5"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="time"
+                            android:maxLength="5" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus15"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric15"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker16"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="16." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:maxLength="5"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="time"
+                            android:maxLength="5" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus16"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric16"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Worker17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_num_worker17"
+                            style="@style/textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:text="17." />
+
+                        <EditText
+                            android:id="@+id/edit_name_of_worker17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Name of Worker"
+                            android:inputType="textPersonName"
+                            android:maxLength="30" />
+
+                        <EditText
+                            android:id="@+id/edit_designation17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Designation"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_lenght_of_service17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Length Of Service"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_working_hours17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:inputType="time"
+                            android:maxLength="5"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Working Hours" />
+
+                        <EditText
+                            android:id="@+id/edit_rest_time17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Rest Time"
+                            android:inputType="time"
+                            android:maxLength="5" />
+
+                        <EditText
+                            android:id="@+id/edit_attend_card17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Attend card/ Wage slip"
+                            android:inputType="textPersonName"
+                            android:maxLength="20" />
+
+                        <EditText
+                            android:id="@+id/edit_over_time_rate17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Over Time Rate"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:id="@+id/edit_salary_per_day17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Salary per day/ per month" />
+
+                        <EditText
+                            android:id="@+id/edit_date_of_payment17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Date of Payment" />
+
+                        <EditText
+                            android:id="@+id/edit_bonus17"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="Bonus" />
+
+                        <ImageView
+                            android:id="@+id/iv_biometric17"
+                            style="@style/myImageView"
+                            android:layout_width="100dp"
+                            android:layout_height="65dp" />
+                    </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -2803,8 +3357,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_blue"
                 android:text="Submit"
-                android:textSize="20dp"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

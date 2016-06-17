@@ -4,25 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!--<TextView-->
-    <!--android:id="@+id/txt_rules"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:text="Rule no.1"-->
-    <!--android:textSize="20dp"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<RadioGroup-->
-    <!--android:id="@+id/rg_rule"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="25dp"-->
-    <!--android:layout_marginBottom="5dp"-->
-    <!--android:orientation="horizontal">-->
-
     <CheckBox
         android:id="@+id/rb_rules"
         android:layout_width="wrap_content"
@@ -34,13 +15,13 @@
         android:textSize="17dp"
         android:textStyle="bold" />
 
-    <!--<RadioButton-->
-    <!--android:id="@+id/rb_no"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="No"-->
-    <!--android:textStyle="bold" />-->
-    <!--</RadioGroup>-->
+    <EditText
+        android:id="@+id/edit_remarks"
+        style="@style/edittext"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_margin="5sp"
+        android:hint="Remarks" />
 
     <View
         android:layout_width="match_parent"

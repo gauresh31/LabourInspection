@@ -166,12 +166,12 @@ public class LicenseListActivity extends AppCompatActivity {
 
 //                    if (Utilities.isNetworkAvailable(getApplicationContext())) {
 //
-//                    GetBasicDetails basic = new GetBasicDetails(license_no);
-//                    basic.execute("");
+                    GetBasicDetails basic = new GetBasicDetails(license_no);
+                    basic.execute("");
 //                    } else {
 //                        Utilities.showMessage("No Internet Connection", getApplicationContext());
 //                    }
-                    callLicenseList(license_no);
+//                    callLicenseList(license_no);
                 }
             });
 
@@ -263,7 +263,7 @@ public class LicenseListActivity extends AppCompatActivity {
             response = WebService.getBasicData(license);
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1500);
             } catch (Exception e) {
                 e.printStackTrace();
             }

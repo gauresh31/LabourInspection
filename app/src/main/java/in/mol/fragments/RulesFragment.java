@@ -39,6 +39,7 @@ import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,6 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     private JSONArray arrActs;
     ContentAdapter contentAdapter;
     private DatabaseHelper dbHelper;
-    String[] strRules, strRuleName, strRemarks;
     String[] etValArr;
     RecyclerView recyclerView;
     View view;
@@ -80,13 +80,14 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
     String licence_no, inspection_no;
     JSONObject dataToDatabase;
     private static MainActivity mainActivity;
-    private XmlSerializer xmlSerializer;
+    private static XmlSerializer xmlSerializer;
     LinearLayout ll_skilled, ll_semiskilled, ll_unskilled;
     EditText edit_skilled_basic, edit_skilled_special, edit_skilled_total,
             edit_semi_skilled_basic, edit_semi_skilled_special, edit_semi_total,
-            edit_unskilled_basic, edit_unskilled_special, edit_unskilled_total;
+            edit_unskilled_basic, edit_unskilled_special, edit_unskilled_total, edit_remarks;
     TextView tv_min_wages;
     boolean[] isSelect;
+    static StringWriter writer;
 
     public RulesFragment() {
         // Required empty public constructor
@@ -101,7 +102,6 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         args.putString(ARG_PARAM3, actName);
         args.putString(ARG_PARAM4, userName);
         args.putString(ARG_PARAM5, userID);
-
         fragment.setArguments(args);
 
         viewPager = viewPagr;
@@ -160,6 +160,8 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         edit_unskilled_basic = (EditText) view.findViewById(R.id.edt_unskilled_basic);
         edit_unskilled_special = (EditText) view.findViewById(R.id.edt_unskilled_special_allow);
         edit_unskilled_total = (EditText) view.findViewById(R.id.edt_unskilled_total);
+
+        edit_remarks = (EditText) view.findViewById(R.id.edit_remarks);
 
         tv_min_wages = (TextView) view.findViewById(R.id.tv_minimum_wages);
 
@@ -426,7 +428,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.btn_submit:
-                saveData();
+                saveDataJson();
 //                saveDataXml();
                 break;
 
@@ -435,23 +437,57 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void sendData(XmlSerializer serializer) {
+//        xmlSerializer = Xml.newSerializer();
+        writer = new StringWriter();
+        try {
+//            xmlSerializer.setOutput(writer);
+            xmlSerializer = serializer;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void saveDataXml() {
         try {
-
             if (xmlSerializer != null) {
-                if (strRules.length > 0) {
 
                     try {
+                        xmlSerializer.startTag("", "objLabourActSchema");
+
+                        xmlSerializer.startTag("", "Actid");
+                        xmlSerializer.text("0");
+                        xmlSerializer.endTag("", "Actid");
+                        xmlSerializer.startTag("", "ISSelected");
+                        xmlSerializer.text("" + true);
+                        xmlSerializer.endTag("", "ISSelected");
+
+                        xmlSerializer.startTag("", "SelectedActs");
+
+                        xmlSerializer.startTag("", "LabourActSchema");
+
+                        xmlSerializer.startTag("", "Actid");
+                        xmlSerializer.text(actId);
+                        xmlSerializer.endTag("", "Actid");
+                        xmlSerializer.startTag("", "ActName");
+                        xmlSerializer.text(actNAME);
+                        xmlSerializer.endTag("", "ActName");
+                        xmlSerializer.startTag("", "ISSelected");
+                        xmlSerializer.text("" + true);
+                        xmlSerializer.endTag("", "ISSelected");
+
                         xmlSerializer.startTag("", "objLabourRulesSchema");
-                        for (int i = 0; i < strRules.length; i++) {
+                        int len = isSelect.length;
+                        for (int i = 0; i < len; i++) {
                             xmlSerializer.startTag("", "LabourRulesSchema");
 
                             xmlSerializer.startTag("", "RuleId");
-                            xmlSerializer.text(strRules[i]);
+                            xmlSerializer.text(m_list.get(i).getRuleId());
                             xmlSerializer.endTag("", "RuleId");
 
                             xmlSerializer.startTag("", "RuleName");
-                            xmlSerializer.text(strRuleName[i]);
+                            xmlSerializer.text(m_list.get(i).getRuleName());
                             xmlSerializer.endTag("", "RuleName");
 
                             xmlSerializer.startTag("", "Actid");
@@ -459,18 +495,24 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
                             xmlSerializer.endTag("", "Actid");
 
                             xmlSerializer.startTag("", "IsSelected");
-                            xmlSerializer.text("true");
+                            xmlSerializer.text("" + isSelect[i]);
                             xmlSerializer.endTag("", "IsSelected");
+
+                            xmlSerializer.startTag("", "ComplaintRmk");
+                            xmlSerializer.text(etValArr[i]);
+                            xmlSerializer.endTag("", "ComplaintRmk");
 
                             xmlSerializer.endTag("", "LabourRulesSchema");
                         }
                         xmlSerializer.endTag("", "objLabourRulesSchema");
+                        xmlSerializer.endTag("", "LabourActSchema");
+                        xmlSerializer.endTag("", "SelectedActs");
 
+                        xmlSerializer.endTag("", "objLabourActSchema");
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
             }
             if (actId.equalsIgnoreCase("101")) {
                 xmlSerializer.startTag("", "objInspectionEmpMinWages");
@@ -478,60 +520,234 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
                 xmlSerializer.startTag("", "InspectionEmpMinWages");
                 xmlSerializer.startTag("", "CategoryID");
                 xmlSerializer.text("101");
-                xmlSerializer.startTag("", "CategoryID");
+                xmlSerializer.endTag("", "CategoryID");
 
                 xmlSerializer.startTag("", "Basic");
                 xmlSerializer.text(edit_skilled_basic.getText().toString());
-                xmlSerializer.startTag("", "Basic");
+                xmlSerializer.endTag("", "Basic");
 
                 xmlSerializer.startTag("", "SpecialAllowance");
                 xmlSerializer.text(edit_skilled_special.getText().toString());
-                xmlSerializer.startTag("", "SpecialAllowance");
+                xmlSerializer.endTag("", "SpecialAllowance");
 
                 xmlSerializer.startTag("", "Total");
                 xmlSerializer.text(edit_skilled_total.getText().toString());
-                xmlSerializer.startTag("", "Total");
+                xmlSerializer.endTag("", "Total");
                 xmlSerializer.endTag("", "InspectionEmpMinWages");
 
                 xmlSerializer.startTag("", "InspectionEmpMinWages");
                 xmlSerializer.startTag("", "CategoryID");
                 xmlSerializer.text("102");
-                xmlSerializer.startTag("", "CategoryID");
+                xmlSerializer.endTag("", "CategoryID");
 
                 xmlSerializer.startTag("", "Basic");
                 xmlSerializer.text(edit_semi_skilled_basic.getText().toString());
-                xmlSerializer.startTag("", "Basic");
+                xmlSerializer.endTag("", "Basic");
 
                 xmlSerializer.startTag("", "SpecialAllowance");
                 xmlSerializer.text(edit_semi_skilled_special.getText().toString());
-                xmlSerializer.startTag("", "SpecialAllowance");
+                xmlSerializer.endTag("", "SpecialAllowance");
 
                 xmlSerializer.startTag("", "Total");
                 xmlSerializer.text(edit_semi_total.getText().toString());
-                xmlSerializer.startTag("", "Total");
+                xmlSerializer.endTag("", "Total");
                 xmlSerializer.endTag("", "InspectionEmpMinWages");
 
                 xmlSerializer.startTag("", "InspectionEmpMinWages");
                 xmlSerializer.startTag("", "CategoryID");
                 xmlSerializer.text("103");
-                xmlSerializer.startTag("", "CategoryID");
+                xmlSerializer.endTag("", "CategoryID");
 
                 xmlSerializer.startTag("", "Basic");
                 xmlSerializer.text(edit_unskilled_basic.getText().toString());
-                xmlSerializer.startTag("", "Basic");
+                xmlSerializer.endTag("", "Basic");
 
                 xmlSerializer.startTag("", "SpecialAllowance");
                 xmlSerializer.text(edit_unskilled_special.getText().toString());
-                xmlSerializer.startTag("", "SpecialAllowance");
+                xmlSerializer.endTag("", "SpecialAllowance");
 
                 xmlSerializer.startTag("", "Total");
                 xmlSerializer.text(edit_unskilled_total.getText().toString());
-                xmlSerializer.startTag("", "Total");
+                xmlSerializer.endTag("", "Total");
                 xmlSerializer.endTag("", "InspectionEmpMinWages");
 
                 xmlSerializer.endTag("", "objInspectionEmpMinWages");
             }
             xmlSerializer.endDocument();
+
+//            String xmlOutput = xmlSerializer.toString();
+
+            String xmlOutput = "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>\n" +
+                    "<InspectionActRemarks>\n" +
+                    "    <PresentEmpName>did</PresentEmpName>\n" +
+                    "    <PresentEmpDesg>iitdit</PresentEmpDesg>\n" +
+                    "    <DateOfInspection>9/6/2016</DateOfInspection>\n" +
+                    "    <Remark>Test Data</Remark>\n" +
+                    "    <CreatedBy>411f82df-1702-4e37-9016-6db1c4909ffe</CreatedBy>\n" +
+                    "    <objLabourInspectionSchema>\n" +
+                    "        <LicenseNo>1631000310277242</LicenseNo>\n" +
+                    "        <Institution_Name>CLEAR CARGO LOGISTIK PVT LTD</Institution_Name>\n" +
+                    "        <Institution_Addr>B - 307 , HARBOUR COURT, PLOT NO 25 A B C D, SECTOR NO 02, REVENUE VILLAGE DRONAGIRI, NAVI MUMBAI (M CORP.) , THANE, THANE, 400707</Institution_Addr>\n" +
+                    "        <Owner_Name>NISHIGANDH REDKAR</Owner_Name>\n" +
+                    "        <Owner_Addr>B - 307 , HARBOUR COURT, PLOT NO 25 A B C D, SECTOR NO 02, REVENUE VILLAGE DRONAGIRI, NAVI MUMBAI (M CORP.) , THANE, THANE, 400707</Owner_Addr>\n" +
+                    "        <TotalWorkers>1</TotalWorkers>\n" +
+                    "        <Male>05</Male>\n" +
+                    "        <Female>05</Female>\n" +
+                    "        <TotalDirectEmp>1</TotalDirectEmp>\n" +
+                    "        <TotalContractEmp>1</TotalContractEmp>\n" +
+                    "        <Transgender>0</Transgender>\n" +
+                    "        <StatusId>0</StatusId>\n" +
+                    "        <RegistrationUnder>sut</RegistrationUnder>\n" +
+                    "        <ScheduleEmp>jgusu</ScheduleEmp>\n" +
+                    "        <WorkingHr>jgjg</WorkingHr>\n" +
+                    "        <WeeklyOff>gsfu</WeeklyOff>\n" +
+                    "        <OfficeID>0</OfficeID>\n" +
+                    "        <ServiceID>4</ServiceID>\n" +
+                    "    </objLabourInspectionSchema>\n" +
+                    "    <objInspectedEmpDetails>\n" +
+                    "        <InspectedEmpDetails>\n" +
+                    "            <Name>kdjgd</Name>\n" +
+                    "            <Designation></Designation>\n" +
+                    "            <LengthOfService></LengthOfService>\n" +
+                    "            <WorkingHr></WorkingHr>\n" +
+                    "            <RestHr></RestHr>\n" +
+                    "            <AttendCard></AttendCard>\n" +
+                    "            <OverTimeRate></OverTimeRate>\n" +
+                    "            <SalayPerDay></SalayPerDay>\n" +
+                    "            <DateOfPayment></DateOfPayment>\n" +
+                    "            <Bonus></Bonus>\n" +
+                    "        </InspectedEmpDetails>\n" +
+                    "    </objInspectedEmpDetails>\n" +
+                    "    <objLabourActSchema>\n" +
+                    "        <Actid>0</Actid>\n" +
+                    "        <ISSelected>true</ISSelected>\n" +
+                    "        <SelectedActs>\n" +
+                    "            <LabourActSchema>\n" +
+                    "                <Actid>101</Actid>\n" +
+                    "                <ActName>The Minimum Wages Act, 1948</ActName>\n" +
+                    "                <ISSelected>true</ISSelected>\n" +
+                    "                <objLabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1001</RuleId>\n" +
+                    "                        <RuleName>Muster roll cum wage register in form II is not mentioned.This is breech of Sec.18(1) R/W Rule 27(1)</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>true</IsSelected>\n" +
+                    "                        <ComplaintRmk>hfjgjf</ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1002</RuleId>\n" +
+                    "                        <RuleName>Attendence card cum wage slips are not provided to worker.This is breech of Sec.18(3) R/W Rule 27(2)</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>true</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1003</RuleId>\n" +
+                    "                        <RuleName>Inspection book is not kept. This is breech of Sec.18 R/W Rule 28</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>false</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1004</RuleId>\n" +
+                    "                        <RuleName>The exact wages for overtime work at the double of normal rate of wages are not being paid to the workers.This is breech of Sec.14(1) R/W Rule 26(1) </RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>false</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1005</RuleId>\n" +
+                    "                        <RuleName>Some/ all workers are being paid wages less than the prescribed Minimum wages.This is breech of Sec.12(1)</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>false</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1006</RuleId>\n" +
+                    "                        <RuleName>The worker are being paid wages after the seventh of every month. This is breech of Rules21(1)(a)</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>false</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1007</RuleId>\n" +
+                    "                        <RuleName>The employer has omitted the name of some employees from muster roll cum wage register. This is breech of Rule 31 (A)(III)</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>false</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1008</RuleId>\n" +
+                    "                        <RuleName>The record for last three year has not preserved.This is breech Rule 30</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>false</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1009</RuleId>\n" +
+                    "                        <RuleName>The employer has making false entry in the records. This is breech of Rule 31 (A)(III)</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>false</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1010</RuleId>\n" +
+                    "                        <RuleName>Weekly off is not provided to the worker.This is breech of Rule 23</RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>true</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                    <LabourRulesSchema>\n" +
+                    "                        <RuleId>1011</RuleId>\n" +
+                    "                        <RuleName>The employer has released wages in cash mode.This is breech of Sec 11(1) </RuleName>\n" +
+                    "                        <Actid>101</Actid>\n" +
+                    "                        <IsSelected>true</IsSelected>\n" +
+                    "                        <ComplaintRmk></ComplaintRmk>\n" +
+                    "                    </LabourRulesSchema>\n" +
+                    "                </objLabourRulesSchema>\n" +
+                    "            </LabourActSchema>\n" +
+                    "        </SelectedActs>\n" +
+                    "    </objLabourActSchema>\n" +
+                    "    <objInspectionEmpMinWages>\n" +
+                    "        <InspectionEmpMinWages>\n" +
+                    "            <CategoryID>101</CategoryID>\n" +
+                    "            <Basic>25456</Basic>\n" +
+                    "            <SpecialAllowance>84</SpecialAllowance>\n" +
+                    "            <Total>25540.00</Total>\n" +
+                    "        </InspectionEmpMinWages>\n" +
+                    "        <InspectionEmpMinWages>\n" +
+                    "            <CategoryID>102</CategoryID>\n" +
+                    "            <Basic>95</Basic>\n" +
+                    "            <SpecialAllowance>54</SpecialAllowance>\n" +
+                    "            <Total>149.00</Total>\n" +
+                    "        </InspectionEmpMinWages>\n" +
+                    "        <InspectionEmpMinWages>\n" +
+                    "            <CategoryID>103</CategoryID>\n" +
+                    "            <Basic>84</Basic>\n" +
+                    "            <SpecialAllowance>98</SpecialAllowance>\n" +
+                    "            <Total>182.00</Total>\n" +
+                    "        </InspectionEmpMinWages>\n" +
+                    "    </objInspectionEmpMinWages>\n" +
+                    "</InspectionActRemarks>";
+
+            long result = -1;
+            result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, xmlOutput);
+
+            if (result > 0) {
+                Utilities.showMessage("Data saved sucessfully", context);
+
+//        SendData send = new SendData(dataToUpload);
+//        send.execute("");
+
+//                Intent in = new Intent(context, ActivityActList.class);
+//                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                in.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(in);
+                mainActivity.finish();
+            } else {
+                Utilities.showMessage("Data not saved", context);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -539,7 +755,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void saveData() {
+    private void saveDataJson() {
         JSONObject rulesSchema = new JSONObject();
         JSONObject dataToUpload = new JSONObject();
         JSONObject rules = new JSONObject();
@@ -549,47 +765,39 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         try {
 //            dataToDatabase.put("objLabourInspectionSchema", basicInfo);
             dataToDatabase = new JSONObject(basicInfo);
-
             empData = dataToDatabase.optJSONObject("objLabourInspectionSchema");
+
             dataToDatabase.put("PresentEmpName", empData.getString("PresentEmpName"));
             dataToDatabase.put("PresentEmpDesg", empData.getString("PresentEmpDesg"));
             dataToDatabase.put("DateOfInspection", empData.getString("DateOfInspection"));
-            dataToDatabase.put("Remark", "Test Data");
-            dataToDatabase.put("CreatedBy", "411f82df-1702-4e37-9016-6db1c4909ffe");
-
+            dataToDatabase.put("Remark", edit_remarks.getText().toString());
+            dataToDatabase.put("CreatedBy", user_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (strRules.length > 0) {
-            JSONArray arrRules = new JSONArray();
+        JSONArray arrRules = new JSONArray();
+        int len = m_list.size();
+        for (int i = 0; i < len; i++) {
+            try {
+                arrRules = rules
+                        .getJSONArray("LabourRulesSchema");
+            } catch (JSONException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            try {
+                JSONObject jsonData = new JSONObject();
+                jsonData.put("RuleId", m_list.get(i).getRuleId());
+                jsonData.put("RuleName", m_list.get(i).getRuleName());
+                jsonData.put("Actid", actId);
+                jsonData.put("IsSelected", isSelect[i]);
+                jsonData.put("ComplaintRmk", etValArr[i]);
+                arrRules.put(jsonData);
 
-            int len = strRules.length;
-            for (int i = 0; i < len; i++) {
-                try {
-                    arrRules = rules
-                            .getJSONArray("LabourRulesSchema");
-                } catch (JSONException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-//                if (m_list != null) {
-                try {
-                    JSONObject jsonData = new JSONObject();
-                    jsonData.put("RuleId", m_list.get(i).getActId());
-                    jsonData.put("RuleName", m_list.get(i).getActName());
-                    jsonData.put("Actid", actId);
-                    jsonData.put("IsSelected", isSelect[i]);
-                    jsonData.put("ComplaintRmk", etValArr[i]);
-                    arrRules.put(jsonData);
-
-                    rules.put("LabourRulesSchema", arrRules.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-//                } else {
-//
-//                }
+                rules.put("LabourRulesSchema", arrRules);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
 
@@ -599,12 +807,17 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
             actSchema.put("Actid", actId);
             actSchema.put("ActName", actNAME);
             actSchema.put("ISSelected", true);
-            actSchema.put("objLabourRulesSchema", rules);
+            actSchema.put("objLabourRulesSchema", arrRules);
 
-            rulesSchema.put("LabourActSchema", actSchema);
+//            rulesSchema.put("LabourActSchema", actSchema);
 
-            selectedActs.put("SelectedActs", rulesSchema);
-            selectedActs.put("ISSelected", true);
+            JSONArray selActs = new JSONArray();
+            selActs.put(actSchema);
+
+            selectedActs.put("SelectedActs", selActs);
+            selectedActs.put("ISSelected", false);
+            selectedActs.put("Actid", actId);
+            selectedActs.put("ActName", actNAME);
 
             dataToDatabase.put("objLabourActSchema", selectedActs);
 
@@ -637,29 +850,29 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
                 json.put("Total", edit_unskilled_total.getText().toString());
                 jarr.put(json);
 
-                minWages.put("InspectionEmpMinWages", jarr.toString());
+//                minWages.put("InspectionEmpMinWages", jarr);
 
-                dataToDatabase.put("objInspectionEmpMinWages", minWages);
+                dataToDatabase.put("objInspectionEmpMinWages", jarr);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         try {
-            dataToUpload.put("InspectionActRemarks", dataToDatabase);
+//            dataToUpload.put("InspectionActRemarks", dataToDatabase);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println(dataToUpload.toString());
+        System.out.println(dataToDatabase.toString());
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
         long result = -1;
-//        result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToUpload.toString());
+        result = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToDatabase.toString());
 
         if (result > 0) {
             Utilities.showMessage("Data saved sucessfully", context);
@@ -689,14 +902,10 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(String... params) {
 
-            WebService.uploadData(json);
+            WebService.uploadData(json.toString());
 
             return null;
         }
-    }
-
-    public void sendData(XmlSerializer serializer) {
-        xmlSerializer = serializer;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -753,11 +962,12 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         public ContentAdapter(List<SpinnerObject> result) {
             lst_rules = result;
             size = lst_rules.size();
-            strRules = new String[size];
-            strRuleName = new String[size];
-            strRemarks = new String[size];
             etValArr = new String[size];
             isSelect = new boolean[size];
+
+            for(int i = 0 ; i < etValArr.length ; i++){
+                etValArr[i] = "";
+            }
         }
 
         @Override
@@ -772,7 +982,7 @@ public class RulesFragment extends Fragment implements View.OnClickListener {
         public void onBindViewHolder(final ViewHolder holder, final int position) {
 //            JSONObject jsonData;
 //                jsonData = arrRule.getJSONObject(position);
-            String actName = lst_rules.get(position).getActName();
+            String actName = lst_rules.get(position).getRuleName();
             holder.rb_rules.setText(actName);
 
             final SpinnerObject obj = lst_rules.get(position);

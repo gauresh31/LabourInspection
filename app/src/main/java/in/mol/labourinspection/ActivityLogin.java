@@ -7,6 +7,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -81,7 +82,8 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void setDefaults() {
-        mUserNameView.setText("sadmin");
+//        mUserNameView.setText("sadmin");
+        mUserNameView.setText("THA.30.SIR.1.1");
         mPasswordView.setText("Pass@123");
     }
 
@@ -93,17 +95,18 @@ public class ActivityLogin extends AppCompatActivity {
         //Async Request
 //        if (Utilities.isNetworkAvailable(getApplicationContext())) {
 //
-//            mAuthTask = new UserLoginTask(username, password, getMacAddress());
-//            mAuthTask.execute("");
+            mAuthTask = new UserLoginTask(username, password, getMacAddress());
+            mAuthTask.execute("");
 //        } else {
 //            Utilities.showMessage("No Internet Connection", getApplicationContext());
 //        }
 
-        //Request Using Volley Library
-        loginUsingVolley();
+//        String macAddr = getMachineId();
+//        //Request Using Volley Library
+//        loginUsingVolley(macAddr);
     }
 
-    public void loginUsingVolley() {
+    public void loginUsingVolley(String macAddr) {
         String username = mUserNameView.getText().toString();
         String password = mPasswordView.getText().toString();
         String passwordMD5 = md5(password);
@@ -114,12 +117,11 @@ public class ActivityLogin extends AppCompatActivity {
             progressDialog.setCancelable(true);
             progressDialog.show();
 
-//            mPasswordView.setText(passwordMD5);
-
             RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
 
             JsonObjectRequest stringRequest = new JsonObjectRequest(
-                    WebService.Login_Url + "Username=" + username + "&Password=" + passwordMD5 + "&MachineID=" + "100001000100101", null,
+                    WebService.Login_Url + "Username=" + username + "&Password=" + passwordMD5 + "&MachineID=" + macAddr//"100001000100101"
+                    , null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -129,10 +131,11 @@ public class ActivityLogin extends AppCompatActivity {
                             Log.i("Inside Response", response.toString());
                             try {
                                 String status = response.getString("LoginStatus");
+                                String userId = response.getString("UserID");
 
                                 if (status.equalsIgnoreCase("Successfull")) {
                                     session.createUserLoginSession(response.toString());
-                                    callLicenseList();
+                                    callLicenseList(userId);
                                 } else {
                                     Utilities.showMessage("Invalid Username Or Password", getApplicationContext());
                                 }
@@ -147,7 +150,7 @@ public class ActivityLogin extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                     Log.i("Inside Error ", error.toString());
-                    Utilities.showMessage("Error occurred....please try again", getApplicationContext());
+                    Utilities.showMessage("Unable to authenticate....please try again", getApplicationContext());
                 }
             });
 
@@ -157,7 +160,7 @@ public class ActivityLogin extends AppCompatActivity {
         }
     }
 
-    public void callLicenseList() {
+    public void callLicenseList(String user_id) {
         if (Utilities.isNetworkAvailable(getApplicationContext())) {
             progressDialog = new ProgressDialog(ActivityLogin.this);
             progressDialog.setMessage("Downloading License List...");
@@ -167,7 +170,7 @@ public class ActivityLogin extends AppCompatActivity {
             RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
 
             JsonArrayRequest stringRequest = new JsonArrayRequest(
-                    WebService.License_Url + "UserID=" + "411F82DF-1702-4E37-9016-6DB1C4909FFE",
+                    WebService.License_Url + "UserID=" + user_id,//"D6E77167-3016-4A56-8EC7-D377DBD01757",//"411F82DF-1702-4E37-9016-6DB1C4909FFE",
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
@@ -230,7 +233,7 @@ public class ActivityLogin extends AppCompatActivity {
                 response = WebService.loginService(user_name, passwordMD5, mMacAddr);
 
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1500);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -299,7 +302,7 @@ public class ActivityLogin extends AppCompatActivity {
             response = WebService.getLicenseList(userId);
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1500);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -362,6 +365,12 @@ public class ActivityLogin extends AppCompatActivity {
         WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
         String macAddr = wifiInfo.getMacAddress();
         return macAddr;
+    }
+
+    public String getMachineId() {
+        String android_id = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        return android_id;
     }
 
     public static final String md5(final String s) {

@@ -56,8 +56,7 @@ public class DataSyncService extends Service {
                         if (data.getData() != null) {
                             System.out.println(data.getData());
                             try {
-                                JSONObject json = new JSONObject(data.getData());
-                                response = WebService.uploadData(json);
+                                response = WebService.uploadData(data.getData());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

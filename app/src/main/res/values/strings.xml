@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Labour Randomization</string>
+    <string name="app_name">Randomization and Inspection</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
@@ -30,7 +30,7 @@
     <!--Acts-->
     <string name="act1948">I have visited the above mentioned establishment for the purpose of inspection under The Minimum Wages Act, 1948
                                 and Maharashtra Minimum Wages Rules, 1963. During inspection </string>
-    
+
     <string name="act_1948">The Minimum Wages Act, 1948</string>
     <string name="act_1936">The Payement of Wages Act, 1936</string>
     <string name="act_1976">The Equal Remuration Act, 1976</string>
@@ -48,4 +48,22 @@
     <string name="act_1986">The Child Labour (Prohibition and Regulation) Act, 1986</string>
 
     <string name="iv_footer">footer</string>
+
+    <string-array name="weekly_off">
+        <item name="Select" />
+        <item name="Sunday" />
+        <item name="Monday" />
+        <item name="Tuesday" />
+        <item name="Wednesday" />
+        <item name="Thursday" />
+        <item name="Friday" />
+        <item name="Saturday" />
+    </string-array>
+
+    <string-array name="leave_wages">
+        <item name="Select" />
+        <item name="Yes" />
+        <item name="No" />
+    </string-array>
+
 </resources>

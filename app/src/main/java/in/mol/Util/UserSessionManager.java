@@ -1,9 +1,11 @@
-package in.mol.models;
+package in.mol.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.HashMap;
+
+import in.mol.models.ApplicationConstants;
 
 /**
  * Created by 1742 on 29-04-2016.

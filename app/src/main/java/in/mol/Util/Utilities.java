@@ -1,4 +1,4 @@
-package in.mol.models;
+package in.mol.Util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

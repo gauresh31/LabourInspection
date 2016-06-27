@@ -173,12 +173,35 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_address_owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Address of Employer:" />
+
+                <EditText
+                    android:id="@+id/edit_address_of_employer"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="105dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:maxLength="250"
+                    android:maxLines="5" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_year_of_starting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/textview"
@@ -193,7 +216,8 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:maxLength="10" />
+                    android:inputType="number"
+                    android:maxLength="4" />
             </LinearLayout>
 
             <LinearLayout
@@ -918,7 +942,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:inputType="number"
-                            android:maxLength="4" />
+                            android:maxLength="10" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -941,7 +965,30 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:inputType="number"
-                            android:maxLength="4" />
+                            android:maxLength="10" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textview"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Transgender: " />
+
+                        <EditText
+                            android:id="@+id/edit_transgender"
+                            style="@style/edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:maxLength="10" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -964,7 +1011,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:inputType="number"
-                            android:maxLength="5" />
+                            android:maxLength="10" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -974,8 +1021,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/textview"
@@ -1048,9 +1094,9 @@
 
                 <TextView
                     style="@style/textview"
-                    android:layout_width="150dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:text="Working Hours :" />
+                    android:text="Working Hours(HH:MM) :" />
 
                 <EditText
                     android:id="@+id/edit_working_hours"
@@ -1059,8 +1105,18 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:maxLength="50"
+                    android:inputType="time"
+                    android:focusable="false"
+                    android:maxLength="5"
                     android:paddingRight="5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/textview"
@@ -1069,9 +1125,9 @@
                     android:layout_marginLeft="10dp"
                     android:text="Weekly Off :" />
 
-                <EditText
-                    android:id="@+id/edit_weekly_off"
-                    style="@style/edittext"
+                <Spinner
+                    android:id="@+id/spn_weekly_off"
+                    style="@style/spinner"
                     android:layout_width="0dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
@@ -1084,8 +1140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/textview"
@@ -1100,8 +1155,8 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="date"
-                    android:maxLength="10" />
+                    android:inputType="number"
+                    android:maxLength="4" />
             </LinearLayout>
 
             <LinearLayout
@@ -1271,9 +1326,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time1"
@@ -1346,9 +1401,9 @@
                         <Spinner
                             android:id="@+id/spin_wages1"
                             android:layout_width="0dp"
-                            android:background="@color/primary_color"
                             android:layout_height="55dp"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:background="@color/primary_color" />
 
                         <ImageView
                             android:id="@+id/iv_biometric1"
@@ -1412,7 +1467,7 @@
                             android:ems="10"
                             android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"/>
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time2"
@@ -1535,9 +1590,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time3"
@@ -1660,9 +1715,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time4"
@@ -1784,10 +1839,10 @@
                             android:layout_width="0dp"
                             android:layout_height="55dp"
                             android:layout_weight="1"
-                            android:inputType="time"
-                            android:maxLength="5"
                             android:ems="10"
-                            android:hint="Working Hours" />
+                            android:hint="Working Hours"
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time5"
@@ -1910,9 +1965,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time6"
@@ -2035,9 +2090,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time7"
@@ -2158,11 +2213,11 @@
                             style="@style/edittext"
                             android:layout_width="0dp"
                             android:layout_height="55dp"
-                            android:inputType="time"
-                            android:maxLength="5"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Working Hours" />
+                            android:hint="Working Hours"
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time8"
@@ -2284,10 +2339,10 @@
                             android:layout_width="0dp"
                             android:layout_height="55dp"
                             android:layout_weight="1"
-                            android:inputType="time"
-                            android:maxLength="5"
                             android:ems="10"
-                            android:hint="Working Hours" />
+                            android:hint="Working Hours"
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time9"
@@ -2409,10 +2464,10 @@
                             android:layout_width="0dp"
                             android:layout_height="55dp"
                             android:layout_weight="1"
-                            android:inputType="time"
-                            android:maxLength="5"
                             android:ems="10"
-                            android:hint="Working Hours" />
+                            android:hint="Working Hours"
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time10"
@@ -2535,9 +2590,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time11"
@@ -2660,9 +2715,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time12"
@@ -2785,9 +2840,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time13"
@@ -2908,9 +2963,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time14"
@@ -3031,9 +3086,9 @@
                             android:layout_height="55dp"
                             android:layout_weight="1"
                             android:ems="10"
+                            android:hint="Working Hours"
                             android:inputType="time"
-                            android:maxLength="5"
-                            android:hint="Working Hours" />
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time15"
@@ -3153,10 +3208,10 @@
                             android:layout_width="0dp"
                             android:layout_height="55dp"
                             android:layout_weight="1"
-                            android:inputType="time"
-                            android:maxLength="5"
                             android:ems="10"
-                            android:hint="Working Hours" />
+                            android:hint="Working Hours"
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time16"
@@ -3275,11 +3330,11 @@
                             style="@style/edittext"
                             android:layout_width="0dp"
                             android:layout_height="55dp"
-                            android:inputType="time"
-                            android:maxLength="5"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="Working Hours" />
+                            android:hint="Working Hours"
+                            android:inputType="time"
+                            android:maxLength="5" />
 
                         <EditText
                             android:id="@+id/edit_rest_time17"

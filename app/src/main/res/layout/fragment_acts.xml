@@ -97,10 +97,64 @@
                 android:visibility="gone" />
 
             <LinearLayout
-                android:id="@+id/ll_skilled"
+                android:id="@+id/ll_highly_skilled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_minimum_wages"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:inputType="textPersonName"
+                    android:maxLength="30"
+                    android:text="Highly-Skilled" />
+
+                <EditText
+                    android:id="@+id/edt_highly_skilled_basic"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Basic"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10" />
+
+                <EditText
+                    android:id="@+id/edt_highly_skilled_special_allow"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Special Allowance"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10" />
+
+                <EditText
+                    android:id="@+id/edt_highly_skilled_total"
+                    style="@style/edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="Total"
+                    android:maxLength="13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_skilled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_highly_skilled"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -125,7 +179,7 @@
                     android:ems="10"
                     android:hint="Basic"
                     android:inputType="numberDecimal"
-                    android:maxLength="20" />
+                    android:maxLength="10" />
 
                 <EditText
                     android:id="@+id/edt_skilled_special_allow"
@@ -136,7 +190,7 @@
                     android:ems="10"
                     android:hint="Special Allowance"
                     android:inputType="numberDecimal"
-                    android:maxLength="20" />
+                    android:maxLength="10" />
 
                 <EditText
                     android:id="@+id/edt_skilled_total"
@@ -147,7 +201,7 @@
                     android:ems="10"
                     android:focusable="false"
                     android:hint="Total"
-                    android:maxLength="12" />
+                    android:maxLength="13" />
             </LinearLayout>
 
             <LinearLayout
@@ -179,7 +233,7 @@
                     android:ems="10"
                     android:hint="Basic"
                     android:inputType="numberDecimal"
-                    android:maxLength="20" />
+                    android:maxLength="10" />
 
                 <EditText
                     android:id="@+id/edt_semi_skilled_special_allow"
@@ -190,7 +244,7 @@
                     android:ems="10"
                     android:hint="Special Allowance"
                     android:inputType="numberDecimal"
-                    android:maxLength="20" />
+                    android:maxLength="10" />
 
                 <EditText
                     android:id="@+id/edt_semi_skilled_total"
@@ -201,7 +255,7 @@
                     android:ems="10"
                     android:focusable="false"
                     android:hint="Total"
-                    android:maxLength="12" />
+                    android:maxLength="13" />
             </LinearLayout>
 
             <LinearLayout
@@ -233,7 +287,7 @@
                     android:ems="10"
                     android:hint="Basic"
                     android:inputType="numberDecimal"
-                    android:maxLength="20" />
+                    android:maxLength="10" />
 
                 <EditText
                     android:id="@+id/edt_unskilled_special_allow"
@@ -244,7 +298,7 @@
                     android:ems="10"
                     android:hint="Special Allowance"
                     android:inputType="numberDecimal"
-                    android:maxLength="20" />
+                    android:maxLength="10" />
 
                 <EditText
                     android:id="@+id/edt_unskilled_total"
@@ -255,7 +309,7 @@
                     android:ems="10"
                     android:focusable="false"
                     android:hint="Total"
-                    android:maxLength="12" />
+                    android:maxLength="13" />
             </LinearLayout>
 
         </RelativeLayout>

@@ -38,6 +38,11 @@
         <item name="android:textSize">@dimen/edittext_font</item>
     </style>
 
+    <style name="spinner" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/edittext</item>
+        <item name="android:textSize">@dimen/edittext_font</item>
+    </style>
+
     <style name="myImageView">
         <!-- 3dp so the background border to be visible -->
         <item name="android:padding">1dp</item>

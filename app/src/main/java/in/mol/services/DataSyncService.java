@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 import in.mol.database.DatabaseHelper;
 import in.mol.models.M_Data;
-import in.mol.models.Utilities;
+import in.mol.Util.Utilities;
 
 /**
  * Created by 1742 on 06-04-2016.

@@ -42,6 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase;
 
     private final Context myContext;
+
+    SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yy-hh-mm-ss");
     File f, folder;
 
     /**
@@ -112,13 +114,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     SQLiteDatabase.OPEN_READONLY);
 
         } catch (SQLiteException e) {
-
             // database does't exist yet.
-
         }
 
         if (checkDB != null) {
-
             checkDB.close();
 
         }
@@ -157,9 +156,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void copyAppDbToDownloadFolder() throws IOException {
-
-        SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yy-hh-mm-ss");
-
         try {
             File backupDB = new File(
                     Environment
@@ -286,6 +282,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("InspectionNo", inspection_no);
         cv.put("JsonData", jsonData);
         cv.put("IsUploaded", false);
+        cv.put("DateTime", sd.format(new Date()));
 
         long result = -1;
         try {

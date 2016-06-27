@@ -1,11 +1,5 @@
 package in.mol.labourinspection;
 
-import android.view.View;
-import android.widget.AdapterView;
-
-import in.mol.models.SpinnerObject;
-import in.mol.models.Utilities;
-
 /**
  * Created by 1742 on 28-04-2016.
  */

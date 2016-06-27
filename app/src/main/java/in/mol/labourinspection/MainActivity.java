@@ -10,9 +10,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,10 +20,10 @@ import java.util.List;
 
 import in.mol.fragments.FragmentActs;
 import in.mol.fragments.FragmentBasicDetails;
+import in.mol.fragments.FragmentEmployerDetails;
 import in.mol.fragments.FragmentRemarks;
-import in.mol.fragments.RulesFragment;
 import in.mol.models.ApplicationConstants;
-import in.mol.models.UserSessionManager;
+import in.mol.Util.UserSessionManager;
 
 public class MainActivity extends AppCompatActivity implements FragmentBasicDetails.OnFragmentInteractionListener {
 
@@ -98,9 +95,11 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
     private void setupViewPager(final ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(FragmentBasicDetails.
-                newInstance(MainActivity.this, getApplicationContext(), viewPager, "", act_id, act_name, username), "Basic Data");
+                newInstance(MainActivity.this, getApplicationContext(), viewPager, username, userId), "Basic Data");
+        adapter.addFragment(FragmentEmployerDetails.
+                newInstance(MainActivity.this, getApplicationContext(), viewPager), "Employer Details");
         adapter.addFragment(FragmentActs.
-                newInstance(MainActivity.this, getApplicationContext(), viewPager, act_id, act_name, username, userId), "Acts");
+                newInstance(MainActivity.this, getApplicationContext(), viewPager, username, userId), "Acts");
         adapter.addFragment(FragmentRemarks.
                 newInstance(MainActivity.this, getApplicationContext(), viewPager, username, userId), "Remarks");
 //        adapter.addFragment(RulesFragment.
@@ -142,4 +141,17 @@ public class MainActivity extends AppCompatActivity implements FragmentBasicDeta
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+        //get current tab index.
+        int index = tabs.getSelectedTabPosition();
+
+        //decide what to do
+        if(index!=0){
+            viewPager.setCurrentItem(index-1);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

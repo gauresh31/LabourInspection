@@ -9,23 +9,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.morpho.capture.MorphoTabletFPSensorDevice;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,8 +27,8 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import in.mol.models.UserSessionManager;
-import in.mol.models.Utilities;
+import in.mol.Util.UserSessionManager;
+import in.mol.Util.Utilities;
 import in.mol.models.VolleySingleton;
 import in.mol.services.DataSyncService;
 import in.mol.services.WebService;
@@ -119,9 +113,8 @@ public class ActivityLogin extends AppCompatActivity {
 
             RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
 
-            JsonObjectRequest stringRequest = new JsonObjectRequest(
-                    WebService.Login_Url + "Username=" + username + "&Password=" + passwordMD5 + "&MachineID=" + macAddr//"100001000100101"
-                    , null,
+            String URL = WebService.Login_Url + "Username=" + username + "&Password=" + passwordMD5 + "&MachineID=" + macAddr;//"100001000100101";
+            JsonObjectRequest stringRequest = new JsonObjectRequest(URL, null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

@@ -2,31 +2,21 @@ package in.mol.labourinspection;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.TextView;
-import android.app.Activity;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
@@ -37,8 +27,8 @@ import java.io.IOException;
 
 import in.mol.database.DatabaseHelper;
 import in.mol.models.ApplicationConstants;
-import in.mol.models.UserSessionManager;
-import in.mol.models.Utilities;
+import in.mol.Util.UserSessionManager;
+import in.mol.Util.Utilities;
 import in.mol.models.VolleySingleton;
 import in.mol.services.WebService;
 
@@ -67,6 +57,14 @@ public class LicenseListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         session.createBasicInfoSession("");
+
+        try {
+            db.copyAppDbToDownloadFolder();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
     }
 
     private void init() {
@@ -92,13 +90,6 @@ public class LicenseListActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            db.copyAppDbToDownloadFolder();
-        } catch (IOException e) {
-
             e.printStackTrace();
         }
     }
@@ -202,7 +193,7 @@ public class LicenseListActivity extends AppCompatActivity {
                             Log.i("Inside Response", "onResponse");
                             if (response != null) {
                                 session.createBasicDetailsInfo(response.toString());
-                                Intent in = new Intent(LicenseListActivity.this, ActivityActList.class);
+                                Intent in = new Intent(LicenseListActivity.this, MainActivity.class);
                                 startActivity(in);
                             } else {
                                 Utilities.showMessage("Fail to load data...check Internet connection", getApplicationContext());
@@ -262,12 +253,6 @@ public class LicenseListActivity extends AppCompatActivity {
             String response;
             response = WebService.getBasicData(license);
 
-            try {
-                Thread.sleep(1500);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             return response;
         }
 
@@ -300,7 +285,7 @@ public class LicenseListActivity extends AppCompatActivity {
             if (resp != null) {
                 session.createBasicDetailsInfo(resp);
                 Log.i("Response: ", resp);
-                Intent in = new Intent(LicenseListActivity.this, ActivityActList.class);
+                Intent in = new Intent(LicenseListActivity.this, MainActivity.class);
                 startActivity(in);
             } else {
                 Utilities.showMessage("Fail to get data...check Internet connection", getApplicationContext());

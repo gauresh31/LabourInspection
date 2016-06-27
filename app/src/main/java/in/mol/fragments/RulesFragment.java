@@ -2,7 +2,6 @@ package in.mol.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -15,26 +14,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xml.sax.SAXException;
 
 import org.xmlpull.v1.XmlSerializer;
 
@@ -45,12 +38,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.mol.database.DatabaseHelper;
-import in.mol.labourinspection.ActivityActList;
 import in.mol.labourinspection.MainActivity;
 import in.mol.labourinspection.R;
 import in.mol.models.SpinnerObject;
-import in.mol.models.UserSessionManager;
-import in.mol.models.Utilities;
+import in.mol.Util.UserSessionManager;
+import in.mol.Util.Utilities;
 import in.mol.services.WebService;
 
 public class RulesFragment extends Fragment implements View.OnClickListener {

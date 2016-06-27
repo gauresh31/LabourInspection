@@ -1,16 +1,14 @@
 package in.mol.fragments;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -18,10 +16,8 @@ import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -39,18 +35,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+import in.mol.Util.CustomTimeDialog;
 import in.mol.database.DatabaseHelper;
 import in.mol.labourinspection.MainActivity;
 import in.mol.labourinspection.R;
 import in.mol.models.SpinnerObject;
-import in.mol.models.UserSessionManager;
-import in.mol.models.Utilities;
+import in.mol.Util.UserSessionManager;
+import in.mol.Util.Utilities;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,10 +58,9 @@ import in.mol.models.Utilities;
 public class FragmentBasicDetails extends Fragment implements View.OnClickListener, AuthBfdCap {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "acts";
-    private static final String ARG_PARAM2 = "act_ID";
-    private static final String ARG_PARAM3 = "act_NAME";
-    private static final String ARG_PARAM4 = "User_NAME";
+
+    private static final String ARG_PARAM1 = "User_NAME";
+    private static final String ARG_PARAM2 = "User_ID";
 
     // TODO: Rename and change types of parameters
     private String actList;
@@ -79,8 +73,9 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     private String[] strBioTemplate;
     private ScrollView scroll_list;
     private TextView tvHeader;
-    private EditText name_of_establishment, address, address_site, name_of_employer, male, female, total,
-            registration, schedule_empl, working_hours, weekly_off, no_of_contractors_count, representative_of_principle,
+    private static EditText working_hours;
+    private EditText name_of_establishment, address, address_site, name_of_employer, address_employer, male, female, transgender, total,
+            registration, schedule_empl, no_of_contractors_count, representative_of_principle,
             direct_worker, contract_worker, year_of_starting, accounting_year, no_of_workers, declaration_designation, is_present;
     private EditText edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement,
             edit_name_of_contractor2, edit_nature_of_work2, edit_no_of_workers2, edit_date_of_commencement2,
@@ -130,6 +125,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
     private Spinner spin_weeklyoff1, spin_wages1;
 
+    private Spinner spn_weekly_off;
     static EditText date;
 
     private ImageView biometric_worker_1, biometric_worker_2, biometric_worker_3, biometric_worker_4, biometric_worker_5,
@@ -154,7 +150,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     JSONArray arrActs;
     List<SpinnerObject> m_list;
     private static UserSessionManager session;
-    String licence_no, inspection_no, actId, actNAME, user_name;
+    String licence_no, inspection_no, actId, actNAME, user_name, user_id;
     JSONObject json;
     XmlSerializer serializer;
     JSONObject jsonWorker;
@@ -164,22 +160,14 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param acts Parameter 1.
-     * @return A new instance of fragment FragmentBasicDetails.
-     */
     // TODO: Rename and change types and number of parameters
-    public static FragmentBasicDetails newInstance(MainActivity activityMain, Context con, ViewPager vPager,
-                                                   String acts, String actID, String actName, String userName) {
+    public static FragmentBasicDetails newInstance(MainActivity activityMain, Context con, ViewPager vPager, String userName, String userId) {
         FragmentBasicDetails fragment = new FragmentBasicDetails();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, acts);
-        args.putString(ARG_PARAM2, actID);
-        args.putString(ARG_PARAM3, actName);
-        args.putString(ARG_PARAM4, userName);
+
+        args.putString(ARG_PARAM1, userName);
+        args.putString(ARG_PARAM2, userId);
+
         fragment.setArguments(args);
 
         viewPager = vPager;
@@ -193,10 +181,8 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            actList = getArguments().getString(ARG_PARAM1);
-            actId = getArguments().getString(ARG_PARAM2);
-            actNAME = getArguments().getString(ARG_PARAM3);
-            user_name = getArguments().getString(ARG_PARAM4);
+            user_name = getArguments().getString(ARG_PARAM1);
+            user_id = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -213,7 +199,6 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
         return view;
     }
-
 
     private void init() {
 
@@ -234,14 +219,15 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         name_of_establishment = (EditText) view.findViewById(R.id.edit_name_of_establishment);
         address = (EditText) view.findViewById(R.id.edit_address);
         address_site = (EditText) view.findViewById(R.id.edit_address_of_site);
+        address_employer = (EditText) view.findViewById(R.id.edit_address_of_employer);
         name_of_employer = (EditText) view.findViewById(R.id.edit_name_of_employer);
         male = (EditText) view.findViewById(R.id.edit_male);
         female = (EditText) view.findViewById(R.id.edit_female);
+        transgender = (EditText) view.findViewById(R.id.edit_transgender);
         total = (EditText) view.findViewById(R.id.edit_total);
         registration = (EditText) view.findViewById(R.id.edit_registration_under);
         schedule_empl = (EditText) view.findViewById(R.id.edit_schedule_employment);
         working_hours = (EditText) view.findViewById(R.id.edit_working_hours);
-        weekly_off = (EditText) view.findViewById(R.id.edit_weekly_off);
         date = (EditText) view.findViewById(R.id.edit_date_of_inspection);
         representative_of_principle = (EditText) view.findViewById(R.id.edit_representative_of_principle);
         direct_worker = (EditText) view.findViewById(R.id.edit_direct_employees);
@@ -251,6 +237,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         no_of_workers = (EditText) view.findViewById(R.id.edit_no_of_workers);
         declaration_designation = (EditText) view.findViewById(R.id.edit_declar_designation);
         is_present = (EditText) view.findViewById(R.id.edit_is_present);
+        spn_weekly_off = (Spinner) view.findViewById(R.id.spn_weekly_off);
 
         ll_working_hours = (LinearLayout) view.findViewById(R.id.ll_working_hours);
         ll_employees = (LinearLayout) view.findViewById(R.id.ll_no_of_employees);
@@ -567,24 +554,21 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         lstWeekly.add("Select");
         lstWeekly.add("Sunday");
         lstWeekly.add("Monday");
-        lstWeekly.add("Select");
-        lstWeekly.add("Select");
-        lstWeekly.add("Select");
+        lstWeekly.add("Tuesday");
+        lstWeekly.add("Wednesday");
+        lstWeekly.add("Thursday");
+        lstWeekly.add("Friday");
+        lstWeekly.add("Saturday");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                context, android.R.layout.simple_dropdown_item_1line, lstWeekly);
+                context, R.layout.default_textview, lstWeekly);
 
-        spin_weeklyoff1.setAdapter(adapter);
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(
-                context, android.R.layout.simple_dropdown_item_1line, lstWeekly);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin_wages1.setAdapter(adapter1);
+        spn_weekly_off.setAdapter(adapter);
 
         licence_no = session.getLicenseNo();
         inspection_no = session.getInspectionNo();
 
-        tvHeader.setText(actNAME);
+        tvHeader.setText("Basic Details");
 
         String basicData = session.getInfoBasedOnLicense();
 
@@ -596,79 +580,60 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             name_of_establishment.setText(json.getString("Institution_Name"));
             address.setText(json.getString("Institution_Addr"));
             name_of_employer.setText(json.getString("Owner_Name"));
+            address_employer.setText(json.getString("Owner_Addr"));
             direct_worker.setText(json.getString("TotalDirectEmp"));
             contract_worker.setText(json.getString("TotalContractEmp"));
-
             total.setText(json.getString("TotalWorkers"));
             male.setText(json.getString("Male"));
             female.setText(json.getString("Female"));
-
+            transgender.setText(json.getString("Transgender"));
 
         } catch (Exception e) {
             male.setText("0");
             female.setText("0");
+            transgender.setText("0");
             e.printStackTrace();
         }
 
-        String basicInfo = session.getBasicDetailsInfo();
-        JSONObject basic;
-        JSONObject objJson;
-        try {
-            basic = new JSONObject(basicInfo);
-            objJson = basic.optJSONObject("objLabourInspectionSchema");
+//        String basicInfo = session.getBasicDetailsInfo();
+//        JSONObject basic;
+//        JSONObject objJson;
+//        try {
+//            basic = new JSONObject(basicInfo);
+//            objJson = basic.optJSONObject("objLabourInspectionSchema");
+//
+//            male.setText(objJson.getString("Male"));
+//            female.setText(objJson.getString("Female"));
+//            registration.setText(objJson.getString("RegistrationUnder"));
+//            schedule_empl.setText(objJson.getString("ScheduleEmp"));
+//            working_hours.setText(objJson.getString("WorkingHr"));
+//            weekly_off.setText(objJson.getString("WeeklyOff"));
+//            date.setText(objJson.getString("DateOfInspection"));
+//            representative_of_principle.setText(objJson.getString("representative_of_principle"));
+//            direct_worker.setText(objJson.getString("TotalDirectEmp"));
+//            contract_worker.setText(objJson.getString("TotalContractEmp"));
+//            year_of_starting.setText(objJson.getString("year_of_starting"));
+//            accounting_year.setText(objJson.getString("accounting_year"));
+//            declaration_designation.setText(objJson.getString("PresentEmpDesg"));
+//            is_present.setText(objJson.getString("PresentEmpName"));
+//            name_of_employer.setText(objJson.getString("Owner_Name"));
+//            total.setText(objJson.getString("TotalWorkers"));
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-            male.setText(objJson.getString("Male"));
-            female.setText(objJson.getString("Female"));
-            registration.setText(objJson.getString("RegistrationUnder"));
-            schedule_empl.setText(objJson.getString("ScheduleEmp"));
-            working_hours.setText(objJson.getString("WorkingHr"));
-            weekly_off.setText(objJson.getString("WeeklyOff"));
-            date.setText(objJson.getString("DateOfInspection"));
-            representative_of_principle.setText(objJson.getString("representative_of_principle"));
-            direct_worker.setText(objJson.getString("TotalDirectEmp"));
-            contract_worker.setText(objJson.getString("TotalContractEmp"));
-            year_of_starting.setText(objJson.getString("year_of_starting"));
-            accounting_year.setText(objJson.getString("accounting_year"));
-            declaration_designation.setText(objJson.getString("PresentEmpDesg"));
-            is_present.setText(objJson.getString("PresentEmpName"));
-            name_of_employer.setText(objJson.getString("Owner_Name"));
-            total.setText(objJson.getString("TotalWorkers"));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (actId.equalsIgnoreCase("102") || actId.equalsIgnoreCase("103") || actId.equalsIgnoreCase("104")) {
-            ll_no_of_workers.setVisibility(View.GONE);
-            hs_worker_info.setVisibility(View.GONE);
-        } else if (actId.equalsIgnoreCase("105")) {
-            ll_no_of_workers.setVisibility(View.GONE);
-            hs_worker_info.setVisibility(View.GONE);
-            ll_working_hours.setVisibility(View.GONE);
-        } else if (actId.equalsIgnoreCase("107")) {
-            ll_no_of_workers.setVisibility(View.GONE);
-            hs_worker_info.setVisibility(View.GONE);
-            ll_employees.setVisibility(View.GONE);
-            ll_working_hours.setVisibility(View.GONE);
-            ll_address_site_1970.setVisibility(View.VISIBLE);
-            ll_employees_1970.setVisibility(View.VISIBLE);
-            ll_representative.setVisibility(View.VISIBLE);
-            ll_no_of_contractor.setVisibility(View.VISIBLE);
-
-        } else if (actId.equalsIgnoreCase("108")) {
-            ll_no_of_workers.setVisibility(View.GONE);
-            hs_worker_info.setVisibility(View.GONE);
-            ll_schedule_emp.setVisibility(View.GONE);
-            ll_year_of_startng.setVisibility(View.VISIBLE);
-            ll_acc_year.setVisibility(View.VISIBLE);
-        }
-
+        ll_no_of_workers.setVisibility(View.GONE);
+        hs_worker_info.setVisibility(View.GONE);
+        ll_address_site_1970.setVisibility(View.GONE);
+        ll_employees_1970.setVisibility(View.GONE);
     }
 
     private void setEventListeners() {
         date.setOnClickListener(this);
+        working_hours.setOnClickListener(this);
         submit.setOnClickListener(this);
 
         biometric_worker_1.setOnClickListener(this);
@@ -681,7 +646,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         biometric_worker_8.setOnClickListener(this);
         biometric_worker_9.setOnClickListener(this);
         biometric_worker_10.setOnClickListener(this);
-//        spn_act.setOnItemSelectedListener(this);
+
 
 //        male.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -961,52 +926,29 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         });
     }
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            date.setText(year + "-" + (month + 1) + "-" + day);
-        }
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit:
                 if (validation()) {
-                    if (count > 0) {
-                        createContractorJson();
-                    }
-                    if (worker_count > 0) {
-                        createWorkerJson();
-                        try {
-                            dataToDatabase.put("objInspectedEmpDetails", jarr);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+
                     createJson();
 //                writeXml();
                 }
                 break;
 
             case R.id.edit_date_of_inspection:
-                DialogFragment newFragment = new DatePickerFragment();
+                DatePickerFragment newFragment = new DatePickerFragment();
+                newFragment.setInstance(date);
                 newFragment.show(getFragmentManager(), "datePicker");
+                break;
+
+            case R.id.edit_working_hours:
+                CustomTimeDialog dialogBuilder = new CustomTimeDialog(mainAct, working_hours);
+                dialogBuilder.setTitle("Set Time");
+                AlertDialog alertDialog = dialogBuilder.create();
+                dialogBuilder.getAlert(alertDialog);
+                alertDialog.show();
                 break;
 
             case R.id.spn_act:
@@ -1173,12 +1115,12 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     public class PagerAdapter extends FragmentPagerAdapter {
 
         private FragmentBasicDetails fragmentBasicDetails;
-        private FragmentActs actFragment;
+        private FragmentEmployerDetails employerFragment;
 
         public PagerAdapter(FragmentManager manager) {
             super(manager);
             this.fragmentBasicDetails = new FragmentBasicDetails();
-            this.actFragment = new FragmentActs();
+            this.employerFragment = new FragmentEmployerDetails();
         }
 
         @Override
@@ -1194,7 +1136,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
                     return fragmentBasicDetails;
 
                 case 1:
-                    return actFragment;
+                    return employerFragment;
                 default:
                     return null;
             }
@@ -1260,6 +1202,10 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             serializer.text(female.getText().toString());
             serializer.endTag("", "Female");
 
+            serializer.startTag("", "Transgender");
+            serializer.text(transgender.getText().toString());
+            serializer.endTag("", "Transgender");
+
             serializer.startTag("", "TotalDirectEmp");
             serializer.text(direct_worker.getText().toString());
             serializer.endTag("", "TotalDirectEmp");
@@ -1288,9 +1234,9 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             serializer.text(working_hours.getText().toString());
             serializer.endTag("", "WorkingHr");
 
-            serializer.startTag("", "WeeklyOff");
-            serializer.text(weekly_off.getText().toString());
-            serializer.endTag("", "WeeklyOff");
+//            serializer.startTag("", "WeeklyOff");
+//            serializer.text(weekly_off.getText().toString());
+//            serializer.endTag("", "WeeklyOff");
 
             serializer.startTag("", "OfficeID");
             serializer.text("0");
@@ -1739,27 +1685,26 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             jsonn.put("address_site", address_site.getText().toString());
             jsonn.put("Male", male.getText().toString());
             jsonn.put("Female", female.getText().toString());
+            jsonn.put("Transgender", transgender.getText().toString());
             jsonn.put("TotalWorkers", total.getText().toString());
             jsonn.put("RegistrationUnder", registration.getText().toString());
             jsonn.put("ScheduleEmp", schedule_empl.getText().toString());
             jsonn.put("WorkingHr", working_hours.getText().toString());
-            jsonn.put("WeeklyOff", weekly_off.getText().toString());
+            jsonn.put("WeeklyOff", spn_weekly_off.getSelectedItem().toString());
             jsonn.put("DateOfInspection", date.getText().toString());
             jsonn.put("representative_of_principle", representative_of_principle.getText().toString());
             jsonn.put("TotalDirectEmp", direct_worker.getText().toString());
             jsonn.put("TotalContractEmp", contract_worker.getText().toString());
 
-            if(year_of_starting.getText().toString().equalsIgnoreCase("")){
+            if (year_of_starting.getText().toString().equalsIgnoreCase("")) {
                 year_of_starting.setText("1900");
             }
-            if(accounting_year.getText().toString().equalsIgnoreCase("")){
+            if (accounting_year.getText().toString().equalsIgnoreCase("")) {
                 accounting_year.setText("1900");
             }
 
             jsonn.put("year_of_starting", year_of_starting.getText().toString());
             jsonn.put("accounting_year", accounting_year.getText().toString());
-            jsonn.put("PresentEmpDesg", declaration_designation.getText().toString());
-            jsonn.put("PresentEmpName", is_present.getText().toString());
             jsonn.put("Owner_Name", name_of_employer.getText().toString());
 
         } catch (Exception e) {
@@ -1768,21 +1713,22 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
 
         try {
             dataToDatabase.put("objLabourInspectionSchema", jsonn);
+            dataToDatabase.put("PresentEmpName", is_present.getText().toString());
+            dataToDatabase.put("PresentEmpDesg", declaration_designation.getText().toString());
+            dataToDatabase.put("DateOfInspection", date.getText().toString());
+            dataToDatabase.put("CreatedBy", user_id);
+
             session.createBasicInfoSession(dataToDatabase.toString());
 
             PagerAdapter fragmentPagerAdapter = new PagerAdapter(getFragmentManager());
-            FragmentActs frag = (FragmentActs) fragmentPagerAdapter.getItem(1);
+            FragmentEmployerDetails frag = (FragmentEmployerDetails) fragmentPagerAdapter.getItem(1);
             frag.sendData(dataToDatabase.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         System.out.println(dataToDatabase.toString());
-
-//        long rowId = dbHelper.insertBasicDetails(user_name, licence_no, inspection_no, dataToDatabase.toString());
-
-//        if (rowId > 0) {
-        clear();
+//        clear();
         Utilities.showMessage("Data Saved Successfully", context);
         try {
             Thread.sleep(1000);
@@ -1790,9 +1736,6 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             e.printStackTrace();
         }
         viewPager.setCurrentItem(1);
-//        } else {
-//            Utilities.showMessage("Data not Saved", context);
-//        }
     }
 
     private void clear() {
@@ -1802,11 +1745,11 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         name_of_employer.setText("");
         male.setText("");
         female.setText("");
+        transgender.setText("");
         total.setText("");
         registration.setText("");
         schedule_empl.setText("");
         working_hours.setText("");
-        weekly_off.setText("");
         date.setText("");
         representative_of_principle.setText("");
         direct_worker.setText("");
@@ -1815,6 +1758,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         accounting_year.setText("");
         declaration_designation.setText("");
         is_present.setText("");
+        address_employer.setText("");
 
         no_of_workers.setText("0");
         no_of_contractors_count.setText("0");
@@ -1825,11 +1769,11 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         name_of_employer.setError(null);
         male.setError(null);
         female.setError(null);
+        transgender.setError(null);
         total.setError(null);
         registration.setError(null);
         schedule_empl.setError(null);
         working_hours.setError(null);
-        weekly_off.setError(null);
         date.setError(null);
         representative_of_principle.setError(null);
         direct_worker.setError(null);
@@ -2370,7 +2314,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             json.put("Bonus", editTexts[9].getText().toString()
                     .trim());
             json.put("EmployeeWeeklyOff", "Monday");
-            json.put("LeaveWithWages", "Yes");
+            json.put("LeaveWithWages", "1");
 
             jarr.put(json);
 
@@ -2398,74 +2342,46 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             return false;
         }
 
-//        if (ll_employees.getVisibility() == View.VISIBLE) {
-//            if (male.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Male Employees", context);
-//                return false;
-//            }
-//            if (female.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter female Employees", context);
-//                return false;
-//            }
-//        }
-//        if (registration.getText().toString().equalsIgnoreCase("")) {
-//            Utilities.showMessage("Enter Registration", context);
-//            registration.setError("Enter Value");
-//            return false;
-//        }
-//        if (ll_schedule_emp.getVisibility() == View.VISIBLE) {
-//            if (schedule_empl.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Schedule Employment", context);
-//                return false;
-//            }
-//        }
-//        if (ll_working_hours.getVisibility() == View.VISIBLE) {
-//            if (working_hours.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Working hours", context);
-//                return false;
-//            }
-//            if (weekly_off.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Weekly off", context);
-//                return false;
-//            }
-//        }
+        if (male.getText().toString().equalsIgnoreCase("")) {
+            Utilities.showMessage("Enter Male Employees", context);
+            return false;
+        }
+
+        if (female.getText().toString().equalsIgnoreCase("")) {
+            Utilities.showMessage("Enter female Employees", context);
+            return false;
+        }
+
+        if (transgender.getText().toString().equalsIgnoreCase("")) {
+            Utilities.showMessage("Enter Transgender Employees", context);
+            return false;
+        }
+
+        if (registration.getText().toString().equalsIgnoreCase("")) {
+            Utilities.showMessage("Enter Registration under", context);
+            return false;
+        }
+
+        if (schedule_empl.getText().toString().equalsIgnoreCase("")) {
+            Utilities.showMessage("Enter Schedule Employment", context);
+            return false;
+        }
+
+        if (working_hours.getText().toString().equalsIgnoreCase("")) {
+            Utilities.showMessage("Enter Working hours", context);
+            return false;
+        }
+
         if (date.getText().toString().equalsIgnoreCase("")) {
             Utilities.showMessage("Enter Date of inspection", context);
             date.setError("Enter Value");
             return false;
         }
 
-        if (ll_address_site_1970.getVisibility() == View.VISIBLE) {
-            if (address_site.getText().toString().equalsIgnoreCase("")) {
-                Utilities.showMessage("Enter Address of site", context);
-                return false;
-            }
+        if (spn_weekly_off.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            Utilities.showMessage("Select Weekly Off", context);
+            return false;
         }
-//        if (ll_employees_1970.getVisibility() == View.VISIBLE) {
-//            if (direct_worker.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Direct Worker Count", context);
-//                return false;
-//            }
-//            if (contract_worker.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Contract Worker Count", context);
-//                return false;
-//            }
-//            if (representative_of_principle.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Representative", context);
-//                return false;
-//            }
-//        }
-
-//        if (actId.equalsIgnoreCase("108")) {
-//            if (year_of_starting.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter year of starting", context);
-//                return false;
-//            }
-//            if (accounting_year.getText().toString().equalsIgnoreCase("")) {
-//                Utilities.showMessage("Enter Accounting year", context);
-//                return false;
-//            }
-//        }
 
         if (declaration_designation.getText().toString().equalsIgnoreCase("")) {
             Utilities.showMessage("Enter Designation", context);

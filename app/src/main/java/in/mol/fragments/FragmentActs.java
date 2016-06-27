@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,8 +37,8 @@ import in.mol.database.DatabaseHelper;
 import in.mol.labourinspection.MainActivity;
 import in.mol.labourinspection.R;
 import in.mol.models.SpinnerObject;
-import in.mol.models.UserSessionManager;
-import in.mol.models.Utilities;
+import in.mol.Util.UserSessionManager;
+import in.mol.Util.Utilities;
 
 public class FragmentActs extends Fragment {
 
@@ -44,11 +46,9 @@ public class FragmentActs extends Fragment {
     private static ViewPager viewPager;
     static Context context;
     private static MainActivity mainActivity;
-    private static final String ARG_PARAM1 = "acts";
-    private static final String ARG_PARAM2 = "act_ID";
-    private static final String ARG_PARAM3 = "act_NAME";
-    private static final String ARG_PARAM4 = "User_NAME";
-    private static final String ARG_PARAM5 = "User_ID";
+
+    private static final String ARG_PARAM1 = "User_NAME";
+    private static final String ARG_PARAM2 = "User_ID";
     private String actNAME, user_name, user_id;
     private Spinner spin_acts;
     private DatabaseHelper dbHelper;
@@ -59,15 +59,17 @@ public class FragmentActs extends Fragment {
     String[] etValArr;
     boolean[] isSelect;
     RecyclerView recyclerView;
-    LinearLayout ll_skilled, ll_semiskilled, ll_unskilled;
-    EditText edit_skilled_basic, edit_skilled_special, edit_skilled_total,
+    LinearLayout ll_skilled, ll_semiskilled, ll_unskilled, ll_highly_skilled;
+    EditText edit_highly_skilled_basic, edit_highly_skilled_special, edit_highly_skilled_total,
+            edit_skilled_basic, edit_skilled_special, edit_skilled_total,
             edit_semi_skilled_basic, edit_semi_skilled_special, edit_semi_total,
-            edit_unskilled_basic, edit_unskilled_special, edit_unskilled_total, edit_remarks;
+            edit_unskilled_basic, edit_unskilled_special, edit_unskilled_total;
     TextView tv_min_wages;
     private Button save, next;
     String act_Id, act_name, basicInfo;
-    JSONArray arrRules;
-    JSONObject rules, selectedActs;
+    JSONArray arrRules, arrSelectedRules;
+    JSONObject rules, selectedActs, selectedActSchema;
+
     static JSONObject dataToDatabase;
     JSONArray jarr;
 
@@ -76,14 +78,12 @@ public class FragmentActs extends Fragment {
     }
 
     public static FragmentActs newInstance(MainActivity mainAct, Context con, ViewPager viewPagr,
-                                           String actID, String actName, String userName, String userID) {
+                                           String userName, String userID) {
         FragmentActs fragment = new FragmentActs();
         Bundle args = new Bundle();
 
-        args.putString(ARG_PARAM2, actID);
-        args.putString(ARG_PARAM3, actName);
-        args.putString(ARG_PARAM4, userName);
-        args.putString(ARG_PARAM5, userID);
+        args.putString(ARG_PARAM1, userName);
+        args.putString(ARG_PARAM2, userID);
         fragment.setArguments(args);
 
         viewPager = viewPagr;
@@ -97,11 +97,8 @@ public class FragmentActs extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
-//            actId = getArguments().getString(ARG_PARAM2);
-            actNAME = getArguments().getString(ARG_PARAM3);
-            user_name = getArguments().getString(ARG_PARAM4);
-            user_id = getArguments().getString(ARG_PARAM5);
+            user_name = getArguments().getString(ARG_PARAM1);
+            user_id = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -120,10 +117,11 @@ public class FragmentActs extends Fragment {
         dbHelper = new DatabaseHelper(getActivity());
         m_list_acts = new ArrayList<>();
         session = new UserSessionManager(context);
-        arrRules = new JSONArray();
         jarr = new JSONArray();
+        arrSelectedRules = new JSONArray();
         dataToDatabase = new JSONObject();
         selectedActs = new JSONObject();
+        selectedActSchema = new JSONObject();
 
         spin_acts = (Spinner) view.findViewById(R.id.spn_select_acts);
         recyclerView = (RecyclerView) view.findViewById(R.id.rules_recycler_view);
@@ -133,6 +131,11 @@ public class FragmentActs extends Fragment {
         ll_skilled = (LinearLayout) view.findViewById(R.id.ll_skilled);
         ll_semiskilled = (LinearLayout) view.findViewById(R.id.ll_semi_skilled);
         ll_unskilled = (LinearLayout) view.findViewById(R.id.ll_unskilled);
+        ll_highly_skilled = (LinearLayout) view.findViewById(R.id.ll_highly_skilled);
+
+        edit_highly_skilled_basic = (EditText) view.findViewById(R.id.edt_highly_skilled_basic);
+        edit_highly_skilled_special = (EditText) view.findViewById(R.id.edt_highly_skilled_special_allow);
+        edit_highly_skilled_total = (EditText) view.findViewById(R.id.edt_highly_skilled_total);
 
         edit_skilled_basic = (EditText) view.findViewById(R.id.edt_skilled_basic);
         edit_skilled_special = (EditText) view.findViewById(R.id.edt_skilled_special_allow);
@@ -149,7 +152,7 @@ public class FragmentActs extends Fragment {
         tv_min_wages = (TextView) view.findViewById(R.id.tv_minimum_wages);
 
         tv_min_wages.setVisibility(View.GONE);
-        Utilities.invisibleAll(ll_skilled, ll_semiskilled, ll_unskilled);
+        Utilities.invisibleAll(ll_skilled, ll_semiskilled, ll_unskilled, ll_highly_skilled);
     }
 
     private void setDefaults() {
@@ -184,10 +187,10 @@ public class FragmentActs extends Fragment {
 
                 if (act_Id.equalsIgnoreCase("101")) {
                     tv_min_wages.setVisibility(View.VISIBLE);
-                    Utilities.visibleAll(ll_skilled, ll_semiskilled, ll_unskilled);
+                    Utilities.visibleAll(ll_skilled, ll_semiskilled, ll_unskilled, ll_highly_skilled);
                 } else {
                     tv_min_wages.setVisibility(View.GONE);
-                    Utilities.invisibleAll(ll_skilled, ll_semiskilled, ll_unskilled);
+                    Utilities.invisibleAll(ll_skilled, ll_semiskilled, ll_unskilled, ll_highly_skilled);
                 }
 
                 m_list_rules = dbHelper.getRules(act_Id);
@@ -208,6 +211,74 @@ public class FragmentActs extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        edit_highly_skilled_basic.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    if (edit_highly_skilled_basic.getText().toString().equals("") && edit_highly_skilled_special.getText().toString().equals("")) {
+                        edit_highly_skilled_total.setText("");
+                    } else {
+                        double basic = Double.valueOf(edit_highly_skilled_basic.getText().toString());
+                        double allow;
+                        if (!edit_highly_skilled_special.getText().toString().equalsIgnoreCase("")) {
+                            allow = Double.valueOf(edit_highly_skilled_special.getText().toString());
+                        } else {
+                            allow = 0;
+                        }
+                        DecimalFormat df = new DecimalFormat(".00");
+                        String formate = df.format((basic + allow));
+                        edit_highly_skilled_total.setText(formate);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        edit_highly_skilled_special.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    if (edit_highly_skilled_basic.getText().toString().equals("") && edit_highly_skilled_special.getText().toString().equals("")) {
+                        edit_highly_skilled_total.setText("");
+                    } else {
+                        double basic = Double.valueOf(edit_highly_skilled_special.getText().toString());
+                        double allow;
+                        if (!edit_highly_skilled_basic.getText().toString().equalsIgnoreCase("")) {
+                            allow = Double.valueOf(edit_highly_skilled_basic.getText().toString());
+                        } else {
+                            allow = 0;
+                        }
+                        DecimalFormat df = new DecimalFormat(".00");
+                        String formate = df.format((basic + allow));
+                        edit_highly_skilled_total.setText(formate);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -439,30 +510,79 @@ public class FragmentActs extends Fragment {
         }
     }
 
-    private void saveFinalData() {
-        JSONObject empData;
-        try {
-            empData = dataToDatabase.optJSONObject("objLabourInspectionSchema");
+    public class PagerAdapter extends FragmentPagerAdapter {
 
-            dataToDatabase.put("PresentEmpName", empData.getString("PresentEmpName"));
-            dataToDatabase.put("PresentEmpDesg", empData.getString("PresentEmpDesg"));
-            dataToDatabase.put("DateOfInspection", empData.getString("DateOfInspection"));
-//            dataToDatabase.put("Remark", edit_remarks.getText().toString());
-            dataToDatabase.put("CreatedBy", user_id);
-        } catch (Exception e) {
-            e.printStackTrace();
+        private FragmentRemarks fragmentRemarks;
+        private FragmentActs actFragment;
+
+        public PagerAdapter(FragmentManager manager) {
+            super(manager);
+            this.fragmentRemarks = new FragmentRemarks();
+            this.actFragment = new FragmentActs();
         }
 
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            switch (position) {
+                case 0:
+                    return actFragment;
+
+                case 1:
+                    return fragmentRemarks;
+                default:
+                    return null;
+            }
+        }
+    }
+
+    private void saveFinalData() {
         try {
             dataToDatabase.put("objLabourActSchema", selectedActs);
+            PagerAdapter fragmentPagerAdapter = new PagerAdapter(getFragmentManager());
+            FragmentRemarks frag = (FragmentRemarks) fragmentPagerAdapter.getItem(1);
+            frag.sendData(dataToDatabase.toString());
+
+            Utilities.showMessage("Data Saved", context);
+            viewPager.setCurrentItem(3);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     private void saveData() {
         int len = m_list_rules.size();
+        JSONArray arrSelect;
+
+        rules = new JSONObject();
+        for (int i = 0; i < len; i++) {
+            try {
+                arrSelectedRules = dataToDatabase
+                        .getJSONArray("objLabourRulesSchema");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            if (isSelect[i]) {
+                try {
+                    JSONObject jsonData = new JSONObject();
+                    jsonData.put("RuleId", m_list_rules.get(i).getRuleId());
+                    jsonData.put("RuleName", m_list_rules.get(i).getRuleName());
+                    jsonData.put("Actid", act_Id);
+                    jsonData.put("IsSelected", isSelect[i]);
+                    jsonData.put("ComplaintRmk", etValArr[i]);
+                    arrSelectedRules.put(jsonData);
+
+                    dataToDatabase.put("objLabourRulesSchema", arrSelectedRules);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         arrRules = new JSONArray();
         rules = new JSONObject();
@@ -479,6 +599,7 @@ public class FragmentActs extends Fragment {
                 jsonData.put("RuleId", m_list_rules.get(i).getRuleId());
                 jsonData.put("RuleName", m_list_rules.get(i).getRuleName());
                 jsonData.put("Actid", act_Id);
+                jsonData.put("ActName", act_name);
                 jsonData.put("IsSelected", isSelect[i]);
                 jsonData.put("ComplaintRmk", etValArr[i]);
                 arrRules.put(jsonData);
@@ -496,7 +617,7 @@ public class FragmentActs extends Fragment {
             actSchema.put("ISSelected", true);
             actSchema.put("objLabourRulesSchema", arrRules);
 
-            JSONArray arrSelect = new JSONArray();
+            arrSelect = new JSONArray();
             try {
                 arrSelect = selectedActs.getJSONArray("SelectedActs");
 
@@ -511,12 +632,11 @@ public class FragmentActs extends Fragment {
             e.printStackTrace();
         }
 
-
         if (act_Id.equalsIgnoreCase("101")) {
             JSONObject json = new JSONObject();
-            JSONObject minWages = new JSONObject();
             try {
                 json.put("CategoryID", "101");
+                json.put("Category", "");
                 json.put("Basic", edit_skilled_basic.getText().toString());
                 json.put("SpecialAllowance", edit_skilled_special.getText().toString());
                 json.put("Total", edit_skilled_total.getText().toString());
@@ -524,6 +644,7 @@ public class FragmentActs extends Fragment {
 
                 json = new JSONObject();
                 json.put("CategoryID", "102");
+                json.put("Category", "");
                 json.put("Basic", edit_semi_skilled_basic.getText().toString());
                 json.put("SpecialAllowance", edit_semi_skilled_special.getText().toString());
                 json.put("Total", edit_semi_total.getText().toString());
@@ -531,27 +652,35 @@ public class FragmentActs extends Fragment {
 
                 json = new JSONObject();
                 json.put("CategoryID", "103");
+                json.put("Category", "");
                 json.put("Basic", edit_unskilled_basic.getText().toString());
                 json.put("SpecialAllowance", edit_unskilled_special.getText().toString());
                 json.put("Total", edit_unskilled_total.getText().toString());
                 jarr.put(json);
 
-//                minWages.put("InspectionEmpMinWages", jarr);
+                json = new JSONObject();
+                json.put("CategoryID", "104");
+                json.put("Category", "");
+                json.put("Basic", edit_highly_skilled_basic.getText().toString());
+                json.put("SpecialAllowance", edit_highly_skilled_special.getText().toString());
+                json.put("Total", edit_highly_skilled_total.getText().toString());
+                jarr.put(json);
 
                 dataToDatabase.put("objInspectionEmpMinWages", jarr);
 
                 tv_min_wages.setVisibility(View.GONE);
-                Utilities.invisibleAll(ll_skilled, ll_semiskilled, ll_unskilled);
+                Utilities.invisibleAll(ll_skilled, ll_semiskilled, ll_unskilled, ll_highly_skilled);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         clear();
+
+        Utilities.showMessage("Data Saved", context);
         List<SpinnerObject> m_list_temp = new ArrayList<>();
         contentAdapter = new ContentAdapter(m_list_temp);
         recyclerView.setAdapter(contentAdapter);
-
     }
 
     private void clear() {

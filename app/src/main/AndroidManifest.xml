@@ -43,6 +43,10 @@
             android:name=".ActivityActList"
             android:label="@string/app_name"></activity>
 
+        <activity
+            android:name="in.mol.Util.ActivityFileBrowser"
+            android:label="@string/app_name"></activity>
+
         <service
             android:name="in.mol.services.DataSyncService"
             android:enabled="true"></service>

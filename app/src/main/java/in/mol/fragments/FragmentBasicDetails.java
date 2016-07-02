@@ -1711,10 +1711,10 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             jsonn.put("lstLabourInspectionSchema", JSONObject.NULL);
             jsonn.put("ServiceName", JSONObject.NULL);
             jsonn.put("WeeklyOff", spn_weekly_off.getSelectedItem().toString());
-            jsonn.put("DateOfInspection", date.getText().toString());
 //            jsonn.put("representative_of_principle", representative_of_principle.getText().toString());
             jsonn.put("TotalDirectEmp", direct_worker.getText().toString());
             jsonn.put("TotalContractEmp", contract_worker.getText().toString());
+            jsonn.put("CreatedBy", user_id);
 
 //            if (year_of_starting.getText().toString().equalsIgnoreCase("")) {
 //                year_of_starting.setText("1900");
@@ -1736,8 +1736,10 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             dataToDatabase.put("PresentEmpName", is_present.getText().toString());
             dataToDatabase.put("PresentEmpDesg", declaration_designation.getText().toString());
             dataToDatabase.put("DateOfInspection", date.getText().toString());
+            dataToDatabase.put("InspectionNo", JSONObject.NULL);
+            dataToDatabase.put("DateOfInspections", JSONObject.NULL);
             dataToDatabase.put("CreatedBy", user_id);
-            dataToDatabase.put("InspectionNo", null);
+
 
             session.createBasicInfoSession(dataToDatabase.toString());
 

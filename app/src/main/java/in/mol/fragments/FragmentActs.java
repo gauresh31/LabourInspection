@@ -635,6 +635,10 @@ public class FragmentActs extends Fragment {
             }
 
             arrSelect.put(actSchema);
+            selectedActs.put("Actid", 0);
+            selectedActs.put("ActName", JSONObject.NULL);
+            selectedActs.put("Acts", JSONObject.NULL);
+            selectedActs.put("ISSelected", false);
             selectedActs.put("SelectedActs", arrSelect);
 
         } catch (JSONException e) {
@@ -750,7 +754,7 @@ public class FragmentActs extends Fragment {
 
     public class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-//        JSONObject jsonResult;
+        //        JSONObject jsonResult;
 //        JSONArray arrRule = new JSONArray();
         List<SpinnerObject> lst_rules = new ArrayList<>();
         int size;

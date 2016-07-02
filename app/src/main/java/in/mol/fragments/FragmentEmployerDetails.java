@@ -13,9 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -37,10 +39,11 @@ public class FragmentEmployerDetails extends Fragment {
     private static Context context;
     static ViewPager viewPager;
     private View view;
-    static private EditText edit_name_of_worker, edit_designation, edit_lenght_of_service, edit_working_hours, edit_rest_time,
+    static private EditText edit_name_of_worker, edit_designation, edit_lenght_of_service, edit_working_hours,edit_from, edit_to, edit_rest_time,
             edit_attend_card, edit_over_time_rate, edit_salary_per_day, edit_date_of_payment, edit_bonus;
     Button add, next;
-    private Spinner spin_wages, spin_weeklyoff;
+    private Spinner spin_wages, spin_weeklyoff, spin_ottype, spin_otwages;
+    LinearLayout ll_over_wages;
     JSONArray jsonArray;
     RecyclerView rc_emp;
     ContentAdapter contentAdapter;
@@ -82,6 +85,8 @@ public class FragmentEmployerDetails extends Fragment {
         edit_designation = (EditText) view.findViewById(R.id.edit_designation);
         edit_lenght_of_service = (EditText) view.findViewById(R.id.edit_length_of_service);
         edit_working_hours = (EditText) view.findViewById(R.id.edit_working_hours);
+        edit_from = (EditText) view.findViewById(R.id.edit_from_time);
+        edit_to = (EditText) view.findViewById(R.id.edit_to_time);
         edit_rest_time = (EditText) view.findViewById(R.id.edit_rest_time);
         edit_attend_card = (EditText) view.findViewById(R.id.edit_attend_card);
         edit_over_time_rate = (EditText) view.findViewById(R.id.edit_over_time_rate);
@@ -90,6 +95,10 @@ public class FragmentEmployerDetails extends Fragment {
         edit_bonus = (EditText) view.findViewById(R.id.edit_bonus);
         spin_wages = (Spinner) view.findViewById(R.id.spin_wages);
         spin_weeklyoff = (Spinner) view.findViewById(R.id.spin_weeklyOff);
+        spin_ottype = (Spinner) view.findViewById(R.id.spin_over_time_type);
+        spin_otwages = (Spinner) view.findViewById(R.id.spin_over_time_wages);
+
+        ll_over_wages = (LinearLayout) view.findViewById(R.id.ll_over_wages);
 
         add = (Button) view.findViewById(R.id.btn_add);
         next = (Button) view.findViewById(R.id.btn_next);
@@ -121,8 +130,27 @@ public class FragmentEmployerDetails extends Fragment {
 
         spin_wages.setAdapter(adapterWages);
 
-        contentAdapter = new ContentAdapter(jsonArray);
+        List<String> otType = new ArrayList<>();
+        otType.add("Select");
+        otType.add("Paid");//1
+        otType.add("Unpaid");//0
 
+        ArrayAdapter<String> adapterOtType = new ArrayAdapter<>(
+                context, R.layout.default_textview, otType);
+
+        spin_ottype.setAdapter(adapterOtType);
+
+        List<String> otWages = new ArrayList<>();
+        otWages.add("Select");
+        otWages.add("Double Rate");//1
+        otWages.add("Single Rate");//0
+
+        ArrayAdapter<String> adapterOtWages = new ArrayAdapter<>(
+                context, R.layout.default_textview, otWages);
+
+        spin_otwages.setAdapter(adapterOtWages);
+
+        contentAdapter = new ContentAdapter(jsonArray);
         rc_emp.setAdapter(contentAdapter);
         rc_emp.setHasFixedSize(true);
         rc_emp.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -146,13 +174,34 @@ public class FragmentEmployerDetails extends Fragment {
 //                TimePickerFragment newFragment = new TimePickerFragment();
 //                newFragment.getInstance(edit_working_hours);
 //                newFragment.show(getFragmentManager(), "timePicker");
-
                 CustomTimeDialog dialogBuilder = new CustomTimeDialog(mainActivity, edit_working_hours);
                 dialogBuilder.setTitle("Set Time");
                 AlertDialog alertDialog = dialogBuilder.create();
                 dialogBuilder.getAlert(alertDialog);
                 alertDialog.show();
+            }
+        });
 
+        edit_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomTimeDialog dialogBuilder = new CustomTimeDialog(mainActivity, edit_from);
+                dialogBuilder.setTitle("Set Time");
+                AlertDialog alertDialog = dialogBuilder.create();
+                dialogBuilder.getAlert(alertDialog);
+                alertDialog.show();
+
+            }
+        });
+
+        edit_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomTimeDialog dialogBuilder = new CustomTimeDialog(mainActivity, edit_to);
+                dialogBuilder.setTitle("Set Time");
+                AlertDialog alertDialog = dialogBuilder.create();
+                dialogBuilder.getAlert(alertDialog);
+                alertDialog.show();
             }
         });
 
@@ -164,7 +213,21 @@ public class FragmentEmployerDetails extends Fragment {
                 AlertDialog alertDialog = dialogBuilder.create();
                 dialogBuilder.getAlert(alertDialog);
                 alertDialog.show();
+            }
+        });
 
+        spin_ottype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 1){
+                    ll_over_wages.setVisibility(View.VISIBLE);
+                } else {
+                    ll_over_wages.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -211,14 +274,31 @@ public class FragmentEmployerDetails extends Fragment {
                     .trim());
             json.put("AttendCard", edit_attend_card.getText().toString()
                     .trim());
-            json.put("OverTimeRate", edit_over_time_rate.getText().toString()
-                    .trim());
-            json.put("SalayPerDay", edit_salary_per_day.getText().toString()
-                    .trim());
+            json.put("OverTimeRate", Double.parseDouble(edit_over_time_rate.getText().toString()
+                    .trim()));
+
+            if(spin_ottype.getSelectedItem().toString().equalsIgnoreCase("Paid")){
+                json.put("OverTimeType", "1");
+            } else {
+                json.put("OverTimeType", "0");
+            }
+
+            if(ll_over_wages.getVisibility() == View.VISIBLE) {
+                if (spin_otwages.getSelectedItem().toString().equalsIgnoreCase("Single Rate")) {
+                    json.put("OverTimeWages", "0");
+                } else {
+                    json.put("OverTimeWages", "1");
+                }
+            } else {
+                json.put("OverTimeWages", "");
+            }
+
+            json.put("SalayPerDay", Double.parseDouble(edit_salary_per_day.getText().toString()
+                    .trim()));
             json.put("DateOfPayment", edit_date_of_payment.getText().toString()
                     .trim());
-            json.put("Bonus", edit_bonus.getText().toString()
-                    .trim());
+            json.put("Bonus", Double.parseDouble(edit_bonus.getText().toString()
+                    .trim()));
             json.put("EmployeeWeeklyOff", spin_weeklyoff.getSelectedItem().toString());
 
             if (spin_wages.getSelectedItem().toString().equalsIgnoreCase("Yes")) {
@@ -226,6 +306,8 @@ public class FragmentEmployerDetails extends Fragment {
             } else {
                 json.put("LeaveWithWages", "0");
             }
+            json.put("FromTime", edit_from.getText().toString());
+            json.put("ToTime", edit_to.getText().toString());
 
             jsonArray.put(json);
             Utilities.showMessage("Employer Added", context);
@@ -247,8 +329,12 @@ public class FragmentEmployerDetails extends Fragment {
         edit_over_time_rate.setText("");
         edit_salary_per_day.setText("");
         edit_date_of_payment.setText("");
+        edit_from.setText("");
+        edit_to.setText("");
         edit_bonus.setText("");
 
+        spin_ottype.setSelection(0);
+        spin_otwages.setVisibility(View.GONE);
         spin_wages.setSelection(0);
         spin_weeklyoff.setSelection(0);
     }
@@ -302,6 +388,16 @@ public class FragmentEmployerDetails extends Fragment {
         if (edit_over_time_rate.getText().toString().equalsIgnoreCase("")) {
             Utilities.showMessage("Enter Overtime rate", context);
             return false;
+        }
+
+        if(spin_ottype.getSelectedItem().toString().equalsIgnoreCase("Select")){
+            Utilities.showMessage("Select Overtime Type", context);
+            return false;
+        } else if(spin_ottype.getSelectedItem().toString().equalsIgnoreCase("Paid")){
+            if(spin_otwages.getSelectedItem().toString().equalsIgnoreCase("Select")){
+                Utilities.showMessage("Select Overtime Wages", context);
+                return false;
+            }
         }
         if (edit_salary_per_day.getText().toString().equalsIgnoreCase("")) {
             Utilities.showMessage("Enter Salary per day", context);

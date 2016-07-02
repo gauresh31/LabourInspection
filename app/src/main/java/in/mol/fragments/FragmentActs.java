@@ -574,7 +574,12 @@ public class FragmentActs extends Fragment {
                     jsonData.put("RuleName", m_list_rules.get(i).getRuleName());
                     jsonData.put("Actid", act_Id);
                     jsonData.put("IsSelected", isSelect[i]);
+                    jsonData.put("ActName", JSONObject.NULL);
                     jsonData.put("ComplaintRmk", etValArr[i]);
+                    jsonData.put("UserTypeName", JSONObject.NULL);
+                    jsonData.put("CreatedOn", JSONObject.NULL);
+                    jsonData.put("Username", JSONObject.NULL);
+                    jsonData.put("objLabourRulesSchemaList", JSONObject.NULL);
                     arrSelectedRules.put(jsonData);
 
                     dataToDatabase.put("objLabourRulesSchema", arrSelectedRules);
@@ -599,9 +604,13 @@ public class FragmentActs extends Fragment {
                 jsonData.put("RuleId", m_list_rules.get(i).getRuleId());
                 jsonData.put("RuleName", m_list_rules.get(i).getRuleName());
                 jsonData.put("Actid", act_Id);
-                jsonData.put("ActName", act_name);
+                jsonData.put("ActName", JSONObject.NULL);
                 jsonData.put("IsSelected", isSelect[i]);
                 jsonData.put("ComplaintRmk", etValArr[i]);
+                jsonData.put("UserTypeName", JSONObject.NULL);
+                jsonData.put("CreatedOn", JSONObject.NULL);
+                jsonData.put("Username", JSONObject.NULL);
+                jsonData.put("objLabourRulesSchemaList", JSONObject.NULL);
                 arrRules.put(jsonData);
 
                 rules.put("LabourRulesSchema", arrRules);
@@ -636,7 +645,7 @@ public class FragmentActs extends Fragment {
             JSONObject json = new JSONObject();
             try {
                 json.put("CategoryID", "101");
-                json.put("Category", "");
+                json.put("Category", JSONObject.NULL);
                 json.put("Basic", edit_skilled_basic.getText().toString());
                 json.put("SpecialAllowance", edit_skilled_special.getText().toString());
                 json.put("Total", edit_skilled_total.getText().toString());
@@ -644,7 +653,7 @@ public class FragmentActs extends Fragment {
 
                 json = new JSONObject();
                 json.put("CategoryID", "102");
-                json.put("Category", "");
+                json.put("Category", JSONObject.NULL);
                 json.put("Basic", edit_semi_skilled_basic.getText().toString());
                 json.put("SpecialAllowance", edit_semi_skilled_special.getText().toString());
                 json.put("Total", edit_semi_total.getText().toString());
@@ -652,7 +661,7 @@ public class FragmentActs extends Fragment {
 
                 json = new JSONObject();
                 json.put("CategoryID", "103");
-                json.put("Category", "");
+                json.put("Category", JSONObject.NULL);
                 json.put("Basic", edit_unskilled_basic.getText().toString());
                 json.put("SpecialAllowance", edit_unskilled_special.getText().toString());
                 json.put("Total", edit_unskilled_total.getText().toString());
@@ -660,7 +669,7 @@ public class FragmentActs extends Fragment {
 
                 json = new JSONObject();
                 json.put("CategoryID", "104");
-                json.put("Category", "");
+                json.put("Category", JSONObject.NULL);
                 json.put("Basic", edit_highly_skilled_basic.getText().toString());
                 json.put("SpecialAllowance", edit_highly_skilled_special.getText().toString());
                 json.put("Total", edit_highly_skilled_total.getText().toString());
@@ -741,8 +750,8 @@ public class FragmentActs extends Fragment {
 
     public class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-        JSONObject jsonResult;
-        JSONArray arrRule = new JSONArray();
+//        JSONObject jsonResult;
+//        JSONArray arrRule = new JSONArray();
         List<SpinnerObject> lst_rules = new ArrayList<>();
         int size;
 
@@ -785,8 +794,11 @@ public class FragmentActs extends Fragment {
                     //set your object's last status
                     obj.setSelected(isChecked);
                     if (isChecked) {
+                        holder.edit_remarks.setVisibility(View.VISIBLE);
                         isSelect[position] = true;
                     } else {
+                        holder.edit_remarks.setText("");
+                        holder.edit_remarks.setVisibility(View.GONE);
                         isSelect[position] = false;
                     }
                 }

@@ -33,9 +33,6 @@ import in.mol.models.VolleySingleton;
 import in.mol.services.DataSyncService;
 import in.mol.services.WebService;
 
-/**
- * Created by 1742 on 29-04-2016.
- */
 public class ActivityLogin extends AppCompatActivity {
 
     private AutoCompleteTextView mUserNameView;
@@ -89,15 +86,15 @@ public class ActivityLogin extends AppCompatActivity {
         //Async Request
 //        if (Utilities.isNetworkAvailable(getApplicationContext())) {
 //
-            mAuthTask = new UserLoginTask(username, password, getMacAddress());
-            mAuthTask.execute("");
+//            mAuthTask = new UserLoginTask(username, password, getMacAddress());
+//            mAuthTask.execute("");
 //        } else {
 //            Utilities.showMessage("No Internet Connection", getApplicationContext());
 //        }
 
-//        String macAddr = getMachineId();
-//        //Request Using Volley Library
-//        loginUsingVolley(macAddr);
+        String macAddr = getMachineId();
+        //Request Using Volley Library
+        loginUsingVolley(macAddr);
     }
 
     public void loginUsingVolley(String macAddr) {

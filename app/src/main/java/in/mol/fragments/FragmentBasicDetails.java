@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Xml;
@@ -74,7 +75,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
     private ScrollView scroll_list;
     private TextView tvHeader;
     private static EditText working_hours;
-    private EditText name_of_establishment, address, address_site, name_of_employer, address_employer, male, female, transgender, total,
+    private EditText name_of_establishment, address, address_site, name_of_employer, address_employer, email, mobile_no, male, female, transgender, total,
             registration, schedule_empl, no_of_contractors_count, representative_of_principle,
             direct_worker, contract_worker, year_of_starting, accounting_year, no_of_workers, declaration_designation, is_present;
     private EditText edit_name_of_contractor, edit_nature_of_work, edit_no_of_workers, edit_date_of_commencement,
@@ -221,6 +222,8 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         address_site = (EditText) view.findViewById(R.id.edit_address_of_site);
         address_employer = (EditText) view.findViewById(R.id.edit_address_of_employer);
         name_of_employer = (EditText) view.findViewById(R.id.edit_name_of_employer);
+        email = (EditText) view.findViewById(R.id.edit_email);
+        mobile_no = (EditText) view.findViewById(R.id.edit_mobile);
         male = (EditText) view.findViewById(R.id.edit_male);
         female = (EditText) view.findViewById(R.id.edit_female);
         transgender = (EditText) view.findViewById(R.id.edit_transgender);
@@ -1677,35 +1680,52 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         try {
 
             jsonn.put("LicenseNo", licence_no);
-            jsonn.put("inspection_no", inspection_no);
+            jsonn.put("InspectionNo", inspection_no);
 
             jsonn.put("Institution_Name", name_of_establishment.getText().toString());
             jsonn.put("Institution_Addr", address.getText().toString());
+            jsonn.put("Institution_State", JSONObject.NULL);
+            jsonn.put("Institution_District", JSONObject.NULL);
+            jsonn.put("Institution_Taluka", JSONObject.NULL);
+            jsonn.put("Institution_Village", JSONObject.NULL);
+            jsonn.put("Institution_Pin", JSONObject.NULL);
+            jsonn.put("Owner_Name", name_of_employer.getText().toString());
             jsonn.put("Owner_Addr", address.getText().toString());
-            jsonn.put("address_site", address_site.getText().toString());
+            jsonn.put("SiteAddr", address_site.getText().toString());
             jsonn.put("Male", male.getText().toString());
             jsonn.put("Female", female.getText().toString());
             jsonn.put("Transgender", transgender.getText().toString());
+            jsonn.put("MobileNo", mobile_no.getText().toString());
+            jsonn.put("EmailID", email.getText().toString());
             jsonn.put("TotalWorkers", total.getText().toString());
+            jsonn.put("StatusId", 0);
+            jsonn.put("Flag", JSONObject.NULL);
+            jsonn.put("LinkText", JSONObject.NULL);
             jsonn.put("RegistrationUnder", registration.getText().toString());
             jsonn.put("ScheduleEmp", schedule_empl.getText().toString());
             jsonn.put("WorkingHr", working_hours.getText().toString());
+            jsonn.put("FromDate", JSONObject.NULL);
+            jsonn.put("ToDate", JSONObject.NULL);
+            jsonn.put("OfficeID", 0);
+            jsonn.put("ServiceID", 3);
+            jsonn.put("lstLabourInspectionSchema", JSONObject.NULL);
+            jsonn.put("ServiceName", JSONObject.NULL);
             jsonn.put("WeeklyOff", spn_weekly_off.getSelectedItem().toString());
             jsonn.put("DateOfInspection", date.getText().toString());
-            jsonn.put("representative_of_principle", representative_of_principle.getText().toString());
+//            jsonn.put("representative_of_principle", representative_of_principle.getText().toString());
             jsonn.put("TotalDirectEmp", direct_worker.getText().toString());
             jsonn.put("TotalContractEmp", contract_worker.getText().toString());
 
-            if (year_of_starting.getText().toString().equalsIgnoreCase("")) {
-                year_of_starting.setText("1900");
-            }
-            if (accounting_year.getText().toString().equalsIgnoreCase("")) {
-                accounting_year.setText("1900");
-            }
+//            if (year_of_starting.getText().toString().equalsIgnoreCase("")) {
+//                year_of_starting.setText("1900");
+//            }
+//            if (accounting_year.getText().toString().equalsIgnoreCase("")) {
+//                accounting_year.setText("1900");
+//            }
+//
+//            jsonn.put("year_of_starting", year_of_starting.getText().toString());
+//            jsonn.put("accounting_year", accounting_year.getText().toString());
 
-            jsonn.put("year_of_starting", year_of_starting.getText().toString());
-            jsonn.put("accounting_year", accounting_year.getText().toString());
-            jsonn.put("Owner_Name", name_of_employer.getText().toString());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1717,6 +1737,7 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
             dataToDatabase.put("PresentEmpDesg", declaration_designation.getText().toString());
             dataToDatabase.put("DateOfInspection", date.getText().toString());
             dataToDatabase.put("CreatedBy", user_id);
+            dataToDatabase.put("InspectionNo", null);
 
             session.createBasicInfoSession(dataToDatabase.toString());
 
@@ -1743,6 +1764,8 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         address.setText("");
         address_site.setText("");
         name_of_employer.setText("");
+        email.setText("");
+        mobile_no.setText("");
         male.setText("");
         female.setText("");
         transgender.setText("");
@@ -2355,6 +2378,25 @@ public class FragmentBasicDetails extends Fragment implements View.OnClickListen
         if (transgender.getText().toString().equalsIgnoreCase("")) {
             Utilities.showMessage("Enter Transgender Employees", context);
             return false;
+        }
+
+        if (!email.getText().toString().equalsIgnoreCase("")) {
+            if (TextUtils.isEmpty(email.getText().toString())) {
+                return false;
+            } else {
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
+                    Utilities.showMessage("Enter Valid Email-id", context);
+                    return false;
+                }
+            }
+        }
+
+        if(!mobile_no.getText().toString().equalsIgnoreCase("")){
+            if((mobile_no.getText().length() != 10)){
+                Utilities.showMessage("Enter Valid Mobile number", context);
+                mobile_no.setError("10 digit mobile number");
+                return  false;
+            }
         }
 
         if (registration.getText().toString().equalsIgnoreCase("")) {

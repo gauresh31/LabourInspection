@@ -302,6 +302,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public long insertFileDetails(String user_name, String licence_no, String inspection_no, String path) {
+        myDataBase = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put("Username", user_name);
+        cv.put("License_no", licence_no);
+        cv.put("Inspection_no", inspection_no);
+        cv.put("File_Path", path);
+        cv.put("IsUploaded", false);
+        cv.put("DateTime", sd.format(new Date()));
+
+        long result = -1;
+        try {
+            myDataBase.beginTransaction();
+            result = myDataBase.insertOrThrow("Labour_File_Upload", null, cv);
+            System.out.println("Result :" + result);
+            if (result == -1) {
+            } else {
+                myDataBase.setTransactionSuccessful();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            myDataBase.endTransaction();
+            myDataBase.close();
+        }
+        return result;
+    }
+
     public M_Data getData() {
         String data = "";
         M_Data mData = new M_Data();
@@ -339,4 +368,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             myDataBase.close();
         }
     }
+
+
 }

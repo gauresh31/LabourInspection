@@ -16,6 +16,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.List;
 
 import in.mol.models.VolleySingleton;
 
@@ -32,8 +34,10 @@ public class WebService {
 
     public static final String Login_Url = "http://testlmsrandomization.mahaonlinegov.in/api/LoginSchema?";//172.16.0.27
     public static final String License_Url = "http://testlmsrandomization.mahaonlinegov.in/api/LabourInspection?";
-    public static String URL_ACTS = "http://testlmsrandomization.mahaonlinegov.in/api/LabourInspection?";
+//    public static String URL_ACTS = "http://testlmsrandomization.mahaonlinegov.in/api/LabourInspection?";
     public static String URL_BASIC_DATA = "http://testlmsrandomization.mahaonlinegov.in/api/InspectionActRemarks?";
+    public static String URL_SUBMIT = "http://testlmsrandomization.mahaonlinegov.in/api/InspectionActRemarks";
+    public static String URL_FILE_UPLOAD = "http://testlmsrandomization.mahaonlinegov.in/api/FileUpload";
 
     public static String resp;
 
@@ -74,9 +78,7 @@ public class WebService {
     public static String getLicenseList(String userId) {
 
         int code = 400;
-
         try {
-            // URL url = new URL();
             URL url = new URL(License_Url + "UserID=" + "D6E77167-3016-4A56-8EC7-D377DBD01757");
 //                    "411F82DF-1702-4E37-9016-6DB1C4909FFE");
             //59FBCF05-F9F7-47D9-AE90-742122C6A292 //userId
@@ -116,7 +118,6 @@ public class WebService {
     public static String getBasicData(String licenseNo) {
 
         int code = 400;
-
         try {
             URL url = new URL(URL_BASIC_DATA + "Licence=" + licenseNo);
             HttpURLConnection urlConnection = (HttpURLConnection) url
@@ -148,66 +149,24 @@ public class WebService {
         }
     }
 
-    public static String getActList(String licenseNo, String inspectionNo) {
-
-        int code = 400;
-
-        try {
-            // URL url = new URL();
-            URL url = new URL(URL_ACTS + "LicenseNo=" + "1610200310122688" + "&InspectionNo=" + "160426031000019");//licenseNo,inspectionNo
-            HttpURLConnection urlConnection = (HttpURLConnection) url
-                    .openConnection();
-            urlConnection.setConnectTimeout(60000);
-            code = urlConnection.getResponseCode();
-            try {
-                BufferedReader bufferedReader = new BufferedReader(
-                        new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line).append("\n");
-                }
-                bufferedReader.close();
-                return stringBuilder.toString();
-            } catch (Exception e) {
-                Log.e("ERROR", e.getMessage(), e);
-                return String.valueOf(code);
-            } finally {
-                urlConnection.disconnect();
-            }
-        } catch (MalformedURLException e) {
-            Log.e("ERROR", e.getMessage(), e);
-            return null;
-        } catch (IOException e) {
-            Log.e("ERROR", e.getMessage(), e);
-
-            return String.valueOf(code);
-        }
-    }
 
     public static String uploadData(String data) {
         int code = 400;
         DataOutputStream printout;
         DataInputStream input;
         try {
-            // URL url = new URL();
-            URL url = new URL("http://testlmsrandomization.mahaonlinegov.in/api/InspectionActRemarks");//jsonData
+            URL url = new URL(URL_SUBMIT);//jsonData
             HttpURLConnection urlConnection = (HttpURLConnection) url
                     .openConnection();
             urlConnection.setConnectTimeout(60000);
             urlConnection.setReadTimeout(20000);
-//            urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
             urlConnection.setUseCaches(false);
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.connect();
-//            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
-//            out.write(data.toString());
-//            out.close();
 
             printout = new DataOutputStream(urlConnection.getOutputStream());
-//            printout.write(Integer.parseInt(URLEncoder.encode(data.toString(), "UTF-8")));
             String str = data;
             byte[] data1 = str.getBytes("UTF-8");
             printout.write(data1);
@@ -239,6 +198,73 @@ public class WebService {
             return String.valueOf(code);
         }
     }
+
+    public static String fileUpload(File data) {
+        try {
+            String res = "";
+
+            MultipartUtility multipart = new MultipartUtility(
+                    URL_FILE_UPLOAD,
+                    "UTF-8");
+
+            multipart.addFormField("", "");
+            multipart.addFilePart("fileUpload", data);//File path
+
+            System.out.println("Request : " + multipart.toString());
+
+            List<String> response = multipart.finish();
+
+            System.out.println("SERVER REPLIED:");
+
+            for (String line : response) {
+                res = res + line;
+            }
+
+            System.out.println(res);
+            return res;
+        } catch (Exception ex) {
+            System.err.println(ex);
+            return ex.toString();
+        }
+    }
+
+//    public static String getActList(String licenseNo, String inspectionNo) {
+//
+//        int code = 400;
+//
+//        try {
+//            // URL url = new URL();
+//            URL url = new URL(URL_ACTS + "LicenseNo=" + "1610200310122688" + "&InspectionNo=" + "160426031000019");//licenseNo,inspectionNo
+//            HttpURLConnection urlConnection = (HttpURLConnection) url
+//                    .openConnection();
+//            urlConnection.setConnectTimeout(60000);
+//            code = urlConnection.getResponseCode();
+//            try {
+//                BufferedReader bufferedReader = new BufferedReader(
+//                        new InputStreamReader(urlConnection.getInputStream()));
+//                StringBuilder stringBuilder = new StringBuilder();
+//                String line;
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    stringBuilder.append(line).append("\n");
+//                }
+//                bufferedReader.close();
+//                return stringBuilder.toString();
+//            } catch (Exception e) {
+//                Log.e("ERROR", e.getMessage(), e);
+//                return String.valueOf(code);
+//            } finally {
+//                urlConnection.disconnect();
+//            }
+//        } catch (MalformedURLException e) {
+//            Log.e("ERROR", e.getMessage(), e);
+//            return null;
+//        } catch (IOException e) {
+//            Log.e("ERROR", e.getMessage(), e);
+//
+//            return String.valueOf(code);
+//        }
+//    }
+
 
 //    public static String loginService1(String email, String password, String macAddr) {
 //        String result = "";
